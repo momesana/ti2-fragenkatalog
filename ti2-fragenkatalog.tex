@@ -1,0 +1,39 @@
+\documentclass[12pt,a4paper,ngerman]{scrartcl}
+
+% Dateikodierung ist latin1%
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+ 
+\definecolor{hl}{RGB}{255,0,0}
+
+\newcommand{\crucial}[1]{ \textbf{\textcolor{hl}{#1} }}
+
+\begin{document}
+
+
+\begin{enumerate}
+\item Welche zwei Hauptaufgaben hat ein Buetriebssytem? \\
+
+\begin{itemize}
+\item \crucial{Abstraktion von Geräteeigenschaften}
+	\begin{itemize}
+		\item Geräteunabhängige Schnittstelle zu den Anwendungen (virtuelle Maschine)
+		\item Geräteüberwachung und -steuerung
+	\end{itemize}
+
+\item \crucial{Unterstützung des Mehrbenutzerbetriebs}
+	\begin{itemize}
+		\item Betriebsmittelverwaltung
+		\item Zuteilungsstrategien
+		\item Schutz
+	\end{itemize}
+\end{itemize}
+
+
+
+\end{enumerate}
+
+
+\end{document}
