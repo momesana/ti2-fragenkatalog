@@ -5,21 +5,28 @@
 \usepackage[ngerman]{babel}
 \usepackage{listings}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{verbatim} 
  
-\definecolor{hl}{RGB}{255,0,0}
+\definecolor{hl}{RGB}{0,125,0}
 
-\newcommand{\crucial}[1]{ \textbf{\textcolor{hl}{#1}}}
+\newcommand{\crucial}[1]{\textbf{\textcolor{hl}{#1}}}
 
-\newcommand{\question}[1]{ \noindent{ \textbf{{#1}}} \\*[4pt]}
+% Question and Answer as commands
+\newcommand{\question}[1]{\noindent{\textbf{{#1}}} \\*[0pt]}
 
-\newenvironment{answer}
-{\noindent \ignorespaces} % before
-{\par \noindent \ignorespacesafterend \\*} % after
+             
+\newenvironment	{answer}
+				{\noindent \ignorespaces \begin{addmargin}[1.5em]{0em}} % before
+				{\end{addmargin} \noindent \ignorespacesafterend \\*} % after
 
 
+
+\title{TI2 - Fragenkatalog}
+\date{\today}
 
 \begin{document}
 
+\maketitle
 
 \question{1. Welche zwei Hauptaufgaben hat ein Betriebssytem?}
 
@@ -42,14 +49,14 @@
 
 \question{2. Was ist ein Prozess?}
 \begin{answer}
-Ein Programm in Ausführung.
+Ein \crucial{Programm in Ausführung}.
 \end{answer}
 
 
 \question{3. Wie ist ein UNIX-Dateisystem strukturiert? Wie können Dateien darin (eindeutig) aufgefunden
 werden?}
 \begin{answer}
-Ein UNIX-Dateisystem ist hierachisch organisiert. Es hat eine Wurzel (root), Verzeichnisse
+Ein UNIX-Dateisystem ist \crucial{hierachisch organisiert}. Es \crucial{hat eine Wurzel} (root), Verzeichnisse
 mit jeweils Unterverzeichnissen. In Vezeichnissen können Dateien abgelegt werden.
 Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
 
@@ -57,27 +64,19 @@ Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
 
 
 
-\question{4. Was ist ein symbolic Link?}
+\question{4a. Was ist ein symbolischer Link (symbolic link)?}
 \begin{answer}
-Bei der Erstellung eines symbolic Link wird ein neuer I-Node angelegt, dieser zeigt auf die
-tatsächliche Datei.
-Links dienen dazu eine Datei unter mehreren Namen zu speichern. Dies kann auch heissen
-eine Datei unter dem gleichen Namen in einem anderen Verzeichniss verfügbar zu machen
-(vollständige Namen: s.o.). Ein symbolic Link ist ein weiterer Pfad zu einer Datei. Bei
-symbolic Links ist zu beachten, dass beim Löschen des Original-Dateinamens der Link in
-"der Lusft hängt".
-Bei Hardlinks ist der Link ein zweiter, regulärer Name der Datei. Wird also die Datei
-unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer
-noch vorhanden. Hardlinks können nicht auf Verzeichnisse gelegt werden.
+Eine symbolische Verknüpfung ist eine \crucial{Verknüpfung} in einem Dateisystem, \crucial{die auf eine andere Datei oder ein anderes Verzeichnis verweist}. Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei führt üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
+\end{answer}
+
+\question{4b. Was ist ein Hardlink?}
+\begin{answer}
+Bei Hardlinks ist der Link ein \crucial{weiterer, regulärer Name der Datei}. Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{können nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
 \end{answer}
 
 \question{5. Ist das UNIX-Dateisystem wirklich ein Baum? Begründung.}
 \begin{answer}
-Ein UNIX-Dateisystem entspricht eher einem gerichteten Graphen denn einem Baum. Verzeichnisse
-und Dateien sind zwar hirarchisch organisiert, aber Möglichkeit von Hardlinks,
-d.h. das mehrfache Vorhandensein in der Dateistruktur einer physikalisch nur einfach vorhanden
-Datei stört das Bild eines Baumes.
-In einem Baum werden die Knoten benannt, unter UNIX werden Pfadnamen benutzt.
+Ein UNIX-Dateisystem entspricht eher einem \crucial{gerichteten Graphen} als einem Baum. Verzeichnisse und Dateien sind zwar hirarchisch organisiert, aber Möglichkeit von \crucial{Hardlinks}, d.h. das mehrfache Vorhandensein in der Dateistruktur einer physikalisch nur einfach vorhanden Datei stört das Bild eines Baumes. In einem Baum werden die Knoten benannt, unter UNIX werden Pfadnamen benutzt.
 \end{answer}
 
 \question{6. Welche Zugriffsrechte kann man auf eine UNIX-Datei haben? Welche Dateiattribute steuern dies, und wie?}
@@ -107,8 +106,7 @@ Ein Kommando-Interpreter stellt die Schnittstelle zum Benutzer zur Verfügung.
 \end{answer}
 
 
-\question{9. Nenne drei Beispiele für Informationen, die der Betriebsystemkern über eine Prozess wissen
-muss.}
+\question{9. Nenne drei Beispiele für Informationen, die der Betriebsystemkern über einen Prozess wissen muss.}
 \begin{answer}
 Prozess ID, Parent-Prozess ID, Zustand des Prozesses.
 \end{answer}
@@ -1366,8 +1364,6 @@ dem "Rest der Welt" Lese-, Schreib- und Ausführungsrechte zu.
 
 \question{100. Charakterisiere symetrische und asymetrische Verschlüsselungsverfahren. Wie können sie zur Realiesierung einer Vertraulichkeit eingesetzt werden? Warum werden häufig Mischformen eingesetzt?}
 \begin{answer}
-
-\end{answer}
 Bei symetrischer Verschlüsselung existieren zwei gleiche Schlüssel. Das hat den Nachteil, das bei bekannt werden des Schlüssels die Vertraulichkeit nicht mehr gegeben ist.
 Bei asymetrischer Verschlüsselung existieren insgesamt vier Schlüssel: zwei private und zwei öffentliche Schlüssel. Die öffentlichen Schlüssel können allgemein bekannt sein. Die Verschlüsselung selbst passiert mit dem privaten Schlüssel des Senders und dem öffentlichen Schlüssel des Empfängers.
 Die Entschlüsselung einer Nachricht erfolgt mit dem privaten Schlüssel des Empfängers und dem
@@ -1379,6 +1375,8 @@ eingesetzt, z.B. werden die symetrischen Schlüssel mit Hilfe asymetrischer Vers
 um die Schlüsselübergabe so sicher als möglich zu machen, die Kommunikation selbst
 findet dann aber mit Hilfe der symetrischen Verschl üsselung statt um eine angemessene Geschwindigkeit
 (z.B. Videokonferenzen) zu gewährleisten.
+\end{answer}
+
 
 
 \end{document}
