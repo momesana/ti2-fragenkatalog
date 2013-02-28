@@ -6,22 +6,22 @@
 \usepackage{listings}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{verbatim} 
- 
-\definecolor{hl}{RGB}{0,125,0}
 
-\newcommand{\crucial}[1]{\textbf{\textcolor{hl}{#1}}}
+% Color definitions
+\definecolor{crucial}{RGB}{0,125,0} % This color marks the portions of code that are crucial (see below)
 
-% Question and Answer as commands
+% Crucial marks keywords or statements that are crucial for passing the exam ;-)
+\newcommand{\crucial}[1]{\textbf{\textcolor{crucial}{#1}}}
+
+% Question Command
 \newcommand{\question}[1]{\noindent{\textbf{{#1}}} \\*[0pt]}
 
-             
+% Answer environment
 \newenvironment	{answer}
 				{\noindent \ignorespaces \begin{addmargin}[1.5em]{0em}} % before
 				{\end{addmargin} \noindent \ignorespacesafterend \\*} % after
 
-
-
-\title{TI2 - Fragenkatalog}
+\title{Technische Informatik 2 \\ Fragenkatalog \\ WISE 2012/2013 \\[5pt] \Large{Universität Bremen}}
 \date{\today}
 
 \begin{document}
@@ -52,17 +52,13 @@
 Ein \crucial{Programm in Ausführung}.
 \end{answer}
 
-
 \question{3. Wie ist ein UNIX-Dateisystem strukturiert? Wie können Dateien darin (eindeutig) aufgefunden
 werden?}
 \begin{answer}
 Ein UNIX-Dateisystem ist \crucial{hierachisch organisiert}. Es \crucial{hat eine Wurzel} (root), Verzeichnisse
 mit jeweils Unterverzeichnissen. In Vezeichnissen können Dateien abgelegt werden.
 Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
-
 \end{answer}
-
-
 
 \question{4a. Was ist ein symbolischer Link (symbolic link)?}
 \begin{answer}
@@ -97,35 +93,25 @@ Ausgabemöglichkeiten nutzen, kann er Ein- und Ausgaben umlenken. Beispielsweise
 können die Fehlermeldungen in eine Datei umgelenkt werden.
 \end{answer}
 
-
-
-
 \question{8. Welche Aufgabe hat ein Kommando-Interpreter (z.B. in UNIX die Shell)?}
 \begin{answer}
 Ein Kommando-Interpreter stellt die Schnittstelle zum Benutzer zur Verfügung.
 \end{answer}
-
 
 \question{9. Nenne drei Beispiele für Informationen, die der Betriebsystemkern über einen Prozess wissen muss.}
 \begin{answer}
 Prozess ID, Parent-Prozess ID, Zustand des Prozesses.
 \end{answer}
 
-
 \question{10. Was ist eine Pipe?}
 \begin{answer}
 Eine Pipe ist die Umlenkung eines unidirektionalen sequentiellen Bitstroms von der Standartausgabe eines Prozesse auf die Standarteingabe eines Prozesses.
 \end{answer}
 
-
-
-
 \question{11. Wie macht man ein soeben editiertes Shell-File ausführbar?}
 \begin{answer}
 Setzen des Ausführbar-Bits (x).
 \end{answer}
-
-
 
 \question{12. In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung in UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}
 \begin{answer}
@@ -133,9 +119,6 @@ Der virtuelle Adressraum ist in Text, Data und Stack unterteilt. Im Text-Teil be
 der eigentliche Programmcode, im Data-Teil die Daten und auf dem Stack alle temparären
 Daten (z.B. Variablen).
 \end{answer}
-
-
-
 
 \question{13. Wozu wird der Stack verwendet?}
 \begin{answer}
@@ -154,15 +137,10 @@ muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
 Ein Linker fügt die relativen Adressen beim compilieren in die Objektfiles ein.
 \end{answer}
 
-
-
 \question{16. Wozu wird beim Assemblieren eine Symboltabelle angelegt?}
 \begin{answer}
 Zum Auflösen von Verweisen.
 \end{answer}
-
-
-
 
 \question{17. Welchen Vorteil hat es, Bibliotheken mit Position Independent Code zu versehen?}
 \begin{answer}
@@ -208,9 +186,6 @@ andere Programme auswirken kann, die sich nach dieser Uhr zu richten haben.
 Beispiele für einen Softwareinterrupt wären SIGKILL oder SIGSTOP.
 \end{answer}
 
-
-
-
 \question{22. Was ist ein Trap? Nenne Beispiele für Traps. Inwiefern unterscheiden sich Traps von Interrupts?}
 \begin{answer}
 Ein Trap ist ein interne Unterbrechung eines Programms in Ausführung, die vom System
@@ -231,9 +206,6 @@ Zustandes von aussen. Eine Art vordefinierte Mechanismen des Systems, die adäqu
 behandelt werden, aber auch umdefiniert werden können (ignore).
 \end{answer}
 
-
-
-
 \question{24. Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}
 \begin{answer}
 Laut Wikipedia:\\
@@ -251,9 +223,6 @@ uninterruptible sleep: Der Prozess wartet auf ein Ereignis, üblicherweise Hardw
 zombie: Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
 \end{answer}
 
-
-
-
 \question{25. Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechen-intensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
 \begin{answer}
 Ein Scheduler soll schlank (effizient) und fair sein, d. h. der Rechenaufwand der Prozessverwaltung
@@ -262,20 +231,12 @@ gerechterweise auch drankommen. Auch die Zeitscheiben sollen eine angemessene Gr
 haben.
 \end{answer}
 
-
-
-
-
 \question{26. Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten simulieren?}
 \begin{answer}
 Man könnte die Anzahl der Durchläufe für die Prozesse mit einer hohen Priorität erhöhen,
 so dass diese in einem Durchlauf mehrere Male dran kommen, oder man gibt den wichtigen
 Prozessen grössere Zeitscheiben, um ihnen mehr CPU-Zeit zukommen zu lassen.
 \end{answer}
-
-
-
-
 
 \question{27. Warum bestehen die Sleep-Queue und die Run-Queue in UNIX nicht aus jeweils einer
 einzigen Warteschlange? Wie sind sie stattdessen organisiert?}
@@ -284,9 +245,6 @@ Sleep-Queue und Run-Queue bestehen aus jeweils einem Array. Jede Priorität hat 
 eine eigene Liste, das Handling zwischen den Queues ist abhängig von der Priorität. Diese
 Aufteilung besteht, da sonst immer alles durchsucht werden müsste.
 \end{answer}
-
-
-
 
 \question{28. Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der PROStruktur
 und teilweise in der User-Struktur abgelegt? Nenne jeweils drei charakteristische
@@ -304,9 +262,6 @@ Aktuelles Verzeichnis
 Geöffnete Dateien.
 \end{answer}
 
-
-
-
 \question{29. Skizziere kurz die Prozesserzeugung in UNIX.Welche Rolle spielen die Systemaufrufe fork()
 und exec() dabei?}
 \begin{answer}
@@ -319,9 +274,6 @@ Programm ausführen, dieses wird mit exec() gestartet, damit wird dann auch der
 Adressraum ausgetauscht.
 \end{answer}
 
-
-
-
 \question{30. Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB ("Zombie")?}
 \begin{answer}
 Das Kind meldet bei der Termination das Signal SIGCHILD an den Vater, dieser behnadelt
@@ -330,9 +282,6 @@ oder der Vater ignoriert das Signal. In diesem Fall wird das Kind zum Zombie. De
 wird dann entweder später vom Vater behandelt oder (je nach UNIX-Variante) durch das
 Betriebssystem. Z.B. kann der INIT-Prozess die Proc-Struktur wieder freigeben.
 \end{answer}
-
-
-
 
 \question{31. Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung?}
 \begin{answer}
@@ -356,9 +305,6 @@ innerhalb der Blöcke.
 Optimierung: mehrere Listen mit jeweils gleich grossen Blöcken, das verringert die Suchdauer.
 \end{answer}
 
-
-
-
 \question{32. Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher
 werden typischerweise bereitgestellt?}
 \begin{answer}
@@ -368,18 +314,12 @@ Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set).
 Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
 \end{answer}
 
-
-
-
 \question{33. Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}
 \begin{answer}
 Ein Prozess muss nicht zwangsläufig komplett im Speicher verfügbar sein (s.o.:Working
 Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten
 möglich, heisst insgesamt eine erheblich bessere Nutzung des Haupspeichers.
 \end{answer}
-
-
-
 
 \question{34. Was versteht man unter Paging, was unter Segmentierung? Wo tritt interne Fragmentierung,
 wo externe Fragmentierung auf? Was versteht man darunter?}
@@ -401,9 +341,6 @@ interne Fragmentierung: wenn innerhalb von gleich grossen Stücken der Speicher 
 ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
-
-
-
 \question{35. Aus welchen Teilen besteht eine virtuelle Adresse zumeist? Wie ermittelt sich daraus die entsprechende
 Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
 \begin{answer}
@@ -413,18 +350,12 @@ Dieser Vorgang wird üblichwerweise durch Hardwareunterstützung realisiert: die
 Unit (MMU).
 \end{answer}
 
-
-
-
 \question{36. Wie können mehrere Prozesse mit Hilfe virtueller Adressierung auf dieselben Programmstücke (oder auch Datenbereiche) zugreifen?}
 \begin{answer}
 Shared Memory:
 In den jeweiligen (unterschiedlichen) Page-Tabellen sind dieselben Seiten eingetragen. (Doppelter
 bzw. dreifacher Eintrag ein und desselben Inhalts in die 'Inhaltsverzeichnisse').
 \end{answer}
-
-
-
 
 \question{37. Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in
 etwa?}
@@ -470,16 +401,10 @@ mit 8 Bit auf 2 Bit) gehen die LRU-ähnlichen Vorteile verloren und Aging wird
 zu komplexen Variante von Second-Chance-FIFO.
 \end{answer}
 
-
-
-
 \question{38. In welche dieser Kategorien kann man den Clock-Hand-Algorithmus einordnen?}
 \begin{answer}
 LRU (ohne Dirty-Bit)
 \end{answer}
-
-
-
 
 \question{39. Warum ist ein optimaler Algorithmus nicht realisierbar?}
 \begin{answer}
@@ -489,9 +414,6 @@ lange benötigen.
 Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben (Embeded
 Systems) ein optimaler bzw. annähernd optimaler Algorithmus möglich.
 \end{answer}
-
-
-
 
 \question{40. Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gross bzw. zu
 klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
@@ -505,9 +427,6 @@ Ein zweiter Zeiger verbessert den Clocl k-Hand-Algorithmus insbesondere bei gros
 Speicher. Z.B. kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen, der Zweite die
 Seiten entfernen falls sie in der Zwischenzeit nicht erneut referenziert wurden.
 \end{answer}
-
-
-
 
 \question{41. Was ist Swapping?Warum wenden auch Paging-Systeme häufig dieses Verfahren an? Unter welcher
 Bedingung?}
@@ -523,9 +442,6 @@ dort Platz verfügbar zu machen, dadurch wird natürlich ein Austausch der Proze
 nach gewisser Zeit erforderlich.
 \end{answer}
 
-
-
-
 \question{42. Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}
 \begin{answer}
 Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte
@@ -538,9 +454,6 @@ Region mit eigener Pagetabelle, Page in der Region, Adressein Page.
 Regionen folgen dabei der logischen Grösse des Adressraumes (Text, Data, Stack), Pages sind in
 feste Grössen unterteilt.
 \end{answer}
-
-
-
 
 \question{43. Wozu wird bei der Speicherverwaltung häufig ein Assoziativspeicher eingesetzt?}
 \begin{answer}
@@ -555,9 +468,6 @@ Es ist der parallele Zugriff auf alle im Cache befindlichen Einträge möglich. 
 im Hauptspeicher vorzuhalten, wäre zu langsam, da zusätzlicher Speicherzugriff nötig
 wäre.
 \end{answer}
-
-
-
 
 \question{44. Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf ein UNIXFilesystem.}
 \begin{answer}
@@ -586,9 +496,7 @@ mit den Parametern fd, buf und len funktioniert analog zu read() und liefert die
 Bztes zurück.
 \end{answer}
 
-
 \question{45. Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über Indirekt-Blöcke?}
-
 \begin{answer}
 Das Dateisystem V7:
 - Der Dateiinhalt ist Block-orientiert mit speziellem Block-Index organisiert.
@@ -627,9 +535,6 @@ jeweils den Dateinamen (auch Dateinamen von Unterverzeichnissen) und die jeweili
 enthalten.
 \end{answer}
 
-
-
-
 \question{47. Welche Aufgaben hat der Buffer Cache in UNIX?}
 \begin{answer}
 Der UNIX-Buffer Cache ist ein Zwischenspeicher (Puffer) für gelesene oder geschriebene Plattenbl
@@ -637,9 +542,6 @@ Der UNIX-Buffer Cache ist ein Zwischenspeicher (Puffer) für gelesene oder gesch
 Buffer Cache ermöglicht Mehrfachzugriff ohne weitere Plattenzugriffe.
 Die Daten werden von Platte zu Cache in Blöcken transportiert, von Cache zu CPU in Bytes.
 \end{answer}
-
-
-
 
 \question{48. Was geschieht durch einen mount()-Systemaufruf in etwa?}
 \begin{answer}
@@ -649,9 +551,6 @@ Dateisysteme zusammengesetzt sein. Mit dem Befehl mount wird ein weiteres Dateis
 in einen solchen Dateibaum (Wurzel: Root) eingehängt, d.h. verfügbar gemacht. Beim mounten
 werden logische Geräte (z.B. CDROM, Partition, ...) und der Mount Point übergeben.
 \end{answer}
-
-
-
 
 \question{49. Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf mmap() in den virtuellen Adressraum eines Prozesses abzubilden?}
 \begin{answer}
@@ -664,9 +563,6 @@ I/O Performance steigt durch:
 \end{itemize}
 
 \end{answer}
-
-
-
 
 \question{50. Wie ist eine Platte intern organisiert? Wie wirkt sich dies auf den Informationszugriff aus? Wie geht das UNIX Fast File System damit um?}
 \begin{answer}
@@ -684,9 +580,6 @@ UNIX Fast File System:
 Das System arbeitet auf vier bzw. acht Byte grossen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
 \end{answer}
 
-
-
-
 \question{51. Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle für den  Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
 \begin{answer}
 In UNIX sind Geräte als Datein dargestellt. Dies bietet für Anwender und Programmierer den
@@ -695,9 +588,6 @@ Vorteil, dass sie einheitlich zu behandeln sind.
 \paragraph*{Laut Wikipedia:}
 Everything is a file (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
 \end{answer}
-
-
-
 
 \question{52. Was ist ein Gerätetreiber, was ein Geräte-Controller? Welche Aufgaben haben sie?}
 \begin{answer}
@@ -713,17 +603,11 @@ Ein Treiber ist also zum Kernel gehörende Software, ein Controller ist die zu e
 vom Treiber gesteuerte, Hardware.
 \end{answer}
 
-
-
-
 \question{53. Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine High Water Mark bzw. eine Low Water Mark?}
 \begin{answer}
 Der Zugriff über Warteschlangen erfolgt um eine Vermischung von Aufträgen und das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
 Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird oder ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt" werden können.
 \end{answer}
-
-
-
 
 \question{54. Worin unterscheidet sich Direct Memorz Access (DMA) von Programmed I/O?}
 \begin{answer}
@@ -734,9 +618,6 @@ Der Controller greift nach der Abarbeitung eines Auftrages ohne Einbeziehung der
 auf den Hauptspeicher zu. Zu diesem Zweck muss der Auftrag selbst die entsprechenden Speicherbereiche
 angeben.
 \end{answer}
-
-
-
 
 \question{55. Warum werden Terminal-Treiber in UNIX parametrisiert? Nenne typische Parameter.}
 \begin{answer}
@@ -753,9 +634,6 @@ an den Prozess weiterzugeben. Weitere Beispiele hierfür sind die Flusskontrolle
 Ausgabe) oder Strg-q (weiter) oder Signale wie Strg-c (stoppt den Prozess mit SIGINT).
 \end{answer}
 
-
-
-
 \question{56. Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}
 \begin{answer}
 Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es
@@ -764,17 +642,11 @@ Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der gegenseit
 nicht gewährleistet ist.
 \end{answer}
 
-
-
-
 \question{57. Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}
 \begin{answer}
 Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das
 Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
 \end{answer}
-
-
-
 
 \question{58. Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt?}
 \begin{answer}
@@ -783,15 +655,10 @@ b) Leser/Schreiber (Reader/Writer)
 c) Speisende Philosophen (Dining Philosophers)?
 \end{answer}
 
-
-
 \question{59. Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
 \begin{answer}
-
-\end{answer}
-
-
 TODO 
+\end{answer}
 
 \question{60. Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen,
 etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}
@@ -810,10 +677,6 @@ keine "echte Nebenläufigkeit" gegeben.
 Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt die Grundlage
 für das Scheduling dar.
 \end{answer}
-
-
-
-
 
 \question{61. Die Routinen pthread create(), pthread join(), pthread exit() realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (wait(), fork() und exit()). Warum arbeitet pthread create() deutlich anders als fork()?}
 \begin{answer}
@@ -841,18 +704,12 @@ eigenständiger Prozess erzeugt wird. Dieser wird auch vom Scheduler berücksich
 Betriebsystemkern bekannt ist.
 \end{answer}
 
-
-
-
 \question{62. Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}
 \begin{answer}
 TODO
 \end{answer}
 
-
-
-\question{63. Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten?
-Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}
+\question{63. Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}
 \begin{answer}
 Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
 Datenstruktur oder auf ein Betriebssystemmittel zugegriffen wird. Kritische Abschnitte
@@ -880,16 +737,10 @@ Wenn ein Prozess sich in einem kritisdchen Abschnitt befindet, und nicht selbst 
 herauskommt (z.B. Endlosschleife), wäre es nicht sinnvoll, hier die Unterbrechung auszuschalten.
 \end{answer}
 
-
-
-
 \question{64. Nach welchen Kriterien wird Korrektheit bzw. Güte von Locking-Algorithmen bewertet? Wie geht man dabei vor?}
 \begin{answer}
 Der Zugriff auf Schlossvariablen darf nicht selbst in einem kritischen Abschnitt liegen. Locking-Algorithmen sollten verklemmungsfrei arbeiten.
 \end{answer}
-
-
-
 
 \question{65. Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von unteilbaren
 Operationen durchführen?}
@@ -901,9 +752,6 @@ erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Proze
 erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher
 genau analysieren und Anfang und Ende festlegen.
 \end{answer}
-
-
-
 
 \question{66. Auf welche verschiedenen Arten kann man Verklemmungen angehen? Wie arbeitet der Bankiersalgorithmus?}
 \begin{answer}
@@ -929,13 +777,10 @@ einen Kreditrahmen aushandelt, der nach und nach eingelöst werden kann, aber di
 leistungsfähigkeit nicht sprengt.
 \end{answer}
 
-
-
 \question{67. Wie kann man eine einseitige Synchronisation mit Hilfe von wait() und signal() vornehmen? Wie kann man diese Primitiven in etwa auf lock() und unlock() abbilden?}
 \begin{answer}
 TODO
 \end{answer}
-
 
 \question{68. Grenze die Begriffe aktives und blockierendes Warten voneinander ab.}
 \begin{answer}
@@ -945,7 +790,6 @@ Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der k
 nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein
 wakeup() aus, um die schlafenden Prozesse zu wecken.
 \end{answer}
-
 
 \question{69. In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen.}
 \begin{answer}
@@ -967,9 +811,6 @@ erst blockiert, wenn dich n Prozesse im kritischen Abschnitt befinden. Eine Sema
 n vorinitialisiert.
 \end{answer}
 
-
-
-
 \question{71. Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}
 \begin{answer}
 - einseitige: Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas
@@ -979,8 +820,6 @@ V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P(
 so wird bloockiert und gewartet bis V() kommt.
 - mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit zwei Semaphoren.
 \end{answer}
-
-
 
 \question{72. Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden?
 In welches Problem wird eine allzu einfache "Implementierung" laufen?}
@@ -994,9 +833,6 @@ z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
 Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen.
 \end{answer}
 
-
-
-
 \question{73. Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-
 Routinen keine vollständige Semaphore-Semantik?Welche zusätzlichen Massnahmen muüsste man
 ergreifen?}
@@ -1005,9 +841,6 @@ Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt 
 da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme
 muss der Abschnitt also wieder freigegeben werden.
 \end{answer}
-
-
-
 
 \question{74. Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}
 \begin{answer}
@@ -1021,7 +854,6 @@ auf eine Veränderung des Counters. Wenn nun ein anderer Prozess den kritischen 
 gibet, indem er ein V() ausführt, werden alle wartenden Prozesse geweckt und donnern los. Es
 kommt aber nur einer in den kritischen Abschnitt hinein.
 \end{answer}
-
 
 \question{75. Was ist ein Monitor? Unter welchen Bedingungen wird ein Monitor betreten bzw. wieder verlassen?}
 \begin{answer}
@@ -1037,18 +869,12 @@ aufgerufen wird. Verlassen wird er, wenn er warten muss (wait()) oder wenn er fe
 ist.
 \end{answer}
 
-
-
-
 \question{76. Aus welchen Komponenten besteht ein Petrinetz (mit Marken)?Was kann man damit beschreiben?}
 \begin{answer}
 Ein Petrinetz ist ein gerichteter Graph, der aus Zuständen (Stellen) und Zustandübergängen
 (Transistionen) besteht. Mit Marken (Tokens) ist der aktuelle Ausführungszustand beschreibbar.
 Mit einem Petrinetz kann man grafisch die Synchronisationszusammenhänge darstellen.
 \end{answer}
-
-
-
 
 \question{77. Wie kann man durch ein Petrinetz typische Sznchronisationsvorschriften ausdrücken?}
 \begin{answer}
@@ -1063,9 +889,6 @@ Bei Unabhängigkeit können zwei Prozesse beliebig oft und in beliebiger Reihenf
 werden und somit unabhängig nebenläufig laufen.
 \end{answer}
 
-
-
-
 \question{78. Was kennzeichnet lebendige bzw. todesgefährdete Petrinetze?}
 \begin{answer}
 Bei lebendigen Petrinetzen gibt es immer Transistionen, egal welche Ausführungsreihenfolge stattgefunden
@@ -1073,9 +896,6 @@ hat..
 Bei todesgefährdeten Petrinetzen kann es nach einer Transistion zu einem Zustand kommen, von
 dem aus keine Transistionen mehr ausgeführt werden kann.
 \end{answer}
-
-
-
 
 \question{79. Was wird durch einen Pfadausdruck beschrieben? Welche Operatoren werden dazu vorgesehen?
 Was ist ihre Semantik?}
@@ -1088,14 +908,10 @@ Operator ; : Sequenz "Erst ..., dann ..."
 Operator | : Unabhängikeit von Prozessen
 \end{answer}
 
-
-
-
 \question{80. Welche Vorteile bieten Pfadausdrücke zur Steuerung von Nebenläufigkeit im Vergleich zu Semaphoren bzw. Monitore?}
 \begin{answer}
 Vorteil ist die korrekte Definition dessen, was erlaubt ist oder was nicht erlaubt ist. Unterschied
 \end{answer}
-
 
 \question{81. Was ist der Unterschied zwischen offenen und geschlossenen Pfadausdrücken?}
 \begin{answer}
@@ -1106,16 +922,12 @@ Offene Pfadausdrücke: alle Einschränkungen von Ausführungsreihenfolgen sind i
 zu spezifizieren. Das heisst alles andere ist erlaubt.
 \end{answer}
 
-
 \question{82. Wie würde man das klassische Reader-/Writer-Problem als Pfadausdruck formulieren?}
 \begin{answer}
 Beim Reader-/Writer-Problem sollen beliebig viele Leser, aber kein Schreiber zugelassen werden,
 oder ein Schreiber ohne Leser. Damit werden inkonsistente Ergebnisse verhindert.
 Als Pfadausdruck: leser+writer
 \end{answer}
-
-
-
 
 \question{83. Was versteht man unter synchronem bzw. asynchronem Nachrichtenaustausch? Inwiefern sind
 diese beiden Kommunikationsformen aufeinander abbildbar?}
@@ -1133,9 +945,6 @@ Asynchrone Kommunikation kann durch sychrone Operationen vorgenommen werden. Daz
 ein Pufferprozess eingeführt werden.
 \end{answer}
 
-
-
-
 \question{84. Wie kann man die Sychronisationseigenschaften von synchronem bzw. asynchronem Nachrichtenaustausch mit Semaphoren modellieren?}
 \begin{answer}
 Sema1(0);
@@ -1151,7 +960,6 @@ send(); s1.P();
 s1.V(); recieve();
 \end{answer}
 
-
 \question{85. Wozu verwendet man Kanäle bzw. Ports? Was ist das?}
 \begin{answer}
 Kommunikation zwischen zwei Prozessen setzt die Benennung der Partner voraus. Besser wäre hier den Kanal zu benennen, über den sie kommunizieren. Die Partner bleiben dadurch "anonym".
@@ -1159,8 +967,6 @@ Ports geben an, wohin gesendet werden soll. Sie werden verwendet, wenn es nur ei
 oder Empfänger auf einem Kanal gibt. Durch Ports ist eine dynamische Zuordnung zu Prozessen
 möglich.
 \end{answer}
-
-
 
 \question{86. Was ist ein guarded command? Warum kann die Verwendung eines solchen Konzepts gerade im
 Zusammenhang mit Nachrichtenaustausch interessant sein?}
@@ -1170,9 +976,6 @@ zu reagieren. Mit Hilfe von guarded commands können Unterscheidungen getroffen 
 if...else if....).
 Wenn mehrere Wächter zutreffen, ist die Auswahl nichtdeterministisch.
 \end{answer}
-
-
-
 
 \question{87. Wie arbeitet der Korridor-Algorithmus zum überwachen mehrerer Eingabequellen in etwa?}
 \begin{answer}
@@ -1185,9 +988,6 @@ tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wied
 begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge am Beginn seiner Runde
 entstanden sind.
 \end{answer}
-
-
-
 
 \question{88. Worin unterscheiden sich die Eigenschaften der folgenden UNIX-Mechanismen zur Interprozesskommunikation:}
 \begin{answer}
@@ -1206,18 +1006,10 @@ Datagramm-Socket: Packetübergabe, Nachrichten, beliebige Reihenfolge, u.U. unzu
 sind möglich), verbindungslos (Vergleich: Brief-/Packetzustellung)
 \end{answer}
 
-
-
-
-
-
 \question{89. Wie lassen sich die Kommunikationseigenschaften von Sockets in die generische Systemaufrufschnittstelle zum Zugriff auf Dateien einordnen?}
 \begin{answer}
 Man erzeugt sie, bekommt den Deskriptor zurück und kann auf ihnen operieren.
 \end{answer}
-
-
-
 
 \question{90. Warum kommt dem Adressierungsproblem in der Interkommunikation eine so grosse Bedeutung
 zu? in welche zwei Teile zerfällt eine Adressangabe typischerweise?}
@@ -1230,17 +1022,10 @@ Flusskontrolle, zur Adressierung und zur Netzkoppelung. Dies ist üblicherweise 
 Protokollhierachie festgelegt, TCP/IP, OSI-Schichten.
 \end{answer}
 
-
-
-
-
 \question{91. Was ist ein (Kommunikations-) Protokoll?}
 \begin{answer}
 Protokoll: Verabredung über die Art und Weise des Kommunikationsvorgangs.
 \end{answer}
-
-
-
 
 \question{92. Skizziere kurz einige typische Kommunikationsprobleme und je einen Lösungsvorschlag im Rahmen eines entsprechenden Protokolls.}
 \begin{answer}
@@ -1253,9 +1038,6 @@ den Vorgang gegebenenfalls wiederholen.
 - Empfänger liegt in einem anderen System, d.h. er arbeitet mit einem anderen Protokoll: die
 Daten müssen entsprechen umgewandelt werden.
 \end{answer}
-
-
-
 
 \question{93. Skizziere einige Eigenschaften typischer Netztopologien.}
 \begin{answer}
@@ -1284,9 +1066,6 @@ Ein allgemeines Netz ist durch die Möglichkeit bei Störungen andere Wege zu su
 Funktionsfähigkeit eine sehr Fehler tolerante Netzwerkvariante.
 \end{answer}
 
-
-
-
 \question{94. Welche besondere Bedeutung kommt dem Protokoll IP zu?}
 \begin{answer}
 Das Internet Protokoll sorgt für die Integration von Anwendungen und Medien. Es ermöglicht
@@ -1295,16 +1074,10 @@ Durch die mit IP bestehenden Möglichkeiten ist es zum wichtigsten und am weites
 Protokoll geworden.
 \end{answer}
 
-
-
-
 \question{95. Was ist ein Remote Procedure Call (RPC), und welche Parameter wird man typischerweise dabei übergeben? Was haben RPCs mit dem Client/Server-Modell zu tun?}
 \begin{answer}
 TODO
 \end{answer}
-
-
-
 
 \question{96. Nenne einige absichtliche und unabsichtliche Angriffe auf Hardware, Software und/oder Daten.}
 \begin{answer}
@@ -1326,8 +1099,6 @@ Klassifizierung:
 
 \end{answer}
 
-
-
 \question{97. Welche grundsätzlichen Sicherheitsziele kann man unterscheiden? Was ist eine Sicherheitspolitik?}
 \begin{answer}
 Eine Sicherheitspolitik soll das reibungslose Erfüllen der vom System zu erledigenden Aufgaben
@@ -1339,17 +1110,12 @@ Als grundsätzliche Sicherheitsziele können Gemeinhaltung, Unversehrtheit und V
 werden.
 \end{answer}
 
-
 \question{98. Auf welche verschiedenen Arten kann sich ein Benutzer authentifizieren?}
 \begin{answer}
 Wissen: z.B. Passwort
 Besitz: z. B. Schlüssel, Chipkarte
 Persönliche Merkmale: z.B. Fingerabdruck, Iris, Sprache
 \end{answer}
-
-
-
-
 
 \question{99. Welche Komponenten enthält eine Zugriffskontrollmatrix? Wie ordnen sich die Dateizugriffsrechte in UNIX in dieses Schema ein?}
 \begin{answer}
@@ -1358,9 +1124,6 @@ Die drei Dimensionen sind also User-Identety, Rechte und Datei.
 Die Dateizugriffsrechte in UNIX ordnen dem Besitzer einer Datei, der zugehörigen Gruppe und
 dem "Rest der Welt" Lese-, Schreib- und Ausführungsrechte zu.
 \end{answer}
-
-
-
 
 \question{100. Charakterisiere symetrische und asymetrische Verschlüsselungsverfahren. Wie können sie zur Realiesierung einer Vertraulichkeit eingesetzt werden? Warum werden häufig Mischformen eingesetzt?}
 \begin{answer}
@@ -1376,7 +1139,5 @@ um die Schlüsselübergabe so sicher als möglich zu machen, die Kommunikation s
 findet dann aber mit Hilfe der symetrischen Verschl üsselung statt um eine angemessene Geschwindigkeit
 (z.B. Videokonferenzen) zu gewährleisten.
 \end{answer}
-
-
 
 \end{document}
