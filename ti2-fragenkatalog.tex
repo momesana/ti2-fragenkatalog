@@ -7,6 +7,37 @@
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{verbatim} 
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+ 
+
+\lstset{ %
+  language=C++,                   	% the language of the code
+  basicstyle=\footnotesize\ttfamily,	% the size of the fonts that are used for the code
+  numbers=left,                   	% where to put the line-numbers
+  numberstyle=\tiny\color{gray},  	% the style that is used for the line-numbers
+  stepnumber=1,                   	% the step between two line-numbers. If it's 1, each line will be numbered
+  numbersep=5pt,                  	% how far the line-numbers are from the code
+  backgroundcolor=\color{white},  	% choose the background color. You must add \usepackage{color}
+  extendedchars=true			%
+  showspaces=false,               	% show spaces adding particular underscores
+  showstringspaces=false,        	% underline spaces within strings
+  showtabs=false,                 	% show tabs within strings adding particular underscores
+  frame=single,                   	% adds a frame around the code
+  rulecolor=\color{gray},        	% if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  tabsize=4,                      	% sets default tabsize to 2 spaces
+  captionpos=b,                   	% sets the caption-position to bottom
+  breaklines=true,                	% sets automatic line breaking
+  breakatwhitespace=false,        	% sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 	% show the filename of files included with \lstinputlisting; also try caption instead of title
+  keywordstyle=\color{blue},      	% keyword style
+  commentstyle=\color{dkgreen},		% comment style
+  stringstyle=\color{mauve},      	% string literal style
+  escapeinside={\%*}{*)},         	% if you want to add LaTeX within your code
+  morekeywords={*,...}			% if you want to add more keywords to the set
+}
+
 % Color definitions
 \definecolor{crucial}{RGB}{0,125,0} % This color marks the portions of code that are crucial (see below)
 
@@ -18,7 +49,7 @@
 
 % Answer environment
 \newenvironment	{answer}
-				{\noindent \ignorespaces \begin{addmargin}[1.5em]{0em}} % before
+				{\par \noindent \ignorespaces \begin{addmargin}[1.5em]{0em}} % before
 				{\end{addmargin} \noindent \ignorespacesafterend \\*} % after
 
 \title{Technische Informatik 2 \\ Fragenkatalog \\ WISE 2012/2013 \\[5pt] \Large{Universität Bremen}}
@@ -77,64 +108,80 @@ Ein UNIX-Dateisystem entspricht eher einem \crucial{gerichteten Graphen} als ein
 
 \question{6. Welche Zugriffsrechte kann man auf eine UNIX-Datei haben? Welche Dateiattribute steuern dies, und wie?}
 \begin{answer}
-Die Zugriffsrechte sind Lesen, Schreiben und Ausführen.
-Es können unterschiedliche Rechte für den Besitzer einer Datei, die Gruppe und den Rest
-der Welt festgelegt werden.
+Die Zugriffsrechte sind \crucial{Lesen}, \crucial{Schreiben} und \crucial{Ausführen}.
+Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest
+der Welt} (others) festgelegt werden.
 \end{answer}
 
 \question{7. Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}
 \begin{answer}
-Da unter UNIX der Zugriff auf Geräte im allgemeinen (d.h. auch auf Terminals) als Zugriff
-auf eine Datei geschieht, bietet dies den Vorteil der einheitlichen Schnittstelle. Der Benutzer
-kann auf das Terminal zugreifen wie auf eine Datei auch und muss sich daher nicht mit
-den konkreten Geräteeigenschaften auseinandersetzen.
-Es gibt Standartein- und Standartausgaben von Prozessen. Will der Benutzer andere Einbzw.
-Ausgabemöglichkeiten nutzen, kann er Ein- und Ausgaben umlenken. Beispielsweise
-können die Fehlermeldungen in eine Datei umgelenkt werden.
+Da unter \textbf{UNIX} der Zugriff auf Geräte im allgemeinen (d.h. auch auf Terminals) als Zugriff
+auf eine Datei geschieht, bietet dies den Vorteil der \crucial{einheitlichen Schnittstelle}. Der Benutzer
+kann auf das Terminal zugreifen wie auf eine Datei auch und muss sich daher nicht mit den konkreten Geräteeigenschaften auseinandersetzen. \\
+Es gibt \crucial{Standardein- und Standardausgaben von Prozessen}. Will der Benutzer andere Ein- bzw. Ausgabemöglichkeiten nutzen, kann er Ein- und Ausgaben umlenken. Beispielsweise können die Fehlermeldungen in eine Datei umgelenkt werden.
 \end{answer}
 
 \question{8. Welche Aufgabe hat ein Kommando-Interpreter (z.B. in UNIX die Shell)?}
 \begin{answer}
-Ein Kommando-Interpreter stellt die Schnittstelle zum Benutzer zur Verfügung.
+Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächtige) \crucial{Schnittstelle zum Betriebssystem} zur Verfügung.
 \end{answer}
 
 \question{9. Nenne drei Beispiele für Informationen, die der Betriebsystemkern über einen Prozess wissen muss.}
 \begin{answer}
-Prozess ID, Parent-Prozess ID, Zustand des Prozesses.
+\begin{itemize}
+\item \crucial{Prozess ID}
+\item \crucial{Parent-Prozess ID}
+\item \crucial{Zustand des Prozesses}
+\end{itemize}
+
 \end{answer}
 
 \question{10. Was ist eine Pipe?}
 \begin{answer}
-Eine Pipe ist die Umlenkung eines unidirektionalen sequentiellen Bitstroms von der Standartausgabe eines Prozesse auf die Standarteingabe eines Prozesses.
+Eine Pipe ist die \crucial{Umlenkung} eines \crucial{unidirektionalen sequentiellen Bitstroms} von der \crucial{Standardausgabe} eines Prozesses auf die \crucial{Standardeingabe} eines Prozesses.
 \end{answer}
 
 \question{11. Wie macht man ein soeben editiertes Shell-File ausführbar?}
 \begin{answer}
-Setzen des Ausführbar-Bits (x).
+\crucial{Setzen des Ausführbar-Bits} (executable bit) (x). \\
+
+%% Bash script
+\lstset{language=bash,caption={Setzen des \textbf{executable bit} für ein Shellskript \textit{shellfile.sh}}}
+\begin{lstlisting}
+chmod +x shellfile.sh
+\end{lstlisting}
+
 \end{answer}
 
-\question{12. In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung in UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}
+\question{12. In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung unter UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}
 \begin{answer}
-Der virtuelle Adressraum ist in Text, Data und Stack unterteilt. Im Text-Teil befindet siche
+Der virtuelle Adressraum ist in \crucial{Text}, \crucial{Data} und \crucial{Stack} unterteilt. Im Text-Teil befindet siche
 der eigentliche Programmcode, im Data-Teil die Daten und auf dem Stack alle temparären
 Daten (z.B. Variablen).
 \end{answer}
 
 \question{13. Wozu wird der Stack verwendet?}
 \begin{answer}
-Auf einem Stack werden die temporär anfallenden Daten eines Prozesses abgelegt. Z.B.
-lokale Variablen.
+Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen temporär anfallenden Daten eines Prozesses} abgelegt. Das umfasst unter anderem die Rücksprung-Addresse, die an die Funktion übergebenen Argumente und lokale Variablen.
 \end{answer}
 
 \question{14. Welchem Zweck dienen Bibliotheken (Libraries)?}
 \begin{answer}
-Bibliotheken stellen Funktionen zur Verfügung. Durch das Vorhandensein von Bibliotheken
-muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
+Bibliotheken \crucial{stellen Funktionen zur Verfügung}. Durch das Vorhandensein von Bibliotheken muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
+
+\paragraph{Laut Wikipedia:}
+Eine Programmbibliothek bezeichnet in der Programmierung eine Sammlung von Softwaremodulen, die Lösungswege für thematisch zusammengehörende Problemstellungen anbieten. Bibliotheken sind im Unterschied zu Programmen keine eigenständig lauffähigen Einheiten, sondern Hilfsmodule, die von Programmen angefordert werden.
 \end{answer}
 
-\question{Welche Aufgabe erfüllt ein Linker?}
+\question{15. Welche Aufgabe erfüllt ein Linker?}
 \begin{answer}
-Ein Linker fügt die relativen Adressen beim compilieren in die Objektfiles ein.
+Ein Linker oder Binder verbindet einzelne Programmmodule zu einem ausführbaren Programm. Im Zuge dessen werden die Symbole in den Objectfiles aufgelöst. Man unterscheidet zwischen statisches und dynamisches Linken. Man unterscheidet dabei zwischen \crucial{statisches und dynamisches Linken}.
+
+\paragraph*{Statisches Linken:}
+Die Symbole schon während des Zusammenstellens der Programmdatei aufgelöst
+
+\paragraph*{Dynamisches Linken:}
+Das Auflösen der Symbole erfolgt erst bei der tatsächlichen Ausführung des Programms.
 \end{answer}
 
 \question{16. Wozu wird beim Assemblieren eine Symboltabelle angelegt?}
