@@ -1,0 +1,478 @@
+\section{Nebenläufigkeit}
+
+\subsection{\question{Erkläre den Begriff ,,Nebenläufigkeit''. Welchen Zweck haben Petri-Netze in diesem Kontext?}}
+\begin{answer}
+engl. concurrency
+
+Nebenläufigkeit entsteht, wenn mehrere Ereignisse in keiner kausalen Beziehung zueinander stehen, sich also nicht beeinflussen. Aktionen können nur dann nebenläufig ausgeführt werden (sie sind parallelisierbar), wenn keine das Resultat der anderen benötigt.
+
+Eine Modellierungssprache, die diese Abhängigkeiten wiedergibt, sind Petri-Netze.
+\end{answer}
+
+\subsection{\question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}}
+\begin{answer}
+Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es
+kann hier zu Verklemmungen, dem After-you-after-you Problem und dem Verhungern kommen.
+Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der gegenseitige Ausschluss
+nicht gewährleistet ist.
+\end{answer}
+
+\subsection{\question{Was sind kritische Abschnitte? Wo kommen sie vor?}}
+\begin{answer}
+Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
+\end{answer}
+
+\subsection{\question{Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}}
+\begin{answer}
+Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das
+Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
+\end{answer}
+
+\subsection{\question{Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt?}}
+\begin{answer}
+a) Erzeuger/Verbraucher (Producer/Consumer)
+b) Leser/Schreiber (Reader/Writer)
+c) Speisende Philosophen (Dining Philosophers)?
+\end{answer}
+
+\subsection{\question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}}
+\begin{answer}
+TODO 
+\end{answer}
+
+\subsection{\question{Was besagt Prämemtion?}}
+\begin{answer}
+Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse zugunsten anderer.
+\end{answer}
+
+\subsection{\question{Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}}
+\begin{answer}
+Ein Prozess hat einen eigenen Adressraum und ist somit stark abgeschottet gegenüber anderen
+Prozessen. Prozesse können aus anderen Prozessen erzeugt werden und arbeiten trotzdem weiter,
+wenn der Vater-Prozess terminiert ist. Prozesse sind eigenständig.
+Threads sind mehrere Kontrollfäden in einer Hülle, nämlich dem Prozess, aus dem sie aufgerufen
+wurden. Threads haben zwar einen eigenen Ausführungszustand (PC,Stack) dafür aber eine
+gemeinsame Umgebung (Adressraum, offenen Dateien, gemeinsame Datenstrukturen). Hier kann
+es zu kritischen Abschnitten kommen. Eine Synchronisation ist erforderlich. Einem Thread muss
+Arbeit (eine Prozedur) zugewiesen werden. Ein Thread ist beendet, wenn die Umgebung, der Prozess
+terminiert. Ein Thread ist also von der Umgebung abhängig.
+Ein Problem ist, dass der Betriebssystemkern nichts vom Erzeugen der Threads erfährt, es ist also
+keine "echte Nebenläufigkeit" gegeben.
+Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt die Grundlage
+für das Scheduling dar.
+\end{answer}
+
+\subsection{\question{Die Routinen pthread create(), pthread join(), pthread exit() realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (wait(), fork() und exit()). Warum arbeitet pthread create() deutlich anders als fork()?}}
+\begin{answer}
+thr create() / fork()
+thr create():
+Thread wird Prozedur zugewiesen, hat eigen Ausführungszustand (PC,Stack)
+fork():
+erstellt eine Kopie des Adressraumes. Kind kann weiterarbeiten nachdem der Vater bereits terminierte.
+thr join() / wait()
+thr join():
+sammelt Thread ein wenn er beendet ist. Bei Prozessende werden eventuell nichtabgeschlossene
+Threads beendet.
+wait():
+wartet auf die Terminierung eines Prozesses. Welcher Prozess kann über die Prozess-ID abgefragt
+werden.
+thr exit() / exit()
+thr exit():
+zum vorzeitigen Beenden von Threads
+exit():
+zum vorzeitigen Beenden von Prozessen
+thr create erzeugt in einer gemeinsamen Umgebung einen eigenen Ausführungszustand. Dazu muss
+beim Erzeugen unter anderem auch eine Stack-Info erstellt werden. Mit Threads ist es möglich,
+von einem Programmfaden in mehrere überzugehen. fork() ist dagegen so ausgelegt, dass ein
+eigenständiger Prozess erzeugt wird. Dieser wird auch vom Scheduler berücksichtigt, da er dem
+Betriebsystemkern bekannt ist.
+\end{answer}
+
+\subsection{\question{Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}}
+\begin{answer}
+TODO
+\end{answer}
+
+\subsection{\question{Was ist der Unterbrechungsauschluss?}}
+\begin{answer}
+Beim Unterbrechungsausschluss werden alle Unterbrechungen auf Systemebene für den kritischen Abschnitt augeschaltet:
+
+\begin{verbatim}
+disable_interrupts(); (entspricht lock())
+... kritischer Abschnitt ...
+enable_interrupts(); (entspricht unlock())
+\end{verbatim}
+
+Damit sind keine Unterbrechungen möglich, folglich auch kein ,,Prozesswechsel''. Ebenso kann sich nur ein Prozess gleichzeitig im kritischen Abschnitt befinden.
+
+Problem hierbei ist, dass Interrupts zeitkritisch sind und somit die Gefahr besteht, dass relevante Interrupts nie verarbeitet werden. Ebenso funktioniert der Unterbrechungsauschluss nur bei Einprozessorsystemen. Im User-Mode ist der Unterbrechungsauschluss gar nicht möglich.
+
+In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnitt gar nicht betreten.
+\end{answer}
+
+\subsection{\question{Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}}
+\begin{answer}
+Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
+Datenstruktur oder auf ein Betriebssystemmittel zugegriffen wird. Kritische Abschnitte
+müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder
+kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine "Schlossvariable"
+realisiert wied. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean
+TRUE). Andere Programmabläufe müssen nun den Status der Schlossvariablen nachfragen,
+um zu erfahren, ob der kritische Abschnitt frei ist oder nicht.
+Möglichkeiten, den gegenseitigen Ausschluss zu gewährleisten:
+- eigene Absicht anmelden, dann überprüfen ob anderer auch will. Jeder Programmablauf benötigt
+eine eigene Schlossvariable. Sobald einmal die Absicht einzutreten erklärt wurde, ist der kritische
+10
+Abschnitt gesperrt. Der gegenseitige Ausschluss ist somit gewährleistet.
+Problem: Wenn zwei Programmabläufe nebenläufig die Absicht anmelden, können beide Abläufe
+in einer Endlosschleife hängenbleiben, weil sie darauf warten, dass der andere den kritischen Abschnitt
+freigibt.
+- Unterbrechungen ausschalten. Andere Programmabläufe können nun nicht mehr einen anderen
+unterbrechen, wenn sich dieser im kritischen Abschnitt befindet.
+- andere Prozesse blockieren>: hier werden andere programmabläufe einfach blockiert, egal ob sie
+nun auf kritische Abschnitte zugreifen können oder nicht.
+- wenn trotdem andere prozesse während eines kritischen Abschnitts zugelassen werden sollen,
+dann müssen wie oben mechanismen gefunden werden, um den kritischen Abschnitt zu schützen.
+Gegenseitiger Ausschluss durch Unterbrechungsausschltung funktioniert nur bei Einprozessorsystemen.
+Wenn ein Prozess sich in einem kritisdchen Abschnitt befindet, und nicht selbst wieder
+herauskommt (z.B. Endlosschleife), wäre es nicht sinnvoll, hier die Unterbrechung auszuschalten.
+\end{answer}
+
+\subsection{\question{Nach welchen Kriterien wird Korrektheit bzw. Güte von Locking-Algorithmen bewertet? Wie geht man dabei vor?}}
+\begin{answer}
+Der Zugriff auf Schlossvariablen darf nicht selbst in einem kritischen Abschnitt liegen. Locking-Algorithmen sollten verklemmungsfrei arbeiten.
+\end{answer}
+
+\subsection{\question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von unteilbaren Operationen durchführen?}}
+\begin{answer}
+Nur unteilbare Operationen sind nicht unterbrechbar.
+Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-
+Ausführung. Wenn man ein Programm auf Maschinen-Code runterbricht, kann man sehr gut
+erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Prozesswechsel,
+erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher
+genau analysieren und Anfang und Ende festlegen.
+\end{answer}
+
+\subsection{\question{Auf welche verschiedenen Arten kann man Verklemmungen angehen? Wie arbeitet der Bankiersalgorithmus?}}
+\begin{answer}
+Ein Deadlock liegt an wenn z.B. zwei oder mehrere Prozesse auf Betriebsmittel warten, die nur
+von anderen freigegeben werden kann, es aber nicht mehr zu der Freigabe kommen wird.
+Möglickeiten:
+- Deadlock ignorieren, wenn er nur selten auftreten kann, da eine Lösung unter Umständen zu
+teuer ist.
+- Deadlock durch Untersuchung des Betriebsmittelgraphen entdecken und Deadlock durch Zwangsentfernen
+eines Prozesses beheben.
+- Deadlock verhindern durch das erkennen der Randbedingung, die zum Deadlock führt:
+- Exklusivität (Spooling)
+- alles auf einmal anfordern (aber: Verschwendung von Ressurcen!)
+- Zwangsentzug
+Zyklus verhindern (Betriebsmittel nach aufsteigender Nummer anfordern und belegen), dies führt
+zu einer Einschränkung der Prozesse.
+- Deadlocks vermeiden: Bankiersalgorithmus.
+Der Bankiersalgorithmus:
+Die Idee ist, dass die maximale Anforderung von Betriebsmitteln im voraus bekannt ist. Belegung
+wird nur dann gewährt, wenn das System dadurch nicht in einen Zustand gelangt, der zu einem
+Deadlock führen kann. Diesem Verfahren liegt das Modell eines Bankiers zugrunde, der mit Kunden
+einen Kreditrahmen aushandelt, der nach und nach eingelöst werden kann, aber die Grenzen der
+leistungsfähigkeit nicht sprengt.
+\end{answer}
+
+\subsection{\question{Wie kann man eine einseitige Synchronisation mit Hilfe von wait() und signal() vornehmen? Wie kann man diese Primitiven in etwa auf lock() und unlock() abbilden?}}
+\begin{answer}
+TODO
+\end{answer}
+
+\subsection{\question{Grenze die Begriffe aktives und blockierendes Warten voneinander ab.}}
+\begin{answer}
+Beim aktiven Warten wird ständig die Schlüsselvariable eines kritischen Abschnitts überprüf, ob sieser nun frei geworden ist oder nicht. Durch das ständige Abfragen wird unter Unständen unnötig CPU-Zeit in Anspruch genommen.
+Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der kritische Abschnitt
+
+nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein
+wakeup() aus, um die schlafenden Prozesse zu wecken.
+\end{answer}
+
+\subsection{\question{Was ist ein Spinlock?}}
+\begin{answer}
+Ein Spinlock ist aktives Warten im Programm selber.
+\end{answer}
+
+\subsection{\question{Was ist aktives Warten?}}
+\begin{answer}
+Aktives Warten ist das Verharren in einer Schleife, bis der kritische Abschnitt wieder frei ist: Spinlocks
+
+Nachteil: Verbrauchen unnötig Prozessorkapazität durch permanente Abfragen (bis Zeitscheibe aufgebraucht)
+
+\begin{verbatim}
+    Gemeinsam von A und B genutzte Variable: lock
+    Interpretation des Werts:                0 gesperrt, ungleich 0 offen 
+    Initialisierung:                         lock = 0
+           
+    Prozess A                    Prozess B
+       ...                          ...
+       solange (lock == 0) {        ...
+          ;                         lock = 1;
+       }                            ...
+       Aktion a                     ...
+\end{verbatim}
+\end{answer}
+
+\subsection{\question{Was ist blockierendes Warten?}}
+\begin{answer}
+Beim blockierenden Warten legt sich der Prozess schlafen, wenn der kritische Abschnitt gerade nicht frei ist (sleep()).
+
+Bei Verlassen des kritischen Abschnitts werden darauf wartende Prozesse aufgeweckt (wakeup()).
+
+Interrupthandler sind zeitkritisch und haben keinen eigenen Prozesskontext, können sich also nicht schlafenlegen und können zur mehrseitigen Synchronisation kein blockierendes Warten verwenden.
+\end{answer}
+
+\subsection{\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?}}
+\begin{answer}
+Die gemeinsame Datenstruktur ist hier die Sleep-Queue. Wenn sich ein schlafender Prozess von
+einm Spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die
+Sleep-Queue nicht freigegeben hat.
+
+Als Lösung wird eine Variante von sleep() eingeführt: sleepl().
+sleepl() gibt die Sleep-Queue wieder frei (gibt den Spinlock wieder ab), bevor die CPU abgegeben wird (vorm Schlafenlegen).
+
+Tim: Was ist mit der Prozesstabelle? Laut Tutorium ist diese ebenfalls relevant.
+\end{answer}
+
+\subsection{\question{Was sind Semaphore?}}
+\begin{answer}
+P() / V()
+
+P(): blockieren [wait, acquire oder down]; counter-- \\
+V(): entblockieren [signal, release, post oder up]; counter++
+
+auch; ,,counting semaphore''
+
+Zähler $>= 0$ bei Eintritt in kritischen Bereich inkrementiert, dekrementiert bei Austritt. Bei Zähler $= 0$ warten.
+
+P()/V() ist nicht an Blockstrukturen gebunden. \\
+P()/V() ist nicht immer regelmäßig geschachtelt.
+\end{answer}
+
+\subsection{\question{Welche zusätzlichen Eigenschaften zeichnen Semaphoren gegenüber blockierenden Locks aus?}}
+\begin{answer}
+\begin{itemize}
+
+  \item Semaphore ist FIFO-Queue, ist also fair.
+
+  \item Semaphore: Anzahl der Zugriffe können begrenzt werden (<-> blockierendes Warten alle).
+
+  \item Blockierendes Warten ist unabhängig.
+
+  \item Synchronisation der Betriebsmittelverwaltung.
+\end{itemize}
+
+Es gibt zwei zusätzliche Erweiterungen bei einer Semaphore:
+
+\begin{itemize}
+
+  \item Im Wartefall wird der Pozess in eine FIFO-Queue eingereiht, das heißt, die Prozesse werden nach Ankunftsreihenfolge beim kritischen Abschnitt abgearbeitet.
+
+  \item Semaphore-Counting, das heisst die Semaphore enthält einen Counter, durch den die Semaphore erst blockiert, wenn dich n Prozesse im kritischen Abschnitt befinden. Eine Semaphore wird mit $n$ vorinitialisiert.
+
+\end{itemize}
+\end{answer}
+
+\subsection{\question{Was sind Monitore?}}
+\begin{answer}
+\begin{verbatim}
+  public synchronized void einzahlen(int betrag) {
+  .. ändere Konto ..
+  }
+\end{verbatim}
+
+Schutz erfolgt nur gegenüber anderen Methoden der Klasse, die ebenfalls synchronized sind, und kritischen Abschnitten, die sich über das Objekt synchronisieren.
+\end{answer}
+
+\subsection{\question{Was sind Mutexes?}}
+\begin{answer}
+kurz für: mutual exclusion
+
+Erlauben den gegenseitigen Ausschluss.
+
+\begin{verbatim}
+  IrgendeineKlasse myObj = new IrgendeineKlasse();
+  synchronized (myObj) {
+  .. kritischer Abschnitt ..
+  }
+\end{verbatim}
+
+äquivalent zu:
+
+\begin{verbatim}
+  Mutex myObj;
+  myObj.lock();
+  .. kritischer Abschnitt ..
+  myObj.unlock();
+\end{verbatim}
+
+Signale/Ereignisse: myObj.wait()/myObj.notify()
+\end{answer}
+
+
+
+\subsection{\question{Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}}
+\begin{answer}
+
+\begin{itemize}
+
+  \item einseitige: Erzeuger-Verbraucher-Prinzip \\
+    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird bloockiert und gewartet bis V() kommt.
+
+    P1: .. X Daten produzieren .. (kritischer Abschnitt); S.V <- Producer-Thread \\
+    P2: S.P; .. Daten X verarbeiten .. (kritischer Abschnitt) <- Verbraucher-Thread
+
+    S = Sempaphor
+
+  \item mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit zwei Semaphoren.
+
+      P1: S.P; kritischer Abschnitt 1; S.V \\
+      P2: S.P; kritischer Abschnitt 2; S.V
+
+\end{itemize}
+\end{answer}
+
+\subsection{\question{Was sind die speisenden Philosophen?}}
+\begin{answer}
+Die Philosophen sitzen am Tisch und denken über philosophische Probleme nach. Wenn einer hungrig wird, greift er zuerst die Gabel links von seinem Teller, dann die auf der rechten Seite und beginnt zu essen. Wenn er satt ist, legt er die Gabeln wieder zurück und beginnt wieder zu denken. Sollte eine Gabel nicht an ihrem Platz liegen, wenn der Philosoph sie aufnehmen möchte, so wartet er, bis die Gabel wieder verfügbar ist.
+
+Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wunderbar. Es kann aber passieren, dass sich alle fünf Philosophen gleichzeitig entschließen, zu essen. Sie ergreifen also alle gleichzeitig ihre linke Gabel und nehmen damit dem jeweils links von ihnen sitzenden Kollegen seine rechte Gabel weg. Nun warten alle fünf darauf, dass die rechte Gabel wieder auftaucht. Das passiert aber nicht, da keiner der fünf seine linke Gabel zurücklegt. Die Philosophen verhungern.
+\end{answer}
+
+\subsection{\question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}}
+\begin{answer}
+Fünf Philosophen sitzen an einem Tisch mit fünf Tellern Reis. Zwischen jedem der Teller befindet
+sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder
+Philosoph zwei Stäbchen zum Essen benötigt, es können also nicht alle Philosophen gleichzeitig
+essen. Nur für zwei gleichzeitig speisende Philosophen sind ausreichend Stäbchen vorhanden.
+Jedes Stäbchen ist ein kritischer Abschnitt. Es kommt aber zu Verklemmungen, wenn jeder Philosoph
+z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
+Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer Paare schützen.
+\end{answer}
+
+\subsection{\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen muüsste man
+ergreifen?}}
+\begin{answer}
+Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben,
+da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme
+muss der Abschnitt also wieder freigegeben werden.
+\end{answer}
+
+\subsection{\question{Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}}
+\begin{answer}
+Duch das Einreihen der Prozesse in eine FIFO-Queue kommt es zu einer festen Reihenfolge bei
+der Abarbeitung. Es kann hier zu Konvois kommen. Weiterhin kann es zu unnötig wielen Prozesswechseln
+kommen, wen die Prozesse aus der FIFO-Queue entnommen werden, prüfen ob sie den
+kritischen Abschnitt betreten können und wieder eingereiht werden.
+Zu donnernden Herden kann es kommen, wenn man das Semaphore-Counting benutzt. Alle Prozesse,
+die beim Eintreten in den kritischen Abschnitt schlafen gelegt wurden, warten praktisch
+auf eine Veränderung des Counters. Wenn nun ein anderer Prozess den kritischen Abschnitt frei
+gibet, indem er ein V() ausführt, werden alle wartenden Prozesse geweckt und donnern los. Es
+kommt aber nur einer in den kritischen Abschnitt hinein.
+\end{answer}
+
+\subsection{\question{Was ist ein Monitor? Unter welchen Bedingungen wird ein Monitor betreten bzw. wieder verlassen?}}
+\begin{answer}
+Ein Monitor ist ein ADT (Abstrakter Datentyp), also mit Daten und Operationen auf diesen
+Daten. Die Zugriffsoperationen sind implizit gegen nebenläufigen Zugriff geschützt. Das heisst,
+der Programmierer muss sich keinen Gedanken mehr um den Schutz von kritischen Abschnitten
+
+innerhalb des Programmes zu machen, da der Nenbenläufigkeitsschutz im Monitor bereits implementiert
+ist. Vorteil dieser Lösung ist, dass eventuelles Vergessen von Schutzanweisungen nicht
+mehr möglich ist.
+Ein Monitor wird betreten, wenn von einer Prozedur des Programms eine entsprechende Monitorfunktion
+aufgerufen wird. Verlassen wird er, wenn er warten muss (wait()) oder wenn er fertig
+ist.
+\end{answer}
+
+\subsection{\question{Aus welchen Komponenten besteht ein Petrinetz (mit Marken)?Was kann man damit beschreiben?}}
+\begin{answer}
+Ein Petrinetz ist ein gerichteter Graph, der aus Zuständen (Stellen) und Zustandübergängen
+(Transistionen) besteht. Mit Marken (Tokens) ist der aktuelle Ausführungszustand beschreibbar.
+Mit einem Petrinetz kann man grafisch die Synchronisationszusammenhänge darstellen.
+\end{answer}
+
+\subsection{\question{Wie kann man durch ein Petrinetz typische Sznchronisationsvorschriften ausdrücken?}}
+\begin{answer}
+a) Sequenz
+b) beschränkte Nebenläufigkeit
+c) Unabhängigkeit?
+Bei einer Sequenz a, b gibt es die Transistionen a und b, die jeweils eine Ein- und Ausgangsstelle
+haben. Die Ausgangsstelle von a ist allerdings die Eingangsstelle von b.
+Die beschränkte nebenläufigkeit kann man darstellen, indem man Token verwendet, um die Anzahl
+der möglichen Prozesse/Threads anzuzeigen.
+Bei Unabhängigkeit können zwei Prozesse beliebig oft und in beliebiger Reihenfolge gestartet
+werden und somit unabhängig nebenläufig laufen.
+\end{answer}
+
+\subsection{\question{Was kennzeichnet lebendige bzw. todesgefährdete Petrinetze?}}
+\begin{answer}
+Bei lebendigen Petrinetzen gibt es immer Transistionen, egal welche Ausführungsreihenfolge stattgefunden
+hat..
+Bei todesgefährdeten Petrinetzen kann es nach einer Transistion zu einem Zustand kommen, von
+dem aus keine Transistionen mehr ausgeführt werden kann.
+\end{answer}
+
+\subsection{\question{Was wird durch einen Pfadausdruck beschrieben? Welche Operatoren werden dazu vorgesehen? Was ist ihre Semantik?}}
+\begin{answer}
+Mit einem Pfadausdruck kann man Angaben über mögliche Nebenläufigkeit von Zugriffsoperationen
+eines ADTs machen.
+Operator : : (Beschränkte) Nebenläufigkeit
+Operator + : Alternative "Entweder ... oder ..."
+Operator ; : Sequenz "Erst ..., dann ..."
+Operator | : Unabhängikeit von Prozessen
+\end{answer}
+
+\subsection{\question{Welche Vorteile bieten Pfadausdrücke zur Steuerung von Nebenläufigkeit im Vergleich zu Semaphoren bzw. Monitore?}}
+\begin{answer}
+Vorteil ist die korrekte Definition dessen, was erlaubt ist oder was nicht erlaubt ist. Unterschied
+\end{answer}
+
+\subsection{\question{Was ist der Unterschied zwischen offenen und geschlossenen Pfadausdrücken?}}
+\begin{answer}
+Geschlossenen Pfadausdrücke: alle erlaubten Ausführungsreihenfolgen von Operationen eines synchronisierten
+Datentyps (ADT mit expliziter Synchronisationsvorschrift) sind zu spezifizieren. Das
+heisst alles davon abweichende ist verboten.
+Offene Pfadausdrücke: alle Einschränkungen von Ausführungsreihenfolgen sind im Pfadausdruck
+zu spezifizieren. Das heisst alles andere ist erlaubt.
+\end{answer}
+
+\subsection{\question{Wie würde man das klassische Reader-/Writer-Problem als Pfadausdruck formulieren?}}
+\begin{answer}
+Beim Reader-/Writer-Problem sollen beliebig viele Leser, aber kein Schreiber zugelassen werden,
+oder ein Schreiber ohne Leser. Damit werden inkonsistente Ergebnisse verhindert.
+Als Pfadausdruck: leser+writer
+\end{answer}
+
+\subsection{\question{Was versteht man unter synchronem bzw. asynchronem Nachrichtenaustausch? Inwiefern sind diese beiden Kommunikationsformen aufeinander abbildbar?}}
+\begin{answer}
+Bei synchronem Datenaustausch warten Sender und Empfänger aufeinander. Das heist, send()
+und recieve() wirken blockierend aufeinander. Der Empfänger muss bereit sein, die Nachricht aufzunehmen.
+Bei asynchronem Datenaustausch muss der Empfänger nicht unbedingt empfangsbereit sein, damit
+der Sender senden kann. Die Nachricht muss dazu aber in einem Puffer innerhalb des Kommunikationskanals
+festgehalten werden. Wenn dieser Puffer zu klein ist, muss der Sender blockiert
+werden, da es sonst zu einem Pufferüberlauf (Bufferover
+ow) kommt.
+Synchrone Kommunikation kann durch asychrone Operationen vorgenommen werden, d.h. der
+Sender wartet nach dem senden auf die Bestätigung des Empfängers.
+Asynchrone Kommunikation kann durch sychrone Operationen vorgenommen werden. Dazu muss
+ein Pufferprozess eingeführt werden.
+\end{answer}
+
+\subsection{\question{Wie kann man die Sychronisationseigenschaften von synchronem bzw. asynchronem Nachrichtenaustausch mit Semaphoren modellieren?}}
+\begin{answer}
+Sema1(0);
+Sema2(0);
+Synchron:
+A B
+send(); s1.P();
+s1.V(); recieve();
+s2.P(); s2.V();
+Asynchron:
+A B
+send(); s1.P();
+s1.V(); recieve();
+\end{answer}
