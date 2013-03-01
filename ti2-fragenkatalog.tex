@@ -58,7 +58,7 @@
 
 \sectionfont{\normalsize} % We change the sections to have a slightly smaller size
 
-\title{Technische Informatik 2 \\ Fragenkatalog \\ WISE 2012/2013 \\[5pt] \Large{Universität Bremen}}
+\title{Technische Informatik 2 \\ Fragenkatalog \\ WiSe 2012/2013 \\[5pt] \Large{Universität Bremen}}
 \date{\today}
 
 \begin{document}
@@ -683,12 +683,26 @@ an den Prozess weiterzugeben. Weitere Beispiele hierfür sind die Flusskontrolle
 Ausgabe) oder Strg-q (weiter) oder Signale wie Strg-c (stoppt den Prozess mit SIGINT).
 \end{answer}
 
+\section{\question{Erkläre den Begriff ,,Nebenläufigkeit''. Welchen Zweck haben Petri-Netze in diesem Kontext?}}
+\begin{answer}
+engl. concurrency
+
+Nebenläufigkeit entsteht, wenn mehrere Ereignisse in keiner kausalen Beziehung zueinander stehen, sich also nicht beeinflussen. Aktionen können nur dann nebenläufig ausgeführt werden (sie sind parallelisierbar), wenn keine das Resultat der anderen benötigt.
+
+Eine Modellierungssprache, die diese Abhängigkeiten wiedergibt, sind Petri-Netze.
+\end{answer}
+
 \section{\question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}}
 \begin{answer}
 Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es
 kann hier zu Verklemmungen, dem After-you-after-you Problem und dem Verhungern kommen.
 Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der gegenseitige Ausschluss
 nicht gewährleistet ist.
+\end{answer}
+
+\section{\question{Was sind kritische Abschnitte? Wo kommen sie vor?}}
+\begin{answer}
+Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
 \end{answer}
 
 \section{\question{Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}}
@@ -707,6 +721,11 @@ c) Speisende Philosophen (Dining Philosophers)?
 \section{\question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}}
 \begin{answer}
 TODO 
+\end{answer}
+
+\section{\question{Was besagt Prämemtion?}}
+\begin{answer}
+Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse zugunsten anderer.
 \end{answer}
 
 \section{\question{Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}}
@@ -755,6 +774,23 @@ Betriebsystemkern bekannt ist.
 \section{\question{Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}}
 \begin{answer}
 TODO
+\end{answer}
+
+\section{\question{Was ist der Unterbrechungsauschluss?}}
+\begin{answer}
+Beim Unterbrechungsausschluss werden alle Unterbrechungen auf Systemebene für den kritischen Abschnitt augeschaltet:
+
+\begin{verbatim}
+disable_interrupts(); (entspricht lock())
+... kritischer Abschnitt ...
+enable_interrupts(); (entspricht unlock())
+\end{verbatim}
+
+Damit sind keine Unterbrechungen möglich, folglich auch kein ,,Prozesswechsel''. Ebenso kann sich nur ein Prozess gleichzeitig im kritischen Abschnitt befinden.
+
+Problem hierbei ist, dass Interrupts zeitkritisch sind und somit die Gefahr besteht, dass relevante Interrupts nie verarbeitet werden. Ebenso funktioniert der Unterbrechungsauschluss nur bei Einprozessorsystemen. Im User-Mode ist der Unterbrechungsauschluss gar nicht möglich.
+
+In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnitt gar nicht betreten.
 \end{answer}
 
 \section{\question{Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}}
@@ -838,37 +874,158 @@ nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, 
 wakeup() aus, um die schlafenden Prozesse zu wecken.
 \end{answer}
 
-\section{\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen.}}
+\section{\question{Was ist ein Spinlock?}}
 \begin{answer}
-Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass
-man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?
+Ein Spinlock ist aktives Warten im Programm selber.
+\end{answer}
+
+\section{\question{Was ist aktives Warten?}}
+\begin{answer}
+Aktives Warten ist das Verharren in einer Schleife, bis der kritische Abschnitt wieder frei ist: Spinlocks
+
+Nachteil: Verbrauchen unnötig Prozessorkapazität durch permanente Abfragen (bis Zeitscheibe aufgebraucht)
+
+\begin{verbatim}
+    Gemeinsam von A und B genutzte Variable: lock
+    Interpretation des Werts:                0 gesperrt, ungleich 0 offen 
+    Initialisierung:                         lock = 0
+           
+    Prozess A                    Prozess B
+       ...                          ...
+       solange (lock == 0) {        ...
+          ;                         lock = 1;
+       }                            ...
+       Aktion a                     ...
+\end{verbatim}
+\end{answer}
+
+\section{\question{Was ist blockierendes Warten?}}
+\begin{answer}
+Beim blockierenden Warten legt sich der Prozess schlafen, wenn der kritische Abschnitt gerade nicht frei ist (sleep()).
+
+Bei Verlassen des kritischen Abschnitts werden darauf wartende Prozesse aufgeweckt (wakeup()).
+
+Interrupthandler sind zeitkritisch und haben keinen eigenen Prozesskontext, können sich also nicht schlafenlegen und können zur mehrseitigen Synchronisation kein blockierendes Warten verwenden.
+\end{answer}
+
+\section{\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?}}
+\begin{answer}
 Die gemeinsame Datenstruktur ist hier die Sleep-Queue. Wenn sich ein schlafender Prozess von
-einm spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die
-Sleep-Queue nicht freigegeben hat. Als Lösung wird eine Variante von sleep() eingeführt: sleepl().
-sleepl() gibt die Sleep-Queue wieder frei, bevor die CPU abgegeben wird.
+einm Spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die
+Sleep-Queue nicht freigegeben hat.
+
+Als Lösung wird eine Variante von sleep() eingeführt: sleepl().
+sleepl() gibt die Sleep-Queue wieder frei (gibt den Spinlock wieder ab), bevor die CPU abgegeben wird (vorm Schlafenlegen).
+
+Tim: Was ist mit der Prozesstabelle? Laut Tutorium ist diese ebenfalls relevant.
+\end{answer}
+
+\section{\question{Was sind Semaphore?}}
+\begin{answer}
+P() / V()
+
+P(): blockieren [wait, acquire oder down]; counter-- \\
+V(): entblockieren [signal, release, post oder up]; counter++
+
+auch; ,,counting semaphore''
+
+Zähler $>= 0$ bei Eintritt in kritischen Bereich inkrementiert, dekrementiert bei Austritt. Bei Zähler $= 0$ warten.
+
+P()/V() ist nicht an Blockstrukturen gebunden. \\
+P()/V() ist nicht immer regelmäßig geschachtelt.
 \end{answer}
 
 \section{\question{Welche zusätzlichen Eigenschaften zeichnen Semaphoren gegenüber blockierenden Locks aus?}}
 \begin{answer}
+\begin{itemize}
+
+  \item Semaphore ist FIFO-Queue, ist also fair.
+
+  \item Semaphore: Anzahl der Zugriffe können begrenzt werden (<-> blockierendes Warten alle).
+
+  \item Blockierendes Warten ist unabhängig.
+
+  \item Synchronisation der Betriebsmittelverwaltung.
+\end{itemize}
+
 Es gibt zwei zusätzliche Erweiterungen bei einer Semaphore:
-- Im Wartefall wird der Pozess in eine FIFO-Queue eingereiht, das heisst die Prozesse werden nach
-Ankunftsreihenfolge beim kritischen Abschnitt abgearbeitet.
-- Semaphore-Counting, das heisst die Semaphore enthält einen Counter, durch den die Semaphore
-erst blockiert, wenn dich n Prozesse im kritischen Abschnitt befinden. Eine Semaphore wird mit
-n vorinitialisiert.
+
+\begin{itemize}
+
+  \item Im Wartefall wird der Pozess in eine FIFO-Queue eingereiht, das heißt, die Prozesse werden nach Ankunftsreihenfolge beim kritischen Abschnitt abgearbeitet.
+
+  \item Semaphore-Counting, das heisst die Semaphore enthält einen Counter, durch den die Semaphore erst blockiert, wenn dich n Prozesse im kritischen Abschnitt befinden. Eine Semaphore wird mit $n$ vorinitialisiert.
+
+\end{itemize}
 \end{answer}
+
+\section{\question{Was sind Monitore?}}
+\begin{answer}
+\begin{verbatim}
+  public synchronized void einzahlen(int betrag) {
+  .. ändere Konto ..
+  }
+\end{verbatim}
+
+Schutz erfolgt nur gegenüber anderen Methoden der Klasse, die ebenfalls synchronized sind, und kritischen Abschnitten, die sich über das Objekt synchronisieren.
+\end{answer}
+
+\section{\question{Was sind Mutexes?}}
+\begin{answer}
+kurz für: mutual exclusion
+
+Erlauben den gegenseitigen Ausschluss.
+
+\begin{verbatim}
+  IrgendeineKlasse myObj = new IrgendeineKlasse();
+  synchronized (myObj) {
+  .. kritischer Abschnitt ..
+  }
+\end{verbatim}
+
+äquivalent zu:
+
+\begin{verbatim}
+  Mutex myObj;
+  myObj.lock();
+  .. kritischer Abschnitt ..
+  myObj.unlock();
+\end{verbatim}
+
+Signale/Ereignisse: myObj.wait()/myObj.notify()
+\end{answer}
+
+
 
 \section{\question{Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}}
 \begin{answer}
-- einseitige: Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas
-ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss
-vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein
-V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen,
-so wird bloockiert und gewartet bis V() kommt.
-- mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit zwei Semaphoren.
+
+\begin{itemize}
+
+  \item einseitige: Erzeuger-Verbraucher-Prinzip \\
+    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird bloockiert und gewartet bis V() kommt.
+
+    P1: .. X Daten produzieren .. (kritischer Abschnitt); S.V <- Producer-Thread \\
+    P2: S.P; .. Daten X verarbeiten .. (kritischer Abschnitt) <- Verbraucher-Thread
+
+    S = Sempaphor
+
+  \item mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit zwei Semaphoren.
+
+      P1: S.P; kritischer Abschnitt 1; S.V \\
+      P2: S.P; kritischer Abschnitt 2; S.V
+
+\end{itemize}
 \end{answer}
 
-\section{\question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache "Implementierung" laufen?}}
+\section{\question{Was sind die speisenden Philosophen?}}
+\begin{answer}
+Die Philosophen sitzen am Tisch und denken über philosophische Probleme nach. Wenn einer hungrig wird, greift er zuerst die Gabel links von seinem Teller, dann die auf der rechten Seite und beginnt zu essen. Wenn er satt ist, legt er die Gabeln wieder zurück und beginnt wieder zu denken. Sollte eine Gabel nicht an ihrem Platz liegen, wenn der Philosoph sie aufnehmen möchte, so wartet er, bis die Gabel wieder verfügbar ist.
+
+Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wunderbar. Es kann aber passieren, dass sich alle fünf Philosophen gleichzeitig entschließen, zu essen. Sie ergreifen also alle gleichzeitig ihre linke Gabel und nehmen damit dem jeweils links von ihnen sitzenden Kollegen seine rechte Gabel weg. Nun warten alle fünf darauf, dass die rechte Gabel wieder auftaucht. Das passiert aber nicht, da keiner der fünf seine linke Gabel zurücklegt. Die Philosophen verhungern.
+\end{answer}
+
+\section{\question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}}
 \begin{answer}
 Fünf Philosophen sitzen an einem Tisch mit fünf Tellern Reis. Zwischen jedem der Teller befindet
 sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder
@@ -876,11 +1033,10 @@ Philosoph zwei Stäbchen zum Essen benötigt, es können also nicht alle Philoso
 essen. Nur für zwei gleichzeitig speisende Philosophen sind ausreichend Stäbchen vorhanden.
 Jedes Stäbchen ist ein kritischer Abschnitt. Es kommt aber zu Verklemmungen, wenn jeder Philosoph
 z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
-Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen.
+Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer Paare schützen.
 \end{answer}
 
-\section{\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-
-Routinen keine vollständige Semaphore-Semantik?Welche zusätzlichen Massnahmen muüsste man
+\section{\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen muüsste man
 ergreifen?}}
 \begin{answer}
 Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben,
