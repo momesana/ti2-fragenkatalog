@@ -12,6 +12,10 @@
 \usepackage{varwidth}
 \usepackage{truncate}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{mdframed}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -57,27 +61,69 @@
 \definecolor{cream}{RGB}{255,255,204} % highlighting color
 \definecolor{blue}{RGB}{0,0,255}
 
-\newcommand{\hlc}[2][cream]{ {\sethlcolor{#1} \hl{#2}} }
+\newcommand{\hlc}[2][cream]{{\sethlcolor{#1} \hl{#2}}}
+
+\subsectionfont{\normalsize} % We change the sections to have a slightly smaller size
 
 % Crucial marks keywords or statements that are crucial for passing the exam ;-)
-\newcommand{\crucial}[1]{\hlc[cream]{\textbf{#1}}} % Optimized for online reading
+\newcommand{\crucial}[1]{\hlc[cream]{#1}} % Optimized for online reading
 %\newcommand{\crucial}[1]{\textbf{\textcolor{crucial}{\uline{#1}}}} % custom
 %\newcommand{\crucial}[1]{\uline{#1}} % Optimized for print
 
 % Question Command
 \newcommand{\question}[1]{
-	\subsection[\truncate{0.85\textwidth}{#1}]{
+	\subsection[\truncate{0.80\textwidth}{#1}]{
 	\textcolor{blue}{#1}}}
+
+\newenvironment{multilinequestion}[1][]
+	{\subsection[\truncate{0.80\textwidth}{#1}]{\textcolor{blue}{#1}} \color{blue}}
+	{}
+
+% Used for the right vertical bar next to the answer blocks
+\newlength\RightBarWidth
+\setlength\RightBarWidth{1pt}
+\newenvironment{rightbar}
+	{
+	\def\FrameCommand##1{%
+	\hspace{\textwidth}\hspace{-\RightBarWidth}%
+	{\color{dkgreen}\vrule width \RightBarWidth}
+	\hspace{-\textwidth}##1\hfill}%
+	\MakeFramed{\addtolength\hsize{-\width-\RightBarWidth-\columnsep}%
+	\FrameRestore}%
+	}
+	{\endMakeFramed}
+
+% Make footnotes available inside frames
+\makeatletter
+
+\newcommand\mystuff@footnotebuffer{}
+\newcounter{mystuff@footnote}
+
+\newcommand\bufferfootnotes{
+	\let\mystuff@footnoteold\footnote
+	\setcounter{mystuff@footnote}{\thefootnote}
+	\renewcommand\mystuff@footnotebuffer{}
+	\renewcommand{\footnote}[1]{
+		\footnotemark
+		\g@addto@macro{\mystuff@footnotebuffer}{
+			\stepcounter{mystuff@footnote}
+			\protect\footnotetext[\themystuff@footnote]{##1}
+		}
+	}
+}
+
+\newcommand\stopbufferingfootnotes{%
+	\mystuff@footnotebuffer%
+	\renewcommand{\footnote}[1]{\mystuff@footnoteold{##1}}%
+}
+
+\makeatother
 
 % Answer environment
 \newenvironment {answer}
-                {}
-                {}
-                %{\par  \begin{addmargin}[1.5em]{0em}} % before
-                %{\end{addmargin} \noindent \ignorespacesafterend \\*} % after
+                {\bufferfootnotes\begin{rightbar} }
+                {\end{rightbar}\stopbufferingfootnotes}
                   
-\subsectionfont{\normalsize \normalfont} % We change the sections to have a slightly smaller size
-
 \title{Technische Informatik 2 \\ Fragenkatalog \\ WiSe 2012/2013 \\[5pt] \Large{Universität Bremen}}
 \date{\today}
 
@@ -88,10 +134,10 @@
 
 % Abstract section
 \begin{abstract}
-Seit jeher gibt es auf den \textbf{Übungsbl"attern} des Kurses \textit{Technische Informatik 2} der bremer Universität Zusatz-Fragen, die der Vorbereitung auf das \textbf{Fachgespräch} dienen. Nachfolgend finden Sie die, von Freiwilligen Studenten und Tutoren zusammengetragenen Antworten auf diese Fragen.
+Seit jeher gibt es auf den \textbf{Übungsbl"attern} des Kurses \textit{Technische Informatik 2} der bremer Universität Zusatzfragen, die der Vorbereitung auf das \textbf{Fachgespräch} dienen sollen. Nachfolgend finden Sie die, von freiwilligen Studenten und Tutoren zusammengetragenen Antworten auf diese Fragen.
 
 \paragraph*{}
-Jeder kann dazu beitragen die Antworten zu erweitern, verbessern oder zu aktualisieren, indem er die Repository auf Github clont, das Dokument überarbeitet und anschließend Merge-Requests einreicht. Die Repository befindet sich unter  \url{https://github.com/momesana/ti2-fragenkatalog/}.
+Jeder kann dazu beitragen die Antworten zu erweitern, zu verbessern oder zu aktualisieren, indem er die Repository auf Github clont, das Dokument überarbeitet und anschließend Merge-Requests einreicht. Das Repository befindet sich unter  \url{https://github.com/momesana/ti2-fragenkatalog/}.
 \end{abstract}
 
 \newpage
@@ -99,9 +145,19 @@ Jeder kann dazu beitragen die Antworten zu erweitern, verbessern oder zu aktuali
 % This inserts the table of contents
 \tableofcontents 
 
-% Template for question and answer pairs
+% Templates for question and answer pairs
+%
+% Simple question
 %\question{}
 %\begin{answer}
+%\end{answer}
+%
+% Multilone question: To be used if the question contains images or blocks etc.
+%\begin{multilinequestion}[text to appear in the subsection]
+%\end{multilinequestion}
+%the question that spans many lines
+%\begin{answer}
+%the answer
 %\end{answer}
 
 % This included Fragment contains questions regarding Operating Systems

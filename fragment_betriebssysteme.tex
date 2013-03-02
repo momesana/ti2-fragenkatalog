@@ -3,13 +3,13 @@
 \question{Welche zwei Hauptaufgaben hat ein Betriebssytem?}
 \begin{answer}
     \begin{itemize}
-    \item Abstraktion von Geräteeigenschaften
+    \item \crucial{Abstraktion von Ger"ateeigenschaften}
         \begin{itemize}
             \item Geräteunabh"angige Schnittstelle zu den Anwendungen (virtuelle Maschine)
             \item Geräteüberwachung und -steuerung
         \end{itemize}
     
-    \item Unterstützung des Mehrbenutzerbetriebs
+    \item \crucial{Unterst"utzung des Mehrbenutzerbetriebs}
         \begin{itemize}
             \item Betriebsmittelverwaltung
             \item Zuteilungsstrategien
@@ -33,12 +33,11 @@ Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
 
 \question{Was ist ein \textit{symbolic link} (symbolischer Link)?}
 \begin{answer}
-\paragraph*{}
 Eine symbolische Verknüpfung ist eine \crucial{Verkn"upfung} in einem Dateisystem, \crucial{die auf eine andere Datei oder ein anderes Verzeichnis verweist}. Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei führt üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
 
 \question{Was ist ein \textit{hard link}?}
 \paragraph*{}
-Ein \crucial{Hardlinks} ist im Grunde genommen ein \crucial{weiterer, regul"arer Name der Datei}. Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{k"onnen nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
+Ein \crucial{Hardlink} ist im Grunde genommen ein \crucial{weiterer, regul"arer Name der Datei.} Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{k"onnen nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
 \end{answer}
 
 \question{Ist das UNIX-Dateisystem wirklich ein Baum? Begründung.}
@@ -49,7 +48,8 @@ Ein UNIX-Dateisystem entspricht eher einem \crucial{gerichteten Graphen} als ein
 \question{Welche Zugriffsrechte kann man auf eine UNIX-Datei haben? Welche Dateiattribute steuern dies, und wie?}
 \begin{answer}
 Die Zugriffsrechte sind \crucial{Lesen}, \crucial{Schreiben} und \crucial{Ausf"uhren}.
-Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest der Welt} (others) festgelegt werden.
+Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest der Welt} (others) festgelegt werden. Zusätzlich gibt es noch die erweiterten Rechte \crucial{Setuid}, \crucial{Setgid} und das \crucial{Sticky Bit.}\footnote{http://de.wikipedia.org/wiki/Unix-Dateirechte\#Sonderrechte.2Ferweiterte\_Rechte}
+
 \end{answer}
 
 \question{Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}
@@ -67,23 +67,68 @@ Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächti
 
 \question{Was machst Du, wenn Dir die genaue Semantik eines Unix-Kommandos entfallen ist?}
 \begin{answer}
-
+Zunächst die Hilfe (mit dem \crucial{Kommandozeilensfwitch --help}), und wenn erforderliche die \crucial{Man-} oder \crucial{Infopages} zur Rate ziehen:
+%% Bash script
+\lstset{language=bash,caption={Hilfe zu einem Kommando am Beispiel von \texttt{mkdir}}}
+\begin{lstlisting}
+anonuser$ mkdir --help
+anonuser$ man mkdir
+anonuser$ info mkdir
+\end{lstlisting}
 \end{answer}
 
-\question{bla sei ein ausführbares Programm. Was ist der Unterschied zwischen dem Aufruf\\
-bla und dem Aufruf bla \& in der Shell? Welche Auswirkungen hat dies, wenn bla von Standard Input liest bzw. auf Standard Output schreibt?}
+\begin{multilinequestion}[\texttt{bla} sei ein ausführbares Programm. Was ist der Unterschied zwischen dem Aufruf]
+
+%% Bash script
+\lstset{caption={}}
+\begin{lstlisting}
+bla
+\end{lstlisting}
+
+und dem Aufruf
+
+%% Bash script
+\lstset{caption={}}
+\begin{lstlisting}
+bla &
+\end{lstlisting}
+
+in der Shell? Welche Auswirkungen hat dies, wenn \texttt{bla} von \textbf{Standard Input} liest bzw. auf \textbf{Standard Output} schreibt?
+\end{multilinequestion}
+
 \begin{answer}
-
+Hängt man einem Befehl ein \& an, so wird dieser als \crucial{Hintergrundprozess} gestartet. Dieser \crucial{kann} dann zwar auf \texttt{stdout} \crucial{schreiben}, wird aber sofort in den Zustand \crucial{suspended} versetzt , wenn er versucht von der Standardeingabe (\textit{stdin}) zu lesen.
 \end{answer}
 
-\question{Gegeben sei der folgende Prozeßbaum: init $\rightarrow$ bash
+\begin{multilinequestion}[Prozessbäume: Gegeben sei der folgende Prozessbaum:]
+
+\begin{figure}[H]
+  \caption{Prozessbaum}
+  \centering
+    \includegraphics[scale=0.70]{images/process-tree01}
+\end{figure}
+
 Wie ändert er sich nach Eingeben der folgenden Kommandofolge im Shell?
-sleep 1000 \& ;
-emacs \& ;
-bash;
-date;}
-\begin{answer}
 
+%% Bash script
+\lstset{language=bash,caption={Eingegebene Befehle}}
+\begin{lstlisting}
+sleep 1000 &
+emacs &
+bash
+date
+\end{lstlisting}
+
+\end{multilinequestion}
+
+\begin{answer}
+Der Prozessbaum sieht nach Eingabe der obigen Befehle folgendermaßen aus:
+\begin{figure}[H]
+  \caption{Prozessbaum nach den Eingaben}
+  \centering
+    \includegraphics[scale=0.70]{images/process-tree02}
+\end{figure}
+\texttt{sleep} und \texttt{emacs} laufen dabei als Hintergrundprozesse.
 \end{answer}
 
 
@@ -130,8 +175,9 @@ Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen tempor"ar an
 \begin{answer}
 Bibliotheken \crucial{stellen Funktionen zur Verf"ugung}. Durch das Vorhandensein von Bibliotheken muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
 
-\paragraph{Laut Wikipedia:}
-Eine Programmbibliothek bezeichnet in der Programmierung eine Sammlung von Softwaremodulen, die Lösungswege für thematisch zusammengehörende Problemstellungen anbieten. Bibliotheken sind im Unterschied zu Programmen keine eigenständig lauffähigen Einheiten, sondern Hilfsmodule, die von Programmen angefordert werden.
+\paragraph{}
+Eine Programmbibliothek bezeichnet in der Programmierung eine \crucial{Sammlung von Softwaremodulen}, die Lösungswege für thematisch zusammengehörende Problemstellungen anbieten. Bibliotheken sind im Unterschied zu Programmen keine eigenständig lauffähigen Einheiten, sondern Hilfsmodule, die von Programmen angefordert werden.\footnote{http://de.wikipedia.org/wiki/Programmbibliothek}
+
 \end{answer}
 
 \question{Welche Aufgabe erfüllt ein Linker?}
@@ -152,12 +198,12 @@ Zum Auflösen von Verweisen.
 
 \question{Welchen Vorteil hat es, Bibliotheken mit Position Independent Code zu versehen?}
 \begin{answer}
-Laut Wikipedia: Position-independent Code (PIC, engl. für positionsunabhängiger Code) ist Maschinencode, der ausgeführt werden kann, unabhängig davon, an welcher absoluten Adresse im Hauptspeicher er sich befindet. PIC wird üblicherweise für dynamische Bibliotheken verwendet, damit diese für jedes Programm an eine Speicherposition geladen werden können, wo sie sich nicht mit anderen Objekten dieses Programms überlappen. 
+Position-independent Code (PIC, engl. für positionsunabhängiger Code) ist \crucial{Maschinencode, der ausgef"uhrt werden kann, unabh"angig davon, an welcher absoluten Adresse im Hauptspeicher er sich befindet}. PIC wird üblicherweise für dynamische Bibliotheken verwendet, damit diese für jedes Programm an eine Speicherposition geladen werden können, wo sie sich nicht mit anderen Objekten dieses Programms überlappen.\footnote{http://de.wikipedia.org/wiki/Position-Independent\_Code} 
 \end{answer}
 
 \question{Durch welche Qualitätsmerkmale soll ein Betriebssystem gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
 \begin{answer}
-Effizienz, Kosten, Bedienbarkeit, Zuverlässigkeit, Verfügbarkeit, Sicherheit, Wartbarkeit.
+\crucial{Effizienz, Kosten, Bedienbarkeit, Zuverl"assigkeit, Verf"ugbarkeit, Sicherheit, Wartbarkeit.}
 Der Kostenpunkt kann mit jeder anderen Anforderung konkurrieren. Je besser ein Aspekt
 werden soll, desto mehr Zeit und Entwicklungsarbeit, sprich Geld muss in diesen Aspekt
 investiert werden. Am Beispiel Windows lässt sich wunderbar erkennen, wie Bedienbarkeit
@@ -168,10 +214,7 @@ siehe Win vs. Linux.
 
 \question{Worin unterscheidet sich der Kernel-Mode vom User-Mode (in UNIX)? Warum wird diese Unterscheidung getroffen?}
 \begin{answer}
-Kernel und Useradressraum sind aus Sicherheitsgründen getrennt. Im User-Mode kann
-nicht auf die Hardware zugegriffen werden. Das hat auch seinen Sinn, da diese Zugriffe
-kontrolliert erfolgen sollen, damit das System sicher und zuverlässig bleibt. Ein Greuel für
-jeden Admin, wenn jeder Hans und Franz in seiner Konfig rumfuhrwerken dürften.
+\crucial{Kernel und Useradressraum sind aus Sicherheitsgr"unden getrennt. Im User-Mode gibt es keinen direkten Zugriff auf die Hardware.} Das hat auch seinen Sinn, da diese Zugriffe kontrolliert erfolgen sollen, damit das System sicher und zuverlässig bleibt.
 \end{answer}
 
 \question{Was passiert etwa bei einem System-Aufruf?}
