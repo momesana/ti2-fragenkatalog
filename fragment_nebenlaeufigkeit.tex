@@ -1,6 +1,6 @@
 \section{Nebenläufigkeit}
 
-\subsection{\question{Erkläre den Begriff ,,Nebenläufigkeit''. Welchen Zweck haben Petri-Netze in diesem Kontext?}}
+\question{Erkläre den Begriff ,,Nebenläufigkeit''. Welchen Zweck haben Petri-Netze in diesem Kontext?}
 \begin{answer}
 engl. concurrency
 
@@ -9,7 +9,7 @@ Nebenläufigkeit entsteht, wenn mehrere Ereignisse in keiner kausalen Beziehung 
 Eine Modellierungssprache, die diese Abhängigkeiten wiedergibt, sind Petri-Netze.
 \end{answer}
 
-\subsection{\question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}}
+\question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}
 \begin{answer}
 Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es
 kann hier zu Verklemmungen, dem After-you-after-you Problem und dem Verhungern kommen.
@@ -17,35 +17,35 @@ Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der gegenseit
 nicht gewährleistet ist.
 \end{answer}
 
-\subsection{\question{Was sind kritische Abschnitte? Wo kommen sie vor?}}
+\question{Was sind kritische Abschnitte? Wo kommen sie vor?}
 \begin{answer}
 Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
 \end{answer}
 
-\subsection{\question{Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}}
+\question{Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}
 \begin{answer}
 Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das
 Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
 \end{answer}
 
-\subsection{\question{Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt?}}
+\question{Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt?}
 \begin{answer}
 a) Erzeuger/Verbraucher (Producer/Consumer)
 b) Leser/Schreiber (Reader/Writer)
 c) Speisende Philosophen (Dining Philosophers)?
 \end{answer}
 
-\subsection{\question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}}
+\question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
 \begin{answer}
 TODO 
 \end{answer}
 
-\subsection{\question{Was besagt Prämemtion?}}
+\question{Was besagt Prämemtion?}
 \begin{answer}
 Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse zugunsten anderer.
 \end{answer}
 
-\subsection{\question{Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}}
+\question{Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}
 \begin{answer}
 Ein Prozess hat einen eigenen Adressraum und ist somit stark abgeschottet gegenüber anderen
 Prozessen. Prozesse können aus anderen Prozessen erzeugt werden und arbeiten trotzdem weiter,
@@ -62,7 +62,7 @@ Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt d
 für das Scheduling dar.
 \end{answer}
 
-\subsection{\question{Die Routinen pthread create(), pthread join(), pthread exit() realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (wait(), fork() und exit()). Warum arbeitet pthread create() deutlich anders als fork()?}}
+\question{Die Routinen pthread create(), pthread join(), pthread exit() realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (wait(), fork() und exit()). Warum arbeitet pthread create() deutlich anders als fork()?}
 \begin{answer}
 thr create() / fork()
 thr create():
@@ -88,12 +88,12 @@ eigenständiger Prozess erzeugt wird. Dieser wird auch vom Scheduler berücksich
 Betriebsystemkern bekannt ist.
 \end{answer}
 
-\subsection{\question{Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}}
+\question{Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}
 \begin{answer}
 TODO
 \end{answer}
 
-\subsection{\question{Was ist der Unterbrechungsauschluss?}}
+\question{Was ist der Unterbrechungsauschluss?}
 \begin{answer}
 Beim Unterbrechungsausschluss werden alle Unterbrechungen auf Systemebene für den kritischen Abschnitt augeschaltet:
 
@@ -110,7 +110,7 @@ Problem hierbei ist, dass Interrupts zeitkritisch sind und somit die Gefahr best
 In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnitt gar nicht betreten.
 \end{answer}
 
-\subsection{\question{Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}}
+\question{Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}
 \begin{answer}
 Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
 Datenstruktur oder auf ein Betriebssystemmittel zugegriffen wird. Kritische Abschnitte
@@ -138,12 +138,12 @@ Wenn ein Prozess sich in einem kritisdchen Abschnitt befindet, und nicht selbst 
 herauskommt (z.B. Endlosschleife), wäre es nicht sinnvoll, hier die Unterbrechung auszuschalten.
 \end{answer}
 
-\subsection{\question{Nach welchen Kriterien wird Korrektheit bzw. Güte von Locking-Algorithmen bewertet? Wie geht man dabei vor?}}
+\question{Nach welchen Kriterien wird Korrektheit bzw. Güte von Locking-Algorithmen bewertet? Wie geht man dabei vor?}
 \begin{answer}
 Der Zugriff auf Schlossvariablen darf nicht selbst in einem kritischen Abschnitt liegen. Locking-Algorithmen sollten verklemmungsfrei arbeiten.
 \end{answer}
 
-\subsection{\question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von unteilbaren Operationen durchführen?}}
+\question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von unteilbaren Operationen durchführen?}
 \begin{answer}
 Nur unteilbare Operationen sind nicht unterbrechbar.
 Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-
@@ -153,7 +153,7 @@ erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte las
 genau analysieren und Anfang und Ende festlegen.
 \end{answer}
 
-\subsection{\question{Auf welche verschiedenen Arten kann man Verklemmungen angehen? Wie arbeitet der Bankiersalgorithmus?}}
+\question{Auf welche verschiedenen Arten kann man Verklemmungen angehen? Wie arbeitet der Bankiersalgorithmus?}
 \begin{answer}
 Ein Deadlock liegt an wenn z.B. zwei oder mehrere Prozesse auf Betriebsmittel warten, die nur
 von anderen freigegeben werden kann, es aber nicht mehr zu der Freigabe kommen wird.
@@ -177,12 +177,12 @@ einen Kreditrahmen aushandelt, der nach und nach eingelöst werden kann, aber di
 leistungsfähigkeit nicht sprengt.
 \end{answer}
 
-\subsection{\question{Wie kann man eine einseitige Synchronisation mit Hilfe von wait() und signal() vornehmen? Wie kann man diese Primitiven in etwa auf lock() und unlock() abbilden?}}
+\question{Wie kann man eine einseitige Synchronisation mit Hilfe von wait() und signal() vornehmen? Wie kann man diese Primitiven in etwa auf lock() und unlock() abbilden?}
 \begin{answer}
 TODO
 \end{answer}
 
-\subsection{\question{Grenze die Begriffe aktives und blockierendes Warten voneinander ab.}}
+\question{Grenze die Begriffe aktives und blockierendes Warten voneinander ab.}
 \begin{answer}
 Beim aktiven Warten wird ständig die Schlüsselvariable eines kritischen Abschnitts überprüf, ob sieser nun frei geworden ist oder nicht. Durch das ständige Abfragen wird unter Unständen unnötig CPU-Zeit in Anspruch genommen.
 Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der kritische Abschnitt
@@ -191,12 +191,12 @@ nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, 
 wakeup() aus, um die schlafenden Prozesse zu wecken.
 \end{answer}
 
-\subsection{\question{Was ist ein Spinlock?}}
+\question{Was ist ein Spinlock?}
 \begin{answer}
 Ein Spinlock ist aktives Warten im Programm selber.
 \end{answer}
 
-\subsection{\question{Was ist aktives Warten?}}
+\question{Was ist aktives Warten?}
 \begin{answer}
 Aktives Warten ist das Verharren in einer Schleife, bis der kritische Abschnitt wieder frei ist: Spinlocks
 
@@ -216,7 +216,7 @@ Nachteil: Verbrauchen unnötig Prozessorkapazität durch permanente Abfragen (bi
 \end{verbatim}
 \end{answer}
 
-\subsection{\question{Was ist blockierendes Warten?}}
+\question{Was ist blockierendes Warten?}
 \begin{answer}
 Beim blockierenden Warten legt sich der Prozess schlafen, wenn der kritische Abschnitt gerade nicht frei ist (sleep()).
 
@@ -225,7 +225,7 @@ Bei Verlassen des kritischen Abschnitts werden darauf wartende Prozesse aufgewec
 Interrupthandler sind zeitkritisch und haben keinen eigenen Prozesskontext, können sich also nicht schlafenlegen und können zur mehrseitigen Synchronisation kein blockierendes Warten verwenden.
 \end{answer}
 
-\subsection{\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?}}
+\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?}
 \begin{answer}
 Die gemeinsame Datenstruktur ist hier die Sleep-Queue. Wenn sich ein schlafender Prozess von
 einm Spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die
@@ -237,7 +237,7 @@ sleepl() gibt die Sleep-Queue wieder frei (gibt den Spinlock wieder ab), bevor d
 Tim: Was ist mit der Prozesstabelle? Laut Tutorium ist diese ebenfalls relevant.
 \end{answer}
 
-\subsection{\question{Was sind Semaphore?}}
+\question{Was sind Semaphore?}
 \begin{answer}
 P() / V()
 
@@ -252,7 +252,7 @@ P()/V() ist nicht an Blockstrukturen gebunden. \\
 P()/V() ist nicht immer regelmäßig geschachtelt.
 \end{answer}
 
-\subsection{\question{Welche zusätzlichen Eigenschaften zeichnen Semaphoren gegenüber blockierenden Locks aus?}}
+\question{Welche zusätzlichen Eigenschaften zeichnen Semaphoren gegenüber blockierenden Locks aus?}
 \begin{answer}
 \begin{itemize}
 
@@ -276,7 +276,7 @@ Es gibt zwei zusätzliche Erweiterungen bei einer Semaphore:
 \end{itemize}
 \end{answer}
 
-\subsection{\question{Was sind Monitore?}}
+\question{Was sind Monitore?}
 \begin{answer}
 \begin{verbatim}
   public synchronized void einzahlen(int betrag) {
@@ -287,7 +287,7 @@ Es gibt zwei zusätzliche Erweiterungen bei einer Semaphore:
 Schutz erfolgt nur gegenüber anderen Methoden der Klasse, die ebenfalls synchronized sind, und kritischen Abschnitten, die sich über das Objekt synchronisieren.
 \end{answer}
 
-\subsection{\question{Was sind Mutexes?}}
+\question{Was sind Mutexes?}
 \begin{answer}
 kurz für: mutual exclusion
 
@@ -314,7 +314,7 @@ Signale/Ereignisse: myObj.wait()/myObj.notify()
 
 
 
-\subsection{\question{Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}}
+\question{Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}
 \begin{answer}
 
 \begin{itemize}
@@ -335,14 +335,14 @@ Signale/Ereignisse: myObj.wait()/myObj.notify()
 \end{itemize}
 \end{answer}
 
-\subsection{\question{Was sind die speisenden Philosophen?}}
+\question{Was sind die speisenden Philosophen?}
 \begin{answer}
 Die Philosophen sitzen am Tisch und denken über philosophische Probleme nach. Wenn einer hungrig wird, greift er zuerst die Gabel links von seinem Teller, dann die auf der rechten Seite und beginnt zu essen. Wenn er satt ist, legt er die Gabeln wieder zurück und beginnt wieder zu denken. Sollte eine Gabel nicht an ihrem Platz liegen, wenn der Philosoph sie aufnehmen möchte, so wartet er, bis die Gabel wieder verfügbar ist.
 
 Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wunderbar. Es kann aber passieren, dass sich alle fünf Philosophen gleichzeitig entschließen, zu essen. Sie ergreifen also alle gleichzeitig ihre linke Gabel und nehmen damit dem jeweils links von ihnen sitzenden Kollegen seine rechte Gabel weg. Nun warten alle fünf darauf, dass die rechte Gabel wieder auftaucht. Das passiert aber nicht, da keiner der fünf seine linke Gabel zurücklegt. Die Philosophen verhungern.
 \end{answer}
 
-\subsection{\question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}}
+\question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}
 \begin{answer}
 Fünf Philosophen sitzen an einem Tisch mit fünf Tellern Reis. Zwischen jedem der Teller befindet
 sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder
@@ -353,15 +353,15 @@ z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
 Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer Paare schützen.
 \end{answer}
 
-\subsection{\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen muüsste man
-ergreifen?}}
+\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen muüsste man
+ergreifen?}
 \begin{answer}
 Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben,
 da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme
 muss der Abschnitt also wieder freigegeben werden.
 \end{answer}
 
-\subsection{\question{Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}}
+\question{Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}
 \begin{answer}
 Duch das Einreihen der Prozesse in eine FIFO-Queue kommt es zu einer festen Reihenfolge bei
 der Abarbeitung. Es kann hier zu Konvois kommen. Weiterhin kann es zu unnötig wielen Prozesswechseln
@@ -374,7 +374,7 @@ gibet, indem er ein V() ausführt, werden alle wartenden Prozesse geweckt und do
 kommt aber nur einer in den kritischen Abschnitt hinein.
 \end{answer}
 
-\subsection{\question{Was ist ein Monitor? Unter welchen Bedingungen wird ein Monitor betreten bzw. wieder verlassen?}}
+\question{Was ist ein Monitor? Unter welchen Bedingungen wird ein Monitor betreten bzw. wieder verlassen?}
 \begin{answer}
 Ein Monitor ist ein ADT (Abstrakter Datentyp), also mit Daten und Operationen auf diesen
 Daten. Die Zugriffsoperationen sind implizit gegen nebenläufigen Zugriff geschützt. Das heisst,
@@ -388,14 +388,14 @@ aufgerufen wird. Verlassen wird er, wenn er warten muss (wait()) oder wenn er fe
 ist.
 \end{answer}
 
-\subsection{\question{Aus welchen Komponenten besteht ein Petrinetz (mit Marken)?Was kann man damit beschreiben?}}
+\question{Aus welchen Komponenten besteht ein Petrinetz (mit Marken)?Was kann man damit beschreiben?}
 \begin{answer}
 Ein Petrinetz ist ein gerichteter Graph, der aus Zuständen (Stellen) und Zustandübergängen
 (Transistionen) besteht. Mit Marken (Tokens) ist der aktuelle Ausführungszustand beschreibbar.
 Mit einem Petrinetz kann man grafisch die Synchronisationszusammenhänge darstellen.
 \end{answer}
 
-\subsection{\question{Wie kann man durch ein Petrinetz typische Sznchronisationsvorschriften ausdrücken?}}
+\question{Wie kann man durch ein Petrinetz typische Sznchronisationsvorschriften ausdrücken?}
 \begin{answer}
 a) Sequenz
 b) beschränkte Nebenläufigkeit
@@ -408,7 +408,7 @@ Bei Unabhängigkeit können zwei Prozesse beliebig oft und in beliebiger Reihenf
 werden und somit unabhängig nebenläufig laufen.
 \end{answer}
 
-\subsection{\question{Was kennzeichnet lebendige bzw. todesgefährdete Petrinetze?}}
+\question{Was kennzeichnet lebendige bzw. todesgefährdete Petrinetze?}
 \begin{answer}
 Bei lebendigen Petrinetzen gibt es immer Transistionen, egal welche Ausführungsreihenfolge stattgefunden
 hat..
@@ -416,7 +416,7 @@ Bei todesgefährdeten Petrinetzen kann es nach einer Transistion zu einem Zustan
 dem aus keine Transistionen mehr ausgeführt werden kann.
 \end{answer}
 
-\subsection{\question{Was wird durch einen Pfadausdruck beschrieben? Welche Operatoren werden dazu vorgesehen? Was ist ihre Semantik?}}
+\question{Was wird durch einen Pfadausdruck beschrieben? Welche Operatoren werden dazu vorgesehen? Was ist ihre Semantik?}
 \begin{answer}
 Mit einem Pfadausdruck kann man Angaben über mögliche Nebenläufigkeit von Zugriffsoperationen
 eines ADTs machen.
@@ -426,12 +426,12 @@ Operator ; : Sequenz "Erst ..., dann ..."
 Operator | : Unabhängikeit von Prozessen
 \end{answer}
 
-\subsection{\question{Welche Vorteile bieten Pfadausdrücke zur Steuerung von Nebenläufigkeit im Vergleich zu Semaphoren bzw. Monitore?}}
+\question{Welche Vorteile bieten Pfadausdrücke zur Steuerung von Nebenläufigkeit im Vergleich zu Semaphoren bzw. Monitore?}
 \begin{answer}
 Vorteil ist die korrekte Definition dessen, was erlaubt ist oder was nicht erlaubt ist. Unterschied
 \end{answer}
 
-\subsection{\question{Was ist der Unterschied zwischen offenen und geschlossenen Pfadausdrücken?}}
+\question{Was ist der Unterschied zwischen offenen und geschlossenen Pfadausdrücken?}
 \begin{answer}
 Geschlossenen Pfadausdrücke: alle erlaubten Ausführungsreihenfolgen von Operationen eines synchronisierten
 Datentyps (ADT mit expliziter Synchronisationsvorschrift) sind zu spezifizieren. Das
@@ -440,14 +440,14 @@ Offene Pfadausdrücke: alle Einschränkungen von Ausführungsreihenfolgen sind i
 zu spezifizieren. Das heisst alles andere ist erlaubt.
 \end{answer}
 
-\subsection{\question{Wie würde man das klassische Reader-/Writer-Problem als Pfadausdruck formulieren?}}
+\question{Wie würde man das klassische Reader-/Writer-Problem als Pfadausdruck formulieren?}
 \begin{answer}
 Beim Reader-/Writer-Problem sollen beliebig viele Leser, aber kein Schreiber zugelassen werden,
 oder ein Schreiber ohne Leser. Damit werden inkonsistente Ergebnisse verhindert.
 Als Pfadausdruck: leser+writer
 \end{answer}
 
-\subsection{\question{Was versteht man unter synchronem bzw. asynchronem Nachrichtenaustausch? Inwiefern sind diese beiden Kommunikationsformen aufeinander abbildbar?}}
+\question{Was versteht man unter synchronem bzw. asynchronem Nachrichtenaustausch? Inwiefern sind diese beiden Kommunikationsformen aufeinander abbildbar?}
 \begin{answer}
 Bei synchronem Datenaustausch warten Sender und Empfänger aufeinander. Das heist, send()
 und recieve() wirken blockierend aufeinander. Der Empfänger muss bereit sein, die Nachricht aufzunehmen.
@@ -462,7 +462,7 @@ Asynchrone Kommunikation kann durch sychrone Operationen vorgenommen werden. Daz
 ein Pufferprozess eingeführt werden.
 \end{answer}
 
-\subsection{\question{Wie kann man die Sychronisationseigenschaften von synchronem bzw. asynchronem Nachrichtenaustausch mit Semaphoren modellieren?}}
+\question{Wie kann man die Sychronisationseigenschaften von synchronem bzw. asynchronem Nachrichtenaustausch mit Semaphoren modellieren?}
 \begin{answer}
 Sema1(0);
 Sema2(0);

@@ -1,16 +1,15 @@
 \section{Betriebssysteme - Grundlagen}
 
-\subsection{\question{Welche zwei Hauptaufgaben hat ein Betriebssytem?}}
-
+\question{Welche zwei Hauptaufgaben hat ein Betriebssytem?}
 \begin{answer}
     \begin{itemize}
-    \item \crucial{Abstraktion von Geräteeigenschaften}
+    \item Abstraktion von Geräteeigenschaften
         \begin{itemize}
-            \item Geräteunabhängige Schnittstelle zu den Anwendungen (virtuelle Maschine)
+            \item Geräteunabh"angige Schnittstelle zu den Anwendungen (virtuelle Maschine)
             \item Geräteüberwachung und -steuerung
         \end{itemize}
     
-    \item \crucial{Unterstützung des Mehrbenutzerbetriebs}
+    \item Unterstützung des Mehrbenutzerbetriebs
         \begin{itemize}
             \item Betriebsmittelverwaltung
             \item Zuteilungsstrategien
@@ -19,42 +18,41 @@
     \end{itemize}
 \end{answer}
 
-\subsection{\question{Was ist ein Prozess?}}
+\question{Was ist ein Prozess?}
 \begin{answer}
-Ein \crucial{Programm in Ausführung}.
+Ein \crucial{Programm in Ausf"uhrung}.
 \end{answer}
 
-\subsection{\question{Wie ist ein UNIX-Dateisystem strukturiert? Wie können Dateien darin (eindeutig) aufgefunden
-werden?}}
+\question{Wie ist ein UNIX-Dateisystem strukturiert? Wie können Dateien darin (eindeutig) aufgefunden
+werden?}
 \begin{answer}
 Ein UNIX-Dateisystem ist \crucial{hierachisch organisiert}. Es \crucial{hat eine Wurzel} (root), Verzeichnisse
 mit jeweils Unterverzeichnissen. In Vezeichnissen können Dateien abgelegt werden.
 Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
 \end{answer}
 
-\subsection{\question{Was ist ein \textit{symbolic link} (symbolischer Link)?}}
+\question{Was ist ein \textit{symbolic link} (symbolischer Link)?}
 \begin{answer}
 \paragraph*{}
-Eine symbolische Verknüpfung ist eine \crucial{Verknüpfung} in einem Dateisystem, \crucial{die auf eine andere Datei oder ein anderes Verzeichnis verweist}. Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei führt üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
+Eine symbolische Verknüpfung ist eine \crucial{Verkn"upfung} in einem Dateisystem, \crucial{die auf eine andere Datei oder ein anderes Verzeichnis verweist}. Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei führt üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
 
-\subsection{\question{Was ist ein \textit{hard link}?}}
+\question{Was ist ein \textit{hard link}?}
 \paragraph*{}
-Ein \crucial{Hardlinks} ist im Grunde genommen ein \crucial{weiterer, regulärer Name der Datei}. Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{können nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
+Ein \crucial{Hardlinks} ist im Grunde genommen ein \crucial{weiterer, regul"arer Name der Datei}. Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{k"onnen nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
 \end{answer}
 
-\subsection{\question{Ist das UNIX-Dateisystem wirklich ein Baum? Begründung.}}
+\question{Ist das UNIX-Dateisystem wirklich ein Baum? Begründung.}
 \begin{answer}
 Ein UNIX-Dateisystem entspricht eher einem \crucial{gerichteten Graphen} als einem Baum. Verzeichnisse und Dateien sind zwar hirarchisch organisiert, aber Möglichkeit von \crucial{Hardlinks}, d.h. das mehrfache Vorhandensein in der Dateistruktur einer physikalisch nur einfach vorhanden Datei stört das Bild eines Baumes. In einem Baum werden die Knoten benannt, unter UNIX werden Pfadnamen benutzt.
 \end{answer}
 
-\subsection{\question{Welche Zugriffsrechte kann man auf eine UNIX-Datei haben? Welche Dateiattribute steuern dies, und wie?}}
+\question{Welche Zugriffsrechte kann man auf eine UNIX-Datei haben? Welche Dateiattribute steuern dies, und wie?}
 \begin{answer}
-Die Zugriffsrechte sind \crucial{Lesen}, \crucial{Schreiben} und \crucial{Ausführen}.
-Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest
-der Welt} (others) festgelegt werden.
+Die Zugriffsrechte sind \crucial{Lesen}, \crucial{Schreiben} und \crucial{Ausf"uhren}.
+Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest der Welt} (others) festgelegt werden.
 \end{answer}
 
-\subsection{\question{Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}}
+\question{Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}
 \begin{answer}
 Da unter \textbf{UNIX} der Zugriff auf Geräte im allgemeinen (d.h. auch auf Terminals) als Zugriff
 auf eine Datei geschieht, bietet dies den Vorteil der \crucial{einheitlichen Schnittstelle}. Der Benutzer
@@ -62,12 +60,34 @@ kann auf das Terminal zugreifen wie auf eine Datei auch und muss sich daher nich
 Es gibt \crucial{Standardein- und Standardausgaben von Prozessen}. Will der Benutzer andere Ein- bzw. Ausgabemöglichkeiten nutzen, kann er Ein- und Ausgaben umlenken. Beispielsweise können die Fehlermeldungen in eine Datei umgelenkt werden.
 \end{answer}
 
-\subsection{\question{Welche Aufgabe hat ein Kommando-Interpreter (z.B. in UNIX die Shell)?}}
+\question{Welche Aufgabe hat ein Kommando-Interpreter (z.B. in UNIX die Shell)?}
 \begin{answer}
 Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächtige) \crucial{Schnittstelle zum Betriebssystem} zur Verfügung.
 \end{answer}
 
-\subsection{\question{Nenne drei Beispiele für Informationen, die der Betriebsystemkern über einen Prozess wissen muss.}}
+\question{Was machst Du, wenn Dir die genaue Semantik eines Unix-Kommandos entfallen ist?}
+\begin{answer}
+
+\end{answer}
+
+\question{bla sei ein ausführbares Programm. Was ist der Unterschied zwischen dem Aufruf\\
+bla und dem Aufruf bla \& in der Shell? Welche Auswirkungen hat dies, wenn bla von Standard Input liest bzw. auf Standard Output schreibt?}
+\begin{answer}
+
+\end{answer}
+
+\question{Gegeben sei der folgende Prozeßbaum: init $\rightarrow$ bash
+Wie ändert er sich nach Eingeben der folgenden Kommandofolge im Shell?
+sleep 1000 \& ;
+emacs \& ;
+bash;
+date;}
+\begin{answer}
+
+\end{answer}
+
+
+\question{Nenne drei Beispiele für Informationen, die der Betriebsystemkern über einen Prozess wissen muss.}
 \begin{answer}
 \begin{itemize}
 \item \crucial{Prozess ID}
@@ -77,14 +97,14 @@ Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächti
 
 \end{answer}
 
-\subsection{\question{Was ist eine Pipe?}}
+\question{Was ist eine Pipe?}
 \begin{answer}
 Eine Pipe ist die \crucial{Umlenkung} eines \crucial{unidirektionalen sequentiellen Bitstroms} von der \crucial{Standardausgabe} eines Prozesses auf die \crucial{Standardeingabe} eines Prozesses.
 \end{answer}
 
-\subsection{\question{Wie macht man ein soeben editiertes Shell-File ausführbar?}}
+\question{Wie macht man ein soeben editiertes Shell-File ausführbar?}
 \begin{answer}
-\crucial{Setzen des Ausführbar-Bits} (executable bit) (x). \\
+\crucial{Setzen des Ausf"uhrbar-Bits} (executable bit) (x). \\
 
 %% Bash script
 \lstset{language=bash,caption={Setzen des \textbf{executable bit} für ein Shellskript \textit{shellfile.sh}}}
@@ -94,27 +114,27 @@ chmod +x shellfile.sh
 
 \end{answer}
 
-\subsection{\question{In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung unter UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}}
+\question{In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung unter UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}
 \begin{answer}
 Der virtuelle Adressraum ist in \crucial{Text}, \crucial{Data} und \crucial{Stack} unterteilt. Im Text-Teil befindet siche
 der eigentliche Programmcode, im Data-Teil die Daten und auf dem Stack alle temparären
 Daten (z.B. Variablen).
 \end{answer}
 
-\subsection{\question{Wozu wird der Stack verwendet?}}
+\question{Wozu wird der Stack verwendet?}
 \begin{answer}
-Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen temporär anfallenden Daten eines Prozesses} abgelegt. Das umfasst unter anderem die Rücksprung-Addresse, die an die Funktion übergebenen Argumente und lokale Variablen.
+Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen tempor"ar anfallenden Daten eines Prozesses} abgelegt. Das umfasst unter anderem die Rücksprung-Addresse, die an die Funktion übergebenen Argumente und lokale Variablen.
 \end{answer}
 
-\subsection{\question{Welchem Zweck dienen Bibliotheken (Libraries)?}}
+\question{Welchem Zweck dienen Bibliotheken (Libraries)?}
 \begin{answer}
-Bibliotheken \crucial{stellen Funktionen zur Verfügung}. Durch das Vorhandensein von Bibliotheken muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
+Bibliotheken \crucial{stellen Funktionen zur Verf"ugung}. Durch das Vorhandensein von Bibliotheken muss ein Programmierer nicht von Grund auf alle Funktionen neu schreiben.
 
 \paragraph{Laut Wikipedia:}
 Eine Programmbibliothek bezeichnet in der Programmierung eine Sammlung von Softwaremodulen, die Lösungswege für thematisch zusammengehörende Problemstellungen anbieten. Bibliotheken sind im Unterschied zu Programmen keine eigenständig lauffähigen Einheiten, sondern Hilfsmodule, die von Programmen angefordert werden.
 \end{answer}
 
-\subsection{\question{Welche Aufgabe erfüllt ein Linker?}}
+\question{Welche Aufgabe erfüllt ein Linker?}
 \begin{answer}
 Ein Linker oder Binder verbindet einzelne Programmmodule zu einem ausführbaren Programm. Im Zuge dessen werden die Symbole in den Objectfiles aufgelöst. Man unterscheidet zwischen statisches und dynamisches Linken. Man unterscheidet dabei zwischen \crucial{statisches und dynamisches Linken}.
 
@@ -125,17 +145,17 @@ Die Symbole schon während des Zusammenstellens der Programmdatei aufgelöst
 Das Auflösen der Symbole erfolgt erst bei der tatsächlichen Ausführung des Programms.
 \end{answer}
 
-\subsection{\question{Wozu wird beim Assemblieren eine Symboltabelle angelegt?}}
+\question{Wozu wird beim Assemblieren eine Symboltabelle angelegt?}
 \begin{answer}
 Zum Auflösen von Verweisen.
 \end{answer}
 
-\subsection{\question{Welchen Vorteil hat es, Bibliotheken mit Position Independent Code zu versehen?}}
+\question{Welchen Vorteil hat es, Bibliotheken mit Position Independent Code zu versehen?}
 \begin{answer}
 Laut Wikipedia: Position-independent Code (PIC, engl. für positionsunabhängiger Code) ist Maschinencode, der ausgeführt werden kann, unabhängig davon, an welcher absoluten Adresse im Hauptspeicher er sich befindet. PIC wird üblicherweise für dynamische Bibliotheken verwendet, damit diese für jedes Programm an eine Speicherposition geladen werden können, wo sie sich nicht mit anderen Objekten dieses Programms überlappen. 
 \end{answer}
 
-\subsection{\question{Durch welche Qualitätsmerkmale soll ein Betriebssystem gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}}
+\question{Durch welche Qualitätsmerkmale soll ein Betriebssystem gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
 \begin{answer}
 Effizienz, Kosten, Bedienbarkeit, Zuverlässigkeit, Verfügbarkeit, Sicherheit, Wartbarkeit.
 Der Kostenpunkt kann mit jeder anderen Anforderung konkurrieren. Je besser ein Aspekt
@@ -146,7 +166,7 @@ lässt sich oft auch nicht mit einer ausgereiften Bedienbarkeit vereinbaren, ode
 siehe Win vs. Linux.
 \end{answer}
 
-\subsection{\question{Worin unterscheidet sich der Kernel-Mode vom User-Mode (in UNIX)? Warum wird diese Unterscheidung getroffen?}}
+\question{Worin unterscheidet sich der Kernel-Mode vom User-Mode (in UNIX)? Warum wird diese Unterscheidung getroffen?}
 \begin{answer}
 Kernel und Useradressraum sind aus Sicherheitsgründen getrennt. Im User-Mode kann
 nicht auf die Hardware zugegriffen werden. Das hat auch seinen Sinn, da diese Zugriffe
@@ -154,7 +174,7 @@ kontrolliert erfolgen sollen, damit das System sicher und zuverlässig bleibt. E
 jeden Admin, wenn jeder Hans und Franz in seiner Konfig rumfuhrwerken dürften.
 \end{answer}
 
-\subsection{\question{Was passiert etwa bei einem System-Aufruf?}}
+\question{Was passiert etwa bei einem System-Aufruf?}
 \begin{answer}
 Es erfolgt ein Trap, darauf wird der Zustand des Systems gesichert, dann erfolgt der Sprung
 in den Kernel-Mode, in dem der eigentliche Hardware-Zugriff erfolgt. Daraufhin gibt es
@@ -162,7 +182,7 @@ eine Rückmeldung und einen Rücksprung zum Prozess, wo dann auch der Kontext wi
 hergestellt wird.
 \end{answer}
 
-\subsection{\question{Was ist ein Interrupt? Nenne Beispiele für mögliche Interrupt-Quellen. Warum werden sie unterschiedlich priorisiert? Wie wird ein Interrupt in etwa behandelt?}}
+\question{Was ist ein Interrupt? Nenne Beispiele für mögliche Interrupt-Quellen. Warum werden sie unterschiedlich priorisiert? Wie wird ein Interrupt in etwa behandelt?}
 \begin{answer}
 Ein Interrupt ist eine externe Unterbrechung eines Prozesses. Eine Quelle kann z. Bsp. die
 Hardware sein. Hardwareinterrupts haben generell eine höhere Priorität als Softwareinterrupts.
@@ -172,7 +192,7 @@ andere Programme auswirken kann, die sich nach dieser Uhr zu richten haben.
 Beispiele für einen Softwareinterrupt wären SIGKILL oder SIGSTOP.
 \end{answer}
 
-\subsection{\question{Was ist ein Trap? Nenne Beispiele für Traps. Inwiefern unterscheiden sich Traps von Interrupts?}}
+\question{Was ist ein Trap? Nenne Beispiele für Traps. Inwiefern unterscheiden sich Traps von Interrupts?}
 \begin{answer}
 Ein Trap ist ein interne Unterbrechung eines Programms in Ausführung, die vom System
 kommt. Beim Trap wird in den Kernel-Mode gewechselt, da es ja ein Systemaufruf ist.
@@ -183,7 +203,7 @@ PointError). Die Folge ist, wie bei vielen anderen Signalen auch, dass der Proze
 oder gekillt wird.
 \end{answer}
 
-\subsection{\question{Was ist ein Signal? Nenne Beispiele für mögliche Signalquellen. Wie kann ein Prozess auf ein Signal reagieren?}}
+\question{Was ist ein Signal? Nenne Beispiele für mögliche Signalquellen. Wie kann ein Prozess auf ein Signal reagieren?}
 \begin{answer}
 Prozesse können Signale senden und empfangen. Stop, Kill, Terminate und Sleep sind
 Signale. Der Traphandler ist eine Signalquelle. Ein Signal ist die Meldung eines besonderen
@@ -191,7 +211,7 @@ Zustandes von aussen. Eine Art vordefinierte Mechanismen des Systems, die adäqu
 behandelt werden, aber auch umdefiniert werden können (ignore).
 \end{answer}
 
-\subsection{\question{Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}}
+\question{Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}
 \begin{answer}
 Laut Wikipedia:\\
 Einfaches Modell:
@@ -208,7 +228,7 @@ uninterruptible sleep: Der Prozess wartet auf ein Ereignis, üblicherweise Hardw
 zombie: Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
 \end{answer}
 
-\subsection{\question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechen-intensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}}
+\question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechen-intensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
 \begin{answer}
 Ein Scheduler soll schlank (effizient) und fair sein, d. h. der Rechenaufwand der Prozessverwaltung
 darf nicht so gross werden, dass die Effizienz darunter leidet, und jeder Prozess soll
@@ -216,24 +236,24 @@ gerechterweise auch drankommen. Auch die Zeitscheiben sollen eine angemessene Gr
 haben.
 \end{answer}
 
-\subsection{\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten simulieren?}}
+\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten simulieren?}
 \begin{answer}
 Man könnte die Anzahl der Durchläufe für die Prozesse mit einer hohen Priorität erhöhen,
 so dass diese in einem Durchlauf mehrere Male dran kommen, oder man gibt den wichtigen
 Prozessen grössere Zeitscheiben, um ihnen mehr CPU-Zeit zukommen zu lassen.
 \end{answer}
 
-\subsection{\question{Warum bestehen die Sleep-Queue und die Run-Queue in UNIX nicht aus jeweils einer
-einzigen Warteschlange? Wie sind sie stattdessen organisiert?}}
+\question{Warum bestehen die Sleep-Queue und die Run-Queue in UNIX nicht aus jeweils einer
+einzigen Warteschlange? Wie sind sie stattdessen organisiert?}
 \begin{answer}
 Sleep-Queue und Run-Queue bestehen aus jeweils einem Array. Jede Priorität hat darin
 eine eigene Liste, das Handling zwischen den Queues ist abhängig von der Priorität. Diese
 Aufteilung besteht, da sonst immer alles durchsucht werden müsste.
 \end{answer}
 
-\subsection{\question{Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der PROStruktur
+\question{Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der PROStruktur
 und teilweise in der User-Struktur abgelegt? Nenne jeweils drei charakteristische
-Beispiele für Angaben darin.}}
+Beispiele für Angaben darin.}
 \begin{answer}
 Die in der Proc-Struktur abgelegten Zustandsinformationen sind für alle Prozesse verfügbar,
 die in der User-Struktur abgelegten sind nur für den laufenden Prozess verfügbar.
@@ -247,8 +267,8 @@ Aktuelles Verzeichnis
 Geöffnete Dateien.
 \end{answer}
 
-\subsection{\question{Skizziere kurz die Prozesserzeugung in UNIX.Welche Rolle spielen die Systemaufrufe fork()
-und exec() dabei?}}
+\question{Skizziere kurz die Prozesserzeugung in UNIX.Welche Rolle spielen die Systemaufrufe fork()
+und exec() dabei?}
 \begin{answer}
 Der Prozess Nummer Eins (INIT) wird "von Hand" beim Systemstart erzeugt.
 Andere Prozesse werden bei Bedarf als Kindprozesse mit fork() (oft als Kind-Prozesse
@@ -259,7 +279,7 @@ Programm ausführen, dieses wird mit exec() gestartet, damit wird dann auch der
 Adressraum ausgetauscht.
 \end{answer}
 
-\subsection{\question{Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB ("Zombie")?}}
+\question{Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB ("Zombie")?}
 \begin{answer}
 Das Kind meldet bei der Termination das Signal SIGCHILD an den Vater, dieser behnadelt
 durch den Aufruf wait() den Kindprozess und der Kindprozess terminiert
@@ -268,7 +288,7 @@ wird dann entweder später vom Vater behandelt oder (je nach UNIX-Variante) durc
 Betriebssystem. Z.B. kann der INIT-Prozess die Proc-Struktur wieder freigeben.
 \end{answer}
 
-\subsection{\question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung?}}
+\question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung?}
 \begin{answer}
 Wie funktioniert der Buddy-Algorithmus in etwa?
 First-Fit-Algorithmus:
@@ -290,8 +310,8 @@ innerhalb der Blöcke.
 Optimierung: mehrere Listen mit jeweils gleich grossen Blöcken, das verringert die Suchdauer.
 \end{answer}
 
-\subsection{\question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher
-werden typischerweise bereitgestellt?}}
+\question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher
+werden typischerweise bereitgestellt?}
 \begin{answer}
 Die Systeme bieten eine Speicherhierachie an da die Geschwindigkeit sich konträr zu den
 Kosten verhält.
@@ -299,14 +319,14 @@ Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set).
 Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
 \end{answer}
 
-\subsection{\question{Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}}
+\question{Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}
 \begin{answer}
 Ein Prozess muss nicht zwangsläufig komplett im Speicher verfügbar sein (s.o.:Working
 Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten
 möglich, heisst insgesamt eine erheblich bessere Nutzung des Haupspeichers.
 \end{answer}
 
-\subsection{\question{Was versteht man unter Paging, was unter Segmentierung? Wo tritt interne Fragmentierung, wo externe Fragmentierung auf? Was versteht man darunter?}}
+\question{Was versteht man unter Paging, was unter Segmentierung? Wo tritt interne Fragmentierung, wo externe Fragmentierung auf? Was versteht man darunter?}
 \begin{answer}
 Segmentierung:
 Speicher wird in verschieden grosse Stücke unterteilt, das ermöglicht die 
@@ -325,7 +345,7 @@ interne Fragmentierung: wenn innerhalb von gleich grossen Stücken der Speicher 
 ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
-\subsection{\question{Aus welchen Teilen besteht eine virtuelle Adresse zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}}
+\question{Aus welchen Teilen besteht eine virtuelle Adresse zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
 \begin{answer}
 Eine virtuelle Adresse besteht zumeist aus zwei Teilen: jPAGEjADDRj. Der erste Teil wird bei
 Gebrauch in der Page-Tabelle "nachgeschaut" und entsprechend ersetzt: jADDRjADDRj.
@@ -333,14 +353,14 @@ Dieser Vorgang wird üblichwerweise durch Hardwareunterstützung realisiert: die
 Unit (MMU).
 \end{answer}
 
-\subsection{\question{Wie können mehrere Prozesse mit Hilfe virtueller Adressierung auf dieselben Programmstücke (oder auch Datenbereiche) zugreifen?}}
+\question{Wie können mehrere Prozesse mit Hilfe virtueller Adressierung auf dieselben Programmstücke (oder auch Datenbereiche) zugreifen?}
 \begin{answer}
 Shared Memory:
 In den jeweiligen (unterschiedlichen) Page-Tabellen sind dieselben Seiten eingetragen. (Doppelter
 bzw. dreifacher Eintrag ein und desselben Inhalts in die 'Inhaltsverzeichnisse').
 \end{answer}
 
-\subsection{\question{Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in etwa?}}
+\question{Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in etwa?}
 \begin{answer}
 LRU (Least-Recently-Used)
 LRU entfernt die Seite im Hauptspeicher, auf die am längsten nicht mehr zugriffen
@@ -383,12 +403,12 @@ mit 8 Bit auf 2 Bit) gehen die LRU-ähnlichen Vorteile verloren und Aging wird
 zu komplexen Variante von Second-Chance-FIFO.
 \end{answer}
 
-\subsection{\question{In welche dieser Kategorien kann man den Clock-Hand-Algorithmus einordnen?}}
+\question{In welche dieser Kategorien kann man den Clock-Hand-Algorithmus einordnen?}
 \begin{answer}
 LRU (ohne Dirty-Bit)
 \end{answer}
 
-\subsection{\question{Warum ist ein optimaler Algorithmus nicht realisierbar?}}
+\question{Warum ist ein optimaler Algorithmus nicht realisierbar?}
 \begin{answer}
 Ein optimaler Algorithmus ist für ein 'normales' Betriebssystem nicht realisierbar, da die Prozesse
 durch unterschiedliche Working Sets eine unterschiedlich grosse Anzahl von Seiten unterschiedlich
@@ -397,8 +417,8 @@ Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben 
 Systems) ein optimaler bzw. annähernd optimaler Algorithmus möglich.
 \end{answer}
 
-\subsection{\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gross bzw. zu
-klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}}
+\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gross bzw. zu
+klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
 \begin{answer}
 Wenn die Umlaufzeit zu gross gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die
 Freispeichereserve leer).
@@ -410,7 +430,7 @@ Speicher. Z.B. kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetze
 Seiten entfernen falls sie in der Zwischenzeit nicht erneut referenziert wurden.
 \end{answer}
 
-\subsection{\question{Was ist Swapping?Warum wenden auch Paging-Systeme häufig dieses Verfahren an? Unter welcher Bedingung?}}
+\question{Was ist Swapping?Warum wenden auch Paging-Systeme häufig dieses Verfahren an? Unter welcher Bedingung?}
 \begin{answer}
 Swapping wird angewandt wenn die Working Sets der aktiven Prozesse nicht vollständig in den
 Speicher passen.
@@ -423,7 +443,7 @@ dort Platz verfügbar zu machen, dadurch wird natürlich ein Austausch der Proze
 nach gewisser Zeit erforderlich.
 \end{answer}
 
-\subsection{\question{Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}}
+\question{Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}
 \begin{answer}
 Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte
 Adressraum wird in gleich grosse Kacheln eingeteilt.
@@ -436,7 +456,7 @@ Regionen folgen dabei der logischen Grösse des Adressraumes (Text, Data, Stack)
 feste Grössen unterteilt.
 \end{answer}
 
-\subsection{\question{Wozu wird bei der Speicherverwaltung häufig ein Assoziativspeicher eingesetzt?}}
+\question{Wozu wird bei der Speicherverwaltung häufig ein Assoziativspeicher eingesetzt?}
 \begin{answer}
 Assoziativspeicher wird im allgemeinen als Spezialhardware innerhalb der MMU (Memory Managment
 Unit) realisiert. D.h. Assoziativspeicher == Hardware-Cache.
@@ -450,7 +470,7 @@ im Hauptspeicher vorzuhalten, wäre zu langsam, da zusätzlicher Speicherzugriff
 wäre.
 \end{answer}
 
-\subsection{\question{Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf ein UNIXFilesystem.}}
+\question{Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf ein UNIXFilesystem.}
 \begin{answer}
 Welche Rolle spielt der File Descriptor dabei?
 open()
@@ -477,7 +497,7 @@ mit den Parametern fd, buf und len funktioniert analog zu read() und liefert die
 Bztes zurück.
 \end{answer}
 
-\subsection{\question{Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über Indirekt-Blöcke?}}
+\question{Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über Indirekt-Blöcke?}
 \begin{answer}
 Das Dateisystem V7:
 - Der Dateiinhalt ist Block-orientiert mit speziellem Block-Index organisiert.
@@ -508,7 +528,7 @@ als verkettete Liste, heisst bei eine Störung der verkettene Liste durch einen 
 Block (z.B.) sind alle folgenden Listeneinträge nicht mehr erreichbar.
 \end{answer}
 
-\subsection{\question{Welche Aufgaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Directory)?}}
+\question{Welche Aufgaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Directory)?}
 \begin{answer}
 Aufgaben von Inodes: siehe oben. Eine Verzeichnis-Datei (Directory) ist eine Datei und hat entsprechend
 einen eigenen Inode und Datenblöcke. Verzeichnisse sind eine Folge von Einträgen, die
@@ -516,7 +536,7 @@ jeweils den Dateinamen (auch Dateinamen von Unterverzeichnissen) und die jeweili
 enthalten.
 \end{answer}
 
-\subsection{\question{Welche Aufgaben hat der Buffer Cache in UNIX?}}
+\question{Welche Aufgaben hat der Buffer Cache in UNIX?}
 \begin{answer}
 Der UNIX-Buffer Cache ist ein Zwischenspeicher (Puffer) für gelesene oder geschriebene Plattenbl
 öcke im Kernadressraum. Er puffert Ein- und Ausgabe vom User-Adressraum entkoppelt. Der
@@ -524,7 +544,7 @@ Buffer Cache ermöglicht Mehrfachzugriff ohne weitere Plattenzugriffe.
 Die Daten werden von Platte zu Cache in Blöcken transportiert, von Cache zu CPU in Bytes.
 \end{answer}
 
-\subsection{\question{Was geschieht durch einen mount()-Systemaufruf in etwa?}}
+\question{Was geschieht durch einen mount()-Systemaufruf in etwa?}
 \begin{answer}
 Unter UNIX kann eine physikalische Harddisk in mehrere logische Partitionen eingeteilt sein. Jede
 dieser Patitionen enthält ihr eigenes Dateisystem, ein UNIX-System kann also aus mehreren solcher
@@ -533,7 +553,7 @@ in einen solchen Dateibaum (Wurzel: Root) eingehängt, d.h. verfügbar gemacht. 
 werden logische Geräte (z.B. CDROM, Partition, ...) und der Mount Point übergeben.
 \end{answer}
 
-\subsection{\question{Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf mmap() in den virtuellen Adressraum eines Prozesses abzubilden?}}
+\question{Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf mmap() in den virtuellen Adressraum eines Prozesses abzubilden?}
 \begin{answer}
 I/O Performance steigt durch:
 
@@ -545,7 +565,7 @@ I/O Performance steigt durch:
 
 \end{answer}
 
-\subsection{\question{Wie ist eine Platte intern organisiert? Wie wirkt sich dies auf den Informationszugriff aus? Wie geht das UNIX Fast File System damit um?}}
+\question{Wie ist eine Platte intern organisiert? Wie wirkt sich dies auf den Informationszugriff aus? Wie geht das UNIX Fast File System damit um?}
 \begin{answer}
 Eine physikalische Festplatte besteht aus sechs bis zehn internen Platten (Scheiben). Auf jede
 dieser internen Platten greift jeweils von oben und von unten ein Lese-Schreibkopf zu. Jede
@@ -561,7 +581,7 @@ UNIX Fast File System:
 Das System arbeitet auf vier bzw. acht Byte grossen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
 \end{answer}
 
-\subsection{\question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle für den  Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}}
+\question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle für den  Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
 \begin{answer}
 In UNIX sind Geräte als Datein dargestellt. Dies bietet für Anwender und Programmierer den
 Vorteil, dass sie einheitlich zu behandeln sind.
@@ -570,7 +590,7 @@ Vorteil, dass sie einheitlich zu behandeln sind.
 Everything is a file (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
 \end{answer}
 
-\subsection{\question{Was ist ein Gerätetreiber, was ein Geräte-Controller? Welche Aufgaben haben sie?}}
+\question{Was ist ein Gerätetreiber, was ein Geräte-Controller? Welche Aufgaben haben sie?}
 \begin{answer}
 Gerätetreiber:
 - ist Code innerhalb des Betriebssystems zur Geräteverwaltung
@@ -584,13 +604,13 @@ Ein Treiber ist also zum Kernel gehörende Software, ein Controller ist die zu e
 vom Treiber gesteuerte, Hardware.
 \end{answer}
 
-\subsection{\question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine High Water Mark bzw. eine Low Water Mark?}}
+\question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine High Water Mark bzw. eine Low Water Mark?}
 \begin{answer}
 Der Zugriff über Warteschlangen erfolgt um eine Vermischung von Aufträgen und das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
 Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird oder ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt" werden können.
 \end{answer}
 
-\subsection{\question{Worin unterscheidet sich Direct Memorz Access (DMA) von Programmed I/O?}}
+\question{Worin unterscheidet sich Direct Memorz Access (DMA) von Programmed I/O?}
 \begin{answer}
 Beim Programmed
 I/O ist der Ablauf wie unter 7.2 beschrieben, da der Treiber ein Teil des Betriebssystems ist, bleibt letztendlich die Kontrolle des Vorgangs bei der CPU. Beim Direct Memory Access (DMA) liegt nach dem Anstoss eines Auftrages der Zugriff auf den
@@ -600,7 +620,7 @@ auf den Hauptspeicher zu. Zu diesem Zweck muss der Auftrag selbst die entspreche
 angeben.
 \end{answer}
 
-\subsection{\question{Warum werden Terminal-Treiber in UNIX parametrisiert? Nenne typische Parameter.}}
+\question{Warum werden Terminal-Treiber in UNIX parametrisiert? Nenne typische Parameter.}
 \begin{answer}
 Geräte können unter Umständen in verschiedenen Modi laufen. Um den gewünschten Modus zu
 erzeugen, benötigt ein Treiber die Angabe desselben mit Hilfe eines Parameters => Parametrisierung.

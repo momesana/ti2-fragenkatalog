@@ -9,11 +9,23 @@
 \usepackage{soul}
 \usepackage[normalem]{ulem}
 \usepackage{sectsty}
+\usepackage{varwidth}
+\usepackage{truncate}
+\usepackage{hyperref}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
- 
+
+% Setting the properties for links, urls etc.
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+
 \lstset{ %
   language=C++,                     % the language of the code
   basicstyle=\footnotesize\ttfamily,    % the size of the fonts that are used for the code
@@ -42,21 +54,29 @@
 
 % Color definitions
 \definecolor{crucial}{RGB}{0,60,0} % This color marks the portions of code that are crucial (see below)
+\definecolor{cream}{RGB}{255,255,204} % highlighting color
+\definecolor{blue}{RGB}{0,0,255}
+
+\newcommand{\hlc}[2][cream]{ {\sethlcolor{#1} \hl{#2}} }
 
 % Crucial marks keywords or statements that are crucial for passing the exam ;-)
-\newcommand{\crucial}[1]{\textbf{\textcolor{crucial}{\uline{#1}}}}
+\newcommand{\crucial}[1]{\hlc[cream]{\textbf{#1}}} % Optimized for online reading
+%\newcommand{\crucial}[1]{\textbf{\textcolor{crucial}{\uline{#1}}}} % custom
+%\newcommand{\crucial}[1]{\uline{#1}} % Optimized for print
 
 % Question Command
-\newcommand{\question}[1]{#1}
+\newcommand{\question}[1]{
+	\subsection[\truncate{0.85\textwidth}{#1}]{
+	\textcolor{blue}{#1}}}
 
 % Answer environment
 \newenvironment {answer}
                 {}
                 {}
-                %{\par \noindent \ignorespaces \begin{addmargin}[1.5em]{0em}} % before
+                %{\par  \begin{addmargin}[1.5em]{0em}} % before
                 %{\end{addmargin} \noindent \ignorespacesafterend \\*} % after
-
-%\sectionfont{\normalsize} % We change the sections to have a slightly smaller size
+                  
+\subsectionfont{\normalsize \normalfont} % We change the sections to have a slightly smaller size
 
 \title{Technische Informatik 2 \\ Fragenkatalog \\ WiSe 2012/2013 \\[5pt] \Large{Universität Bremen}}
 \date{\today}
@@ -66,8 +86,23 @@
 % Insert title here
 \maketitle
 
+% Abstract section
+\begin{abstract}
+Seit jeher gibt es auf den \textbf{Übungsbl"attern} des Kurses \textit{Technische Informatik 2} der bremer Universität Zusatz-Fragen, die der Vorbereitung auf das \textbf{Fachgespräch} dienen. Nachfolgend finden Sie die, von Freiwilligen Studenten und Tutoren zusammengetragenen Antworten auf diese Fragen.
+
+\paragraph*{}
+Jeder kann dazu beitragen die Antworten zu erweitern, verbessern oder zu aktualisieren, indem er die Repository auf Github clont, das Dokument überarbeitet und anschließend Merge-Requests einreicht. Die Repository befindet sich unter  \url{https://github.com/momesana/ti2-fragenkatalog/}.
+\end{abstract}
+
+\newpage
+
 % This inserts the table of contents
 \tableofcontents 
+
+% Template for question and answer pairs
+%\question{}
+%\begin{answer}
+%\end{answer}
 
 % This included Fragment contains questions regarding Operating Systems
 \include{fragment_betriebssysteme}
@@ -82,3 +117,4 @@
 \include{fragment_sicherheit}
 
 \end{document}
+
