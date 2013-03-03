@@ -5,7 +5,7 @@
     \begin{itemize}
     \item \crucial{Abstraktion von Ger"ateeigenschaften}
         \begin{itemize}
-            \item Geräteunabh"angige Schnittstelle zu den Anwendungen (virtuelle Maschine)
+            \item Geräteunabh"angige Schnittstelle zu den Anwendungen 
             \item Geräteüberwachung und -steuerung
         \end{itemize}
     
@@ -13,6 +13,7 @@
         \begin{itemize}
             \item Betriebsmittelverwaltung
             \item Zuteilungsstrategien
+            \item Kostenabrechnung
             \item Schutz
         \end{itemize}
     \end{itemize}
@@ -23,21 +24,41 @@
 Ein \crucial{Programm in Ausf"uhrung}.
 \end{answer}
 
+\question{Was sind Dateien?}
+\begin{answer}
+Dateien sind \crucial{langlebige, "uber eindeutige Namen (Pfade) identifizierbare Datenobjekte}. Prozesse können auf sie zugreifen und sie modifizieren (wenn die nötige Berechtigung gegeben ist). Für UNIX stellt der Inhalt lediglich eine Bytefolge dar (beliebige interne Struktur).
+\end{answer}
+
+\question{Welche Arten von Dateien gibt es?}
+\begin{answer}
+
+\begin{itemize}
+\item Normale Dateien (plain files)
+\item Verzeichnisse
+\item Symbolische Links
+\item Geräte-Dateien
+	\begin{itemize}
+	\item Blockorientierte Gerätedateien
+	\item Zeichenorientierte Gerätedateien
+	\end{itemize}
+\item Sockets~(\ref{netzwerke:sockets}) und Named Pipes~(\ref{netzwerke:named-pipe})
+\end{itemize}
+
+\end{answer}
+
 \question{Wie ist ein UNIX-Dateisystem strukturiert? Wie können Dateien darin (eindeutig) aufgefunden
 werden?}
 \begin{answer}
-Ein UNIX-Dateisystem ist \crucial{hierachisch organisiert}. Es \crucial{hat eine Wurzel} (root), Verzeichnisse
-mit jeweils Unterverzeichnissen. In Vezeichnissen können Dateien abgelegt werden.
-Vollstädnige Dateinamen sind Pfadnamen mit dem Dateinamen von der Wurzel aus.
+Ein UNIX-Dateisystem ist eine \crucial{hierachisch organisierte} Verzeichniss-Struktur. Ganz oben steht \crucial{ die Wurzel} (root). In Vezeichnissen können Dateien abgelegt werden. Vollständige Dateinamen (absoluter Pfad) sind (eindeutige) \crucial{Pfadnamen} von der Wurzel abwärts. Relative Pfade sind ebenfalls möglich.
 \end{answer}
 
 \question{Was ist ein \textit{symbolic link} (symbolischer Link)?}
 \begin{answer}
-Eine symbolische Verknüpfung ist eine \crucial{Verkn"upfung} in einem Dateisystem, \crucial{die auf eine andere Datei oder ein anderes Verzeichnis verweist}. Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei führt üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
+Ein \textit{ symbolic link} ist ein \crucial{Verweis auf eine Datei oder auf ein Verzeichnis} (, die nicht notwendigerweise existieren müssen). Es ist also lediglich eine Referenz auf die Zieldatei bzw. das Zielverzeichnis (d.h. ein weiterer Pfad zu einer Datei). Ein Löschen oder Verschieben der eigentlichen Datei oder das Verweisen auf eine nicht existierende Datei führen üblicherweise dazu, dass die Referenz „ins Leere“ weist \crucial{(dangling link)}.
 
 \question{Was ist ein \textit{hard link}?}
 \paragraph*{}
-Ein \crucial{Hardlink} ist im Grunde genommen ein \crucial{weiterer, regul"arer Name der Datei.} Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{k"onnen nicht auf Verzeichnisse gelegt werden} (um Loops zu vermeiden).
+Ein \crucial{Hardlink} ist im Grunde genommen ein \crucial{weiterer, regul"arer Name der Datei} (Zwei Namen für die selbe Datei). Wird also die Datei unter ihrem ursprünglichen Namen gelöscht, ist sie unter ihrem zweiten Namen immer noch vorhanden. Erst wenn alle "Namen" gelöscht sind ist die Datei nicht mehr zugreifbar. Intern wird dies durch Reference-Counting erreicht. Hardlinks \crucial{k"onnen nicht auf Verzeichnisse gelegt werden} (Vermeidung unkontrollierte Schleifen).
 \end{answer}
 
 \question{Ist das UNIX-Dateisystem wirklich ein Baum? Begründung.}
@@ -50,30 +71,69 @@ Ein UNIX-Dateisystem entspricht eher einem \crucial{gerichteten Graphen} als ein
 Die Zugriffsrechte sind \crucial{Lesen}, \crucial{Schreiben} und \crucial{Ausf"uhren}.
 Es können unterschiedliche Rechte für den \crucial{Besitzer} (user) einer Datei, die \crucial{Gruppe} (group) und den \crucial{Rest der Welt} (others) festgelegt werden. Zusätzlich gibt es noch die erweiterten Rechte \crucial{Setuid}, \crucial{Setgid} und das \crucial{Sticky Bit.}\footnote{http://de.wikipedia.org/wiki/Unix-Dateirechte\#Sonderrechte.2Ferweiterte\_Rechte}
 
+\subsection*{Detaillierte Auflistung der Zugriffsrechte:}
+{\tiny\bfseries
+\renewcommand{\arraystretch}{1.5}
+	\begin{center}
+	  \begin{tabular}{ | p{1.3cm} ||
+	  >{\color{blue}\centering\arraybackslash}m{1.5cm} |
+	  >{\color{blue}\centering\arraybackslash}m{1.5cm} |
+	  >{\color{blue}\centering\arraybackslash}m{1.5cm} ||
+	  >{\color{dkgreen}\centering\arraybackslash}m{1.2cm} |
+	  >{\color{dkgreen}\centering\arraybackslash}m{1.2cm} |
+	  >{\color{dkgreen}\centering\arraybackslash}m{1.2cm} ||
+	  >{\color{dkgreen}\centering\arraybackslash}m{0.8cm} |
+	  >{\color{dkgreen}\centering\arraybackslash}m{0.8cm} |}
+	    \hline
+	     
+	     &  \multicolumn{3}{c||}{Erweiterte Rechte} & \multicolumn{3}{c||}{User (Owner)} & \textcolor{black}{Group} & \textcolor{black}{Others} \\ \hline
+	     
+	     & SUID & SGID & Sticky & r & w & x & r w x & r w x  \\ \hline
+	    
+	    \textbf{Plain file} & \uline{Ausf"uhren:} Benutzer vs. \uline{Besitzer der Datei} & \uline{Ausf"uhren:} Benutzer vs. \uline{Dateigruppe} & (Bleibt im Swap Space kleben) & Lesen & Schreiben & Ausführen & (dito) & (dito)  \\ \hline
+	    
+	    \textbf{Directory} &  & Dateien darin erhalten Gruppe der Dir & Nur eigene Dateien in Dir löschbar (bsp.: /tmp) & Einträge lesen & Einträge (indirekt) ändern & Auf Dateien darin zugreifen & (dito) & (dito)  \\ \hline
+	  \end{tabular}
+	\end{center}
+}
 \end{answer}
 
 \question{Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}
 \begin{answer}
-Da unter \textbf{UNIX} der Zugriff auf Geräte im allgemeinen (d.h. auch auf Terminals) als Zugriff
-auf eine Datei geschieht, bietet dies den Vorteil der \crucial{einheitlichen Schnittstelle}. Der Benutzer
+Da unter \textbf{UNIX} der Zugriff auf Geräte im allgemeinen (d.h. auch auf Terminals) als Zugriff auf eine Dateien abgebildet sind, bietet dies den Vorteil der \crucial{einheitlichen Schnittstelle und Handhabung}. Der Benutzer
 kann auf das Terminal zugreifen wie auf eine Datei auch und muss sich daher nicht mit den konkreten Geräteeigenschaften auseinandersetzen. \\
 Es gibt \crucial{Standardein- und Standardausgaben von Prozessen}. Will der Benutzer andere Ein- bzw. Ausgabemöglichkeiten nutzen, kann er Ein- und Ausgaben umlenken. Beispielsweise können die Fehlermeldungen in eine Datei umgelenkt werden.
+
+%% Bash script
+\lstset{language=bash,caption={Ein-/Ausgabeumlenkung}}
+\begin{lstlisting}
+user $ echo -e "#\!/bin/bash\necho Hello world" > /tmp/bla # (1)
+user $ bash < /tmp/bla # (2)
+Helloworld
+\end{lstlisting}
+
+\begin{enumerate}
+\item Die Ausgabe des Befehls \texttt{echo} wird in eine Datei \texttt{/tmp/bla} geschrieben, und somit eine Ausgabeumlenkung getätigt.
+
+\item Unter (2) liest die neu erzeugte shell von der soeben erstellten Datei \texttt{/tmp/bla} anstelle des Terminal, was einer Eingabeumlenkung entspricht.
+\end{enumerate}
+
 \end{answer}
 
 \question{Welche Aufgabe hat ein Kommando-Interpreter (z.B. in UNIX die Shell)?}
 \begin{answer}
-Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächtige) \crucial{Schnittstelle zum Betriebssystem} zur Verfügung.
+Ein Kommando-Interpreter stellt dem Benutzer eine einfache (und zugleich mächtige) Schnittstelle zum Betriebssystem \crucial({Benutzungsschnittstelle}) zur Verfügung. Damit lassen sich Aufträge an das Betriebssystem absetzen. Die Shell ist ebenfalls ein Prozess.
 \end{answer}
 
 \question{Was machst Du, wenn Dir die genaue Semantik eines Unix-Kommandos entfallen ist?}
 \begin{answer}
-Zunächst die Hilfe (mit dem \crucial{Kommandozeilensfwitch --help}), und wenn erforderliche die \crucial{Man-} oder \crucial{Infopages} zur Rate ziehen:
+Zunächst die Hilfe (mit dem \crucial{Kommandozeilenswitch --help}), und wenn erforderliche die \crucial{Man-} oder \crucial{Infopages} zur Rate ziehen:
 %% Bash script
 \lstset{language=bash,caption={Hilfe zu einem Kommando am Beispiel von \texttt{mkdir}}}
 \begin{lstlisting}
-anonuser$ mkdir --help
-anonuser$ man mkdir
-anonuser$ info mkdir
+user $ mkdir --help
+user $ man mkdir
+user $ info mkdir
 \end{lstlisting}
 \end{answer}
 
@@ -97,7 +157,10 @@ in der Shell? Welche Auswirkungen hat dies, wenn \texttt{bla} von \textbf{Standa
 \end{multilinequestion}
 
 \begin{answer}
-Hängt man einem Befehl ein \& an, so wird dieser als \crucial{Hintergrundprozess} gestartet. Er gibt damit die Kontrolle über das Terminal auf, so dass dieses für neue Prozesse verwendet werden kann. Dieser \crucial{kann} dann zwar auf \texttt{stdout} \crucial{schreiben}, wird aber sofort in den Zustand \crucial{suspended} versetzt , wenn er versucht von der Standardeingabe (\textit{stdin}) zu lesen.
+\texttt{bla} wird im \crucial{Vordergrund} ausgeführt und beansprucht das Terminal (=Tastatur) für sich. Weitere Shell-Eingaben sind daher erst möglich, nachdem \texttt{bla} terminiert.
+
+\paragraph{}
+Hängt man einem Befehl ein \& an, so wird dieser im \crucial{Hintergrund} ausgeführt (Hintergrundprozess). Er gibt damit die Kontrolle über das Terminal auf, so dass dieses für neue Prozesse verwendet werden kann. Dieser \crucial{kann} dann zwar auf \texttt{stdout} \crucial{schreiben}, wird aber sofort in den Zustand \crucial{suspended} versetzt , \crucial{wenn er versucht von der Standardeingabe (\textit{stdin}) zu lesen}.
 \end{answer}
 
 \begin{multilinequestion}[Prozessbäume: Gegeben sei der folgende Prozessbaum:]
@@ -240,27 +303,40 @@ oder gekillt wird.
 
 \question{Was ist ein Signal? Nenne Beispiele für mögliche Signalquellen. Wie kann ein Prozess auf ein Signal reagieren?}
 \begin{answer}
-Prozesse können Signale senden und empfangen. Stop, Kill, Terminate und Sleep sind
-Signale. Der Traphandler ist eine Signalquelle. Ein Signal ist die Meldung eines besonderen
-Zustandes von aussen. Eine Art vordefinierte Mechanismen des Systems, die adäquat
-behandelt werden, aber auch umdefiniert werden können (ignore).
+Signale dienen der Meldung (von Ausnahmezust"anden) an einen Prozess. Sowohl der Benutzer als auch Prozesse können Signale an Prozesse senden. Beispiele für Signale sind u.a. Stop (SIGINT), Kill (SIGKILL), Terminate und (SIGTERM). Der Traphandler ist oft eine Signalquelle.
 \end{answer}
 
 \question{Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}
 \begin{answer}
-Laut Wikipedia:\\
-Einfaches Modell:
-Sleep, Run, Zombie, Ready.
+\subsection*{Einfaches Modell:}
+\begin{itemize}
+\item Ready
+\item Run
+\item Sleep
+\item Zombie
+\end{itemize}
 
-Erweitertes Modell:
-dead: Der Prozess wurde beendet, er belegt jedoch noch Speicherplatz.
-ready: Der Prozess wartet auf Zuteilung der CPU (Zeitschlitz). Gibt es den Ready-Zustand, so befinden sich höchstens so viele Prozesse im Zustand running, wie CPUs vorhanden sind.
-running: Entweder genau der Prozess, der gerade bearbeitet wird, oder alle Prozesse, die momentan Rechenarbeit verrichten können.
-sleep: Der Prozess wurde auf eigenen Wunsch zurückgestellt. Er kann Signale entgegennehmen, wie z. B. Timer, oder Ergebnisse von Kindprozessen.
-trace: Der Prozess wurde von außen angehalten, üblicherweise durch einen Debugger.
-wait: Der Prozess wartet auf ein Ereignis, üblicherweise eine Benutzereingabe.
-uninterruptible sleep: Der Prozess wartet auf ein Ereignis, üblicherweise Hardware. Tritt dieses Ereignis ein, ohne dass der anfragende Prozess es entgegennimmt, so kann das System instabil werden.
-zombie: Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
+
+\subsection*{Erweitertes Modell:}
+
+\begin{description}
+\item[dead]\hfill \\ Der Prozess wurde beendet, er belegt jedoch noch Speicherplatz.
+
+\item[ready]\hfill \\ Der Prozess wartet auf Zuteilung der CPU (Zeitschlitz). Gibt es den Ready-Zustand, so befinden sich höchstens so viele Prozesse im Zustand running, wie CPUs vorhanden sind.
+
+\item[running]\hfill \\ Entweder genau der Prozess, der gerade bearbeitet wird, oder alle Prozesse, die momentan Rechenarbeit verrichten können.
+
+\item[sleep]\hfill \\ Der Prozess wurde auf eigenen Wunsch zurückgestellt. Er kann Signale entgegennehmen, wie z. B. Timer, oder Ergebnisse von Kindprozessen.
+
+\item[trace]\hfill \\ Der Prozess wurde von außen angehalten, üblicherweise durch einen Debugger.
+
+\item[wait]\hfill \\ Der Prozess wartet auf ein Ereignis, üblicherweise eine Benutzereingabe.
+
+\item[uninterruptible sleep]\hfill \\ Der Prozess wartet auf ein Ereignis, üblicherweise Hardware. Tritt dieses Ereignis ein, ohne dass der anfragende Prozess es entgegennimmt, so kann das System instabil werden.
+
+\item[zombie]\hfill \\ Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
+\end{description}
+
 \end{answer}
 
 \question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechenintensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}

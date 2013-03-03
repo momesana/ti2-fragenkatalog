@@ -36,11 +36,11 @@ Wie lassen sich die Kommunikationseigenschaften von Sockets mit normaler Briefpo
 \paragraph*{Pipe:}
 unidirektionaler sequentieller Bytestrom von stout eines Prozesses zu stdin eines anderen Prozesses. Um eine Pipe verwenden zu können, müssen die beiden Prozesse verwand sein.
 
-\paragraph*{Named Pipe (FIFO):}
+\paragraph*{Named Pipe (FIFO):}\label{netzwerke:named-pipe}
 Das Pipe-Objekt benötigt einen eindeutigen Namen (Kanal-Bezeichner). Die
 beiden miteinander kommunizierenden Prozesse müssen nicht verwandt sein, auch eine Named Pipe ist ein unidirektionaler sequentieller Bytestrom.
 
-\paragraph*{Sockets:}
+\paragraph*{Sockets:}\label{netzwerke:sockets}
 Es gibt zwei Arten von Sockets: Stream-Sockets und Datagramm-Sockets.
 Stream-Socket: Birdirektionale Pipe, Bytestrom, sequentielle übertragung, zuverlässig und verbindungsorientiert (Vergleich: Telefongespräch)
 Datagramm-Socket: Packetübergabe, Nachrichten, beliebige Reihenfolge, u.U. unzuverlässig (Verluste
