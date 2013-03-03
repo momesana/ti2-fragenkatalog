@@ -97,7 +97,7 @@ in der Shell? Welche Auswirkungen hat dies, wenn \texttt{bla} von \textbf{Standa
 \end{multilinequestion}
 
 \begin{answer}
-Hängt man einem Befehl ein \& an, so wird dieser als \crucial{Hintergrundprozess} gestartet. Dieser \crucial{kann} dann zwar auf \texttt{stdout} \crucial{schreiben}, wird aber sofort in den Zustand \crucial{suspended} versetzt , wenn er versucht von der Standardeingabe (\textit{stdin}) zu lesen.
+Hängt man einem Befehl ein \& an, so wird dieser als \crucial{Hintergrundprozess} gestartet. Er gibt damit die Kontrolle über das Terminal auf, so dass dieses für neue Prozesse verwendet werden kann. Dieser \crucial{kann} dann zwar auf \texttt{stdout} \crucial{schreiben}, wird aber sofort in den Zustand \crucial{suspended} versetzt , wenn er versucht von der Standardeingabe (\textit{stdin}) zu lesen.
 \end{answer}
 
 \begin{multilinequestion}[Prozessbäume: Gegeben sei der folgende Prozessbaum:]
@@ -196,20 +196,15 @@ Das Auflösen der Symbole erfolgt erst bei der tatsächlichen Ausführung des Pr
 Zum Auflösen von Verweisen.
 \end{answer}
 
-\question{Welchen Vorteil hat es, Bibliotheken mit Position Independent Code zu versehen?}
+\question{Welchen Vorteil hat es, Bibliotheken mit \textit{Position Independent Code} zu versehen?}
 \begin{answer}
 Position-independent Code (PIC, engl. für positionsunabhängiger Code) ist \crucial{Maschinencode, der ausgef"uhrt werden kann, unabh"angig davon, an welcher absoluten Adresse im Hauptspeicher er sich befindet}. PIC wird üblicherweise für dynamische Bibliotheken verwendet, damit diese für jedes Programm an eine Speicherposition geladen werden können, wo sie sich nicht mit anderen Objekten dieses Programms überlappen.\footnote{http://de.wikipedia.org/wiki/Position-Independent\_Code} 
 \end{answer}
 
-\question{Durch welche Qualitätsmerkmale soll ein Betriebssystem gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
+\question{Durch welche "Qualitätsmerkmale" sollten Betriebssysteme gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
 \begin{answer}
-\crucial{Effizienz, Kosten, Bedienbarkeit, Zuverl"assigkeit, Verf"ugbarkeit, Sicherheit, Wartbarkeit.}
-Der Kostenpunkt kann mit jeder anderen Anforderung konkurrieren. Je besser ein Aspekt
-werden soll, desto mehr Zeit und Entwicklungsarbeit, sprich Geld muss in diesen Aspekt
-investiert werden. Am Beispiel Windows lässt sich wunderbar erkennen, wie Bedienbarkeit
-und Zuverlässigkeit im Widerspruch zueinander stehen können. Die Sicherheit eines OS's
-lässt sich oft auch nicht mit einer ausgereiften Bedienbarkeit vereinbaren, oder umgekehrt,
-siehe Win vs. Linux.
+\crucial{Effizienz, Kosten, Bedienbarkeit, Zuverl"assigkeit, Verf"ugbarkeit, Sicherheit, Wartbarkeit.
+Der Kostenpunkt kann mit jeder anderen Anforderung konkurrieren.} Je besser ein Aspekt werden soll, desto mehr Zeit und Entwicklungsarbeit, sprich Geld muss in diesen Aspekt investiert werden. Am Beispiel Windows lässt sich wunderbar erkennen, wie \crucial{Bedienbarkeit und Zuverl"assigkeit im Widerspruch} zueinander stehen können. Die Sicherheit eines OS's lässt sich oft auch nicht mit einer ausgereiften Bedienbarkeit vereinbaren, oder umgekehrt, siehe Win vs. Linux.
 \end{answer}
 
 \question{Worin unterscheidet sich der Kernel-Mode vom User-Mode (in UNIX)? Warum wird diese Unterscheidung getroffen?}
@@ -217,12 +212,9 @@ siehe Win vs. Linux.
 \crucial{Kernel und Useradressraum sind aus Sicherheitsgr"unden getrennt. Im User-Mode gibt es keinen direkten Zugriff auf die Hardware.} Das hat auch seinen Sinn, da diese Zugriffe kontrolliert erfolgen sollen, damit das System sicher und zuverlässig bleibt.
 \end{answer}
 
-\question{Was passiert etwa bei einem System-Aufruf?}
+\question{Was passiert etwa bei einem System-Aufruf? (Reihenfolge der Arbeitsschritte.)}
 \begin{answer}
-Es erfolgt ein Trap, darauf wird der Zustand des Systems gesichert, dann erfolgt der Sprung
-in den Kernel-Mode, in dem der eigentliche Hardware-Zugriff erfolgt. Daraufhin gibt es
-eine Rückmeldung und einen Rücksprung zum Prozess, wo dann auch der Kontext wieder
-hergestellt wird.
+\crucial{Es erfolgt ein Trap, darauf wird der Zustand des Systems gesichert, dann erfolgt der Sprung in den Kernel-Mode, in dem der eigentliche Hardware-Zugriff erfolgt. Daraufhin gibt es eine R"uckmeldung und einen R"ucksprung zum Prozess, wo dann auch der Kontext wieder hergestellt wird.}
 \end{answer}
 
 \question{Was ist ein Interrupt? Nenne Beispiele für mögliche Interrupt-Quellen. Warum werden sie unterschiedlich priorisiert? Wie wird ein Interrupt in etwa behandelt?}
@@ -235,7 +227,7 @@ andere Programme auswirken kann, die sich nach dieser Uhr zu richten haben.
 Beispiele für einen Softwareinterrupt wären SIGKILL oder SIGSTOP.
 \end{answer}
 
-\question{Was ist ein Trap? Nenne Beispiele für Traps. Inwiefern unterscheiden sich Traps von Interrupts?}
+\question{Was ist ein Trap? Nenne Beispiele. Inwiefern unterscheiden sich Traps von Interrupts?}
 \begin{answer}
 Ein Trap ist ein interne Unterbrechung eines Programms in Ausführung, die vom System
 kommt. Beim Trap wird in den Kernel-Mode gewechselt, da es ja ein Systemaufruf ist.
@@ -271,7 +263,7 @@ uninterruptible sleep: Der Prozess wartet auf ein Ereignis, üblicherweise Hardw
 zombie: Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
 \end{answer}
 
-\question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechen-intensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
+\question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechenintensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
 \begin{answer}
 Ein Scheduler soll schlank (effizient) und fair sein, d. h. der Rechenaufwand der Prozessverwaltung
 darf nicht so gross werden, dass die Effizienz darunter leidet, und jeder Prozess soll
@@ -279,24 +271,21 @@ gerechterweise auch drankommen. Auch die Zeitscheiben sollen eine angemessene Gr
 haben.
 \end{answer}
 
-\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten simulieren?}
+\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten "simulieren"?}
 \begin{answer}
 Man könnte die Anzahl der Durchläufe für die Prozesse mit einer hohen Priorität erhöhen,
 so dass diese in einem Durchlauf mehrere Male dran kommen, oder man gibt den wichtigen
 Prozessen grössere Zeitscheiben, um ihnen mehr CPU-Zeit zukommen zu lassen.
 \end{answer}
 
-\question{Warum bestehen die Sleep-Queue und die Run-Queue in UNIX nicht aus jeweils einer
-einzigen Warteschlange? Wie sind sie stattdessen organisiert?}
+\question{Warum bestehen die \textit{Sleep}- und die \textit{Run-Queue} in UNIX nicht aus jeweils einer einzigen Warteschlange? Wie sind sie stattdessen organisiert?}
 \begin{answer}
 Sleep-Queue und Run-Queue bestehen aus jeweils einem Array. Jede Priorität hat darin
 eine eigene Liste, das Handling zwischen den Queues ist abhängig von der Priorität. Diese
 Aufteilung besteht, da sonst immer alles durchsucht werden müsste.
 \end{answer}
 
-\question{Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der PROStruktur
-und teilweise in der User-Struktur abgelegt? Nenne jeweils drei charakteristische
-Beispiele für Angaben darin.}
+\question{Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der \textit{Proc-Struktur} und teilweise in der \textit{User-Struktur} abgelegt? Nenne jeweils drei charakteristische Beispiele für Angaben darin.}
 \begin{answer}
 Die in der Proc-Struktur abgelegten Zustandsinformationen sind für alle Prozesse verfügbar,
 die in der User-Struktur abgelegten sind nur für den laufenden Prozess verfügbar.
@@ -310,8 +299,7 @@ Aktuelles Verzeichnis
 Geöffnete Dateien.
 \end{answer}
 
-\question{Skizziere kurz die Prozesserzeugung in UNIX.Welche Rolle spielen die Systemaufrufe fork()
-und exec() dabei?}
+\question{Skizziere kurz die Prozesserzeugung in UNIX. Welche Rolle spielen die Systemaufrufe fork() und exec() dabei?}
 \begin{answer}
 Der Prozess Nummer Eins (INIT) wird "von Hand" beim Systemstart erzeugt.
 Andere Prozesse werden bei Bedarf als Kindprozesse mit fork() (oft als Kind-Prozesse
@@ -331,9 +319,8 @@ wird dann entweder später vom Vater behandelt oder (je nach UNIX-Variante) durc
 Betriebssystem. Z.B. kann der INIT-Prozess die Proc-Struktur wieder freigeben.
 \end{answer}
 
-\question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung?}
+\question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung? Wie funktioniert der Buddy-Algorithmus in etwa?}
 \begin{answer}
-Wie funktioniert der Buddy-Algorithmus in etwa?
 First-Fit-Algorithmus:
 Der erste Block, der gross genug ist, wird verwendet indem er in zwei Teile gespalten wird
 (gross genug für die Anforderung und Rest).
@@ -353,23 +340,19 @@ innerhalb der Blöcke.
 Optimierung: mehrere Listen mit jeweils gleich grossen Blöcken, das verringert die Suchdauer.
 \end{answer}
 
-\question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher
-werden typischerweise bereitgestellt?}
+\question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher werden typischerweise bereitgestellt?}
 \begin{answer}
 Die Systeme bieten eine Speicherhierachie an da die Geschwindigkeit sich konträr zu den
-Kosten verhält.
-Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set).
-Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
+Kosten verhält. Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set). Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
 \end{answer}
 
 \question{Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}
 \begin{answer}
 Ein Prozess muss nicht zwangsläufig komplett im Speicher verfügbar sein (s.o.:Working
-Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten
-möglich, heisst insgesamt eine erheblich bessere Nutzung des Haupspeichers.
+Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten möglich, heisst insgesamt eine erheblich bessere Nutzung des Haupspeichers.
 \end{answer}
 
-\question{Was versteht man unter Paging, was unter Segmentierung? Wo tritt interne Fragmentierung, wo externe Fragmentierung auf? Was versteht man darunter?}
+\question{Was versteht man unter \textit{Paging}, was unter \textit{Segmentierung}? Wo tritt \textit{interne Fragmentierung}, wo \textit{externe Fragmentierung} auf? Was versteht man darunter?}
 \begin{answer}
 Segmentierung:
 Speicher wird in verschieden grosse Stücke unterteilt, das ermöglicht die 
@@ -388,19 +371,16 @@ interne Fragmentierung: wenn innerhalb von gleich grossen Stücken der Speicher 
 ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
-\question{Aus welchen Teilen besteht eine virtuelle Adresse zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
+\question{Aus welchen Teilen besteht eine \textit{virtuelle Adresse} zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
 \begin{answer}
-Eine virtuelle Adresse besteht zumeist aus zwei Teilen: jPAGEjADDRj. Der erste Teil wird bei
-Gebrauch in der Page-Tabelle "nachgeschaut" und entsprechend ersetzt: jADDRjADDRj.
-Dieser Vorgang wird üblichwerweise durch Hardwareunterstützung realisiert: die Memory Managment
-Unit (MMU).
+Eine virtuelle Adresse besteht zumeist aus zwei Teilen: jPAGEjADDRj. Der erste Teil wird bei Gebrauch in der Page-Tabelle "nachgeschaut" und entsprechend ersetzt: jADDRjADDRj.
+Dieser Vorgang wird üblichwerweise durch Hardwareunterstützung realisiert: die Memory-Managment-Unit (MMU).
 \end{answer}
 
 \question{Wie können mehrere Prozesse mit Hilfe virtueller Adressierung auf dieselben Programmstücke (oder auch Datenbereiche) zugreifen?}
 \begin{answer}
 Shared Memory:
-In den jeweiligen (unterschiedlichen) Page-Tabellen sind dieselben Seiten eingetragen. (Doppelter
-bzw. dreifacher Eintrag ein und desselben Inhalts in die 'Inhaltsverzeichnisse').
+In den jeweiligen (unterschiedlichen) Page-Tabellen sind dieselben Seiten eingetragen. (Doppelter bzw. dreifacher Eintrag ein und desselben Inhalts in die 'Inhaltsverzeichnisse').
 \end{answer}
 
 \question{Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in etwa?}
@@ -451,7 +431,17 @@ zu komplexen Variante von Second-Chance-FIFO.
 LRU (ohne Dirty-Bit)
 \end{answer}
 
-\question{Warum ist ein optimaler Algorithmus nicht realisierbar?}
+\begin{multilinequestion}[Warum ist ein perfekter Algorithmus zur Verdrängung von Pages aus dem Hauptspeicher nicht realisierbar?]
+Wie arbeiten die folgenden Algorithmen in etwa:
+\begin{enumerate}
+\item FIFO (First-In-First-Out),
+\item LFU (Least-Frequently-Used),
+\item LRU (Least-Recently-Used)?
+\end{enumerate}
+In welche dieser Kategorien kann man NRU (Not-Recently-Used) einordnen? Wie arbeitet
+der Clock-Hand-Algorithmus?
+\end{multilinequestion}
+
 \begin{answer}
 Ein optimaler Algorithmus ist für ein 'normales' Betriebssystem nicht realisierbar, da die Prozesse
 durch unterschiedliche Working Sets eine unterschiedlich grosse Anzahl von Seiten unterschiedlich
@@ -460,62 +450,47 @@ Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben 
 Systems) ein optimaler bzw. annähernd optimaler Algorithmus möglich.
 \end{answer}
 
-\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gross bzw. zu
-klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
+\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gross bzw. zu klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
 \begin{answer}
-Wenn die Umlaufzeit zu gross gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die
-Freispeichereserve leer).
-Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem
-Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als
-sinnvoll.
-Ein zweiter Zeiger verbessert den Clocl k-Hand-Algorithmus insbesondere bei grossen Mengen von
-Speicher. Z.B. kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen, der Zweite die
+Wenn die Umlaufzeit zu gross gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die Freispeichereserve leer). Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als sinnvoll.
+
+\paragraph*{}
+Ein zweiter Zeiger verbessert den Clock-Hand-Algorithmus insbesondere bei grossen Mengen von Speicher. Z.B. kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen, der Zweite die
 Seiten entfernen falls sie in der Zwischenzeit nicht erneut referenziert wurden.
 \end{answer}
 
-\question{Was ist Swapping?Warum wenden auch Paging-Systeme häufig dieses Verfahren an? Unter welcher Bedingung?}
+\question{Was ist Swapping? Warum wenden auch Paging-Systeme häufig dieses Verfahren an bzw. Unter welcher Bedingung?}
 \begin{answer}
-Swapping wird angewandt wenn die Working Sets der aktiven Prozesse nicht vollständig in den
-Speicher passen.
-Dadurch entsteht eine hohe Page Frame-Rate, das so genannte Seiten-Flattern. Da das Lesen
-von der Festplatte recht lange dauert, sinkt die Geschwindigkeit, in der die Instruktionen abgearbeitet
-werden können, rapide.
-Durch Swapping werden nicht nur Teile von Prozessen (Paging), sondern ganze Prozesse auf die
-Platte ausgelagert. Längere Zeit inaktive Prozesse werden aus dem Hauptspeicher entfernt, um
-dort Platz verfügbar zu machen, dadurch wird natürlich ein Austausch der Prozesse im Hauptspeicher
-nach gewisser Zeit erforderlich.
+Swapping wird angewandt, wenn die Working Sets der aktiven Prozesse nicht vollständig in den Speicher passen. Dadurch entsteht eine hohe Page Frame-Rate, das so genannte Seiten-Flattern. Da das Lesen von der Festplatte recht lange dauert, sinkt die Geschwindigkeit, in der die Instruktionen abgearbeitet werden können, rapide.
+
+\paragraph*{}
+Durch Swapping werden nicht nur Teile von Prozessen (Paging), sondern ganze Prozesse auf die Platte ausgelagert. Längere Zeit inaktive Prozesse werden aus dem Hauptspeicher entfernt, um dort Platz verfügbar zu machen, dadurch wird natürlich ein Austausch der Prozesse im Hauptspeicher nach gewisser Zeit erforderlich.
 \end{answer}
 
 \question{Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}
 \begin{answer}
-Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte
-Adressraum wird in gleich grosse Kacheln eingeteilt.
-Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen
-enthalten. Die Grösse der Segmente ist nicht statisch, sondern kann jede Gösse mit n
-multipliziert mit Page Frame Grösse umfassen.
+Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte Adressraum wird in gleich grosse Kacheln eingeteilt.
+Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen enthalten. Die Grösse der Segmente ist nicht statisch, sondern kann jede Gösse mit n multipliziert mit Page Frame Grösse umfassen.
+
+\paragraph*{}
 Dadurch entstehen dreiteilige Adressen:
-Region mit eigener Pagetabelle, Page in der Region, Adressein Page.
-Regionen folgen dabei der logischen Grösse des Adressraumes (Text, Data, Stack), Pages sind in
-feste Grössen unterteilt.
+Region mit eigener Pagetabelle, Page in der Region, Adresse in Page.
+Regionen folgen dabei der logischen Grösse des Adressraumes (Text, Data, Stack), Pages sind in feste Grössen unterteilt.
 \end{answer}
 
-\question{Wozu wird bei der Speicherverwaltung häufig ein Assoziativspeicher eingesetzt?}
+\question{Wozu bzw. wo wird bei der Speicherverwaltung häufig ein \textit{Assoziativspeicher} eingesetzt?}
 \begin{answer}
-Assoziativspeicher wird im allgemeinen als Spezialhardware innerhalb der MMU (Memory Managment
-Unit) realisiert. D.h. Assoziativspeicher == Hardware-Cache.
-Er wird häufig zur Adressumsetzung genutzt. Für die gesamte Pagetabelle wäre dies sehr teuer,
+Assoziativspeicher wird im allgemeinen als Spezialhardware innerhalb der MMU (Memory-Managment-Unit) realisiert. D.h. Assoziativspeicher == Hardware-Cache.
+Er wird häufig zur Adressumsetzung genutzt. Für die gesamte Pagetabelle wäre dies sehr teuer, deswegen wird beim Prozesswechsel neu geladen, es sind (getreu dem Lokalitätsprinzip) immer nur einige Seiten in Gebrauch. Daher enthält der Cache jeweils nur diese Seiten.
 
-deswegen wird beim Prozesswechsel neu geladen, es sind (getreu dem Lokalitätsprinzip) immer nur
-einige Seiten in Gebrauch. Daher enthält der Cache jeweils nur diese Seiten. Ablauf: Adresszugriff,
+\paragraph*{}
+Ablauf: Adresszugriff,
 Page Table Entry im Cache? Wenn ja: Adressumsetzung, wenn nein: Nachladen aus der Pagetabelle.
-Es ist der parallele Zugriff auf alle im Cache befindlichen Einträge möglich. Die gesamte Pagetabelle
-im Hauptspeicher vorzuhalten, wäre zu langsam, da zusätzlicher Speicherzugriff nötig
-wäre.
+Es ist der parallele Zugriff auf alle im Cache befindlichen Einträge möglich. Die gesamte Pagetabelle im Hauptspeicher vorzuhalten, wäre zu langsam, da zusätzlicher Speicherzugriff nötig wäre.
 \end{answer}
 
-\question{Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf ein UNIXFilesystem.}
+\question{Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf ein UNIXFilesystem. Welche Rolle spielt der Filedeskriptor dabei?}
 \begin{answer}
-Welche Rolle spielt der File Descriptor dabei?
 open()
 Öffnet eine Datei für die weitere Arbeit. open() werden die Parameter path (Pfadname der Datei),
 
@@ -540,7 +515,7 @@ mit den Parametern fd, buf und len funktioniert analog zu read() und liefert die
 Bztes zurück.
 \end{answer}
 
-\question{Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über Indirekt-Blöcke?}
+\question{Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über \textit{Indirekt}-Blöcke?}
 \begin{answer}
 Das Dateisystem V7:
 - Der Dateiinhalt ist Block-orientiert mit speziellem Block-Index organisiert.
@@ -571,7 +546,7 @@ als verkettete Liste, heisst bei eine Störung der verkettene Liste durch einen 
 Block (z.B.) sind alle folgenden Listeneinträge nicht mehr erreichbar.
 \end{answer}
 
-\question{Welche Aufgaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Directory)?}
+\question{Welche Aufgaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Euch besser bekannt als \textit{Directory})?}
 \begin{answer}
 Aufgaben von Inodes: siehe oben. Eine Verzeichnis-Datei (Directory) ist eine Datei und hat entsprechend
 einen eigenen Inode und Datenblöcke. Verzeichnisse sind eine Folge von Einträgen, die
@@ -581,22 +556,15 @@ enthalten.
 
 \question{Welche Aufgaben hat der Buffer Cache in UNIX?}
 \begin{answer}
-Der UNIX-Buffer Cache ist ein Zwischenspeicher (Puffer) für gelesene oder geschriebene Plattenbl
-öcke im Kernadressraum. Er puffert Ein- und Ausgabe vom User-Adressraum entkoppelt. Der
-Buffer Cache ermöglicht Mehrfachzugriff ohne weitere Plattenzugriffe.
-Die Daten werden von Platte zu Cache in Blöcken transportiert, von Cache zu CPU in Bytes.
+Der UNIX-Buffer Cache ist ein Zwischenspeicher (Puffer) für gelesene oder geschriebene Plattenblöcke im Kernadressraum. Er puffert Ein- und Ausgabe vom User-Adressraum entkoppelt. Der Buffer Cache ermöglicht Mehrfachzugriff ohne weitere Plattenzugriffe. Die Daten werden von Platte zu Cache in Blöcken transportiert, von Cache zu CPU in Bytes.
 \end{answer}
 
 \question{Was geschieht durch einen mount()-Systemaufruf in etwa?}
 \begin{answer}
-Unter UNIX kann eine physikalische Harddisk in mehrere logische Partitionen eingeteilt sein. Jede
-dieser Patitionen enthält ihr eigenes Dateisystem, ein UNIX-System kann also aus mehreren solcher
-Dateisysteme zusammengesetzt sein. Mit dem Befehl mount wird ein weiteres Dateisystem
-in einen solchen Dateibaum (Wurzel: Root) eingehängt, d.h. verfügbar gemacht. Beim mounten
-werden logische Geräte (z.B. CDROM, Partition, ...) und der Mount Point übergeben.
+Unter UNIX kann eine physikalische Harddisk in mehrere logische Partitionen eingeteilt sein. Jede dieser Patitionen enthält ihr eigenes Dateisystem, ein UNIX-System kann also aus mehreren solcher Dateisysteme zusammengesetzt sein. Mit dem Befehl mount wird ein weiteres Dateisystem in einen solchen Dateibaum (Wurzel: Root) eingehängt, d.h. verfügbar gemacht. Beim mounten werden logische Geräte (z.B. CDROM, Partition, ...) und der Mount Point übergeben.
 \end{answer}
 
-\question{Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf mmap() in den virtuellen Adressraum eines Prozesses abzubilden?}
+\question{Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf \texttt{mmap()} in den virtuellen Adressraum eines Prozesses abzubilden?}
 \begin{answer}
 I/O Performance steigt durch:
 
@@ -624,7 +592,7 @@ UNIX Fast File System:
 Das System arbeitet auf vier bzw. acht Byte grossen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
 \end{answer}
 
-\question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle für den  Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
+\question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle zum Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
 \begin{answer}
 In UNIX sind Geräte als Datein dargestellt. Dies bietet für Anwender und Programmierer den
 Vorteil, dass sie einheitlich zu behandeln sind.
@@ -633,7 +601,7 @@ Vorteil, dass sie einheitlich zu behandeln sind.
 Everything is a file (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
 \end{answer}
 
-\question{Was ist ein Gerätetreiber, was ein Geräte-Controller? Welche Aufgaben haben sie?}
+\question{Was ist ein \textit{Gerätetreiber}, was ein \textit{Geräte-Controller}? Welche Aufgaben haben sie?}
 \begin{answer}
 Gerätetreiber:
 - ist Code innerhalb des Betriebssystems zur Geräteverwaltung
@@ -647,13 +615,13 @@ Ein Treiber ist also zum Kernel gehörende Software, ein Controller ist die zu e
 vom Treiber gesteuerte, Hardware.
 \end{answer}
 
-\question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine High Water Mark bzw. eine Low Water Mark?}
+\question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine \textit{High Water Mark} bzw. eine \textit{Low Water Mark}?}
 \begin{answer}
 Der Zugriff über Warteschlangen erfolgt um eine Vermischung von Aufträgen und das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
 Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird oder ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt" werden können.
 \end{answer}
 
-\question{Worin unterscheidet sich Direct Memorz Access (DMA) von Programmed I/O?}
+\question{Worin unterscheidet sich Direct Memory Access (DMA) von Programmed I/O?}
 \begin{answer}
 Beim Programmed
 I/O ist der Ablauf wie unter 7.2 beschrieben, da der Treiber ein Teil des Betriebssystems ist, bleibt letztendlich die Kontrolle des Vorgangs bei der CPU. Beim Direct Memory Access (DMA) liegt nach dem Anstoss eines Auftrages der Zugriff auf den

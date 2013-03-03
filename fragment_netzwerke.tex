@@ -1,15 +1,11 @@
 \section{Netzwerke und Interprozess-Kommunikation}
 
-\question{Wozu verwendet man Kanäle bzw. Ports? Was ist das?}
+\question{Wozu verwendet man \textit{Kanäle} bzw. \textit{Ports}? Was ist das?}
 \begin{answer}
-Kommunikation zwischen zwei Prozessen setzt die Benennung der Partner voraus. Besser wäre hier den Kanal zu benennen, über den sie kommunizieren. Die Partner bleiben dadurch "anonym".
-Ports geben an, wohin gesendet werden soll. Sie werden verwendet, wenn es nur einen Sender
-oder Empfänger auf einem Kanal gibt. Durch Ports ist eine dynamische Zuordnung zu Prozessen
-möglich.
+Kommunikation zwischen zwei Prozessen setzt die Benennung der Partner voraus. Besser wäre hier den Kanal zu benennen, über den sie kommunizieren. Die Partner bleiben dadurch "anonym". Ports geben an, wohin gesendet werden soll. Sie werden verwendet, wenn es nur einen Sender oder Empfänger auf einem Kanal gibt. Durch Ports ist eine dynamische Zuordnung zu Prozessen möglich.
 \end{answer}
 
-\question{Was ist ein guarded command? Warum kann die Verwendung eines solchen Konzepts gerade im
-Zusammenhang mit Nachrichtenaustausch interessant sein?}
+\question{Was ist ein \textit{guarded command}? Warum kann die Verwendung eines solchen Konzepts gerade im Zusammenhang mit Nachrichtenaustausch interessant sein?}
 \begin{answer}
 Durch guarded commands ist es möglich, auf verschiedene Sender als Empfänger entsprechend
 zu reagieren. Mit Hilfe von guarded commands können Unterscheidungen getroffen werden.(z.B.
@@ -17,31 +13,36 @@ if...else if....).
 Wenn mehrere Wächter zutreffen, ist die Auswahl nichtdeterministisch.
 \end{answer}
 
-\question{Wie arbeitet der Korridor-Algorithmus zum überwachen mehrerer Eingabequellen in etwa?}
+\question{Wie arbeitet der \textit{Korridor}-Algorithmus zum überwachen mehrerer Eingabequellen in etwa?}
 \begin{answer}
-Der Korridor-Algorithmus arbeitet ähnlich wie ein Bürobote, der auf seinem Rundgang durch einen
-Korridor mit vielen Büros geht. Der Bote hat einen "Warteraum", in dem er im Ruhezustand sitzt.
-An jedem Büro ist eine Lampe o.ä. angebracht, die abzuarbeitende Aufträge anzeigt.
-Wenn der Bote von seinem Warteraum aus sieht, das ein Auftrag abzuarbeiten ist, geht er an den
-Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies
-tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum
-begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge am Beginn seiner Runde
-entstanden sind.
+Der Korridor-Algorithmus arbeitet ähnlich wie ein Bürobote, der auf seinem Rundgang durch einen Korridor mit vielen Büros geht. Der Bote hat einen "Warteraum", in dem er im Ruhezustand sitzt. An jedem Büro ist eine Lampe o.ä. angebracht, die abzuarbeitende Aufträge anzeigt.
+
+Wenn der Bote von seinem Warteraum aus sieht, das ein Auftrag abzuarbeiten ist, geht er an den Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge am Beginn seiner Runde entstanden sind.
 \end{answer}
 
-\question{Worin unterscheiden sich die Eigenschaften der folgenden UNIX-Mechanismen zur Interprozesskommunikation:}
+\begin{multilinequestion}[Worin unterscheiden sich die Eigenschaften der folgenden UNIX-Mechanismen zur Interprozesskommunikation:]
+\begin{itemize}
+\item Pipes,
+\item Named Pipes,
+\item Sockets?
+\end{itemize}
+
+Wie lassen sich die Kommunikationseigenschaften von Sockets mit normaler Briefpost und Telefongesprächen vergleichen?
+\end{multilinequestion}
+
+\question{}
 \begin{answer}
-Pipes, Named Pipes, Sockets?
-Wie lassen sich die Kommunikationseigenschaften von Sockets mit normaler Briefpost und Telefongespr
-ächen vergleichen?
-Pipe: unidirektionaler sequentieller Bytestrom von stout eines Prozesses zu stin eines anderen
-Prozesses. Um eine Pipe verwenden zu können, müssen die beiden Prozesse verwand sein.
-Named Pipe: (FIFO) Das Pipe-Objekt benötigt einen eindeutigen Namen (Kanal-Bezeichner). Die
-beiden miteinander kommunizierenden Prozesse müssen nicht verwandt sein, auch eine Named Pipe
-ist ein unidirektionaler sequentieller Bytestrom.
-Sockets: es gibt zwei Arten von Sockets: Stream-Sockets und Datagramm-Sockets.
-Stream-Socket: Birdirektionale Pipe, Bytestrom, sequentielle übertragung, zuverlässig und verbindungsorientiert
-(Vergleich: Telefongespräch)
+
+\paragraph*{Pipe:}
+unidirektionaler sequentieller Bytestrom von stout eines Prozesses zu stdin eines anderen Prozesses. Um eine Pipe verwenden zu können, müssen die beiden Prozesse verwand sein.
+
+\paragraph*{Named Pipe (FIFO):}
+Das Pipe-Objekt benötigt einen eindeutigen Namen (Kanal-Bezeichner). Die
+beiden miteinander kommunizierenden Prozesse müssen nicht verwandt sein, auch eine Named Pipe ist ein unidirektionaler sequentieller Bytestrom.
+
+\paragraph*{Sockets:}
+Es gibt zwei Arten von Sockets: Stream-Sockets und Datagramm-Sockets.
+Stream-Socket: Birdirektionale Pipe, Bytestrom, sequentielle übertragung, zuverlässig und verbindungsorientiert (Vergleich: Telefongespräch)
 Datagramm-Socket: Packetübergabe, Nachrichten, beliebige Reihenfolge, u.U. unzuverlässig (Verluste
 sind möglich), verbindungslos (Vergleich: Brief-/Packetzustellung)
 \end{answer}
@@ -109,11 +110,10 @@ Funktionsfähigkeit eine sehr Fehler tolerante Netzwerkvariante.
 \begin{answer}
 Das Internet Protokoll sorgt für die Integration von Anwendungen und Medien. Es ermöglicht
 eine Netzübergreifende Adressierung und ist Packet-orientiert.
-Durch die mit IP bestehenden Möglichkeiten ist es zum wichtigsten und am weitesten verbreiteten
-Protokoll geworden.
+Durch die mit IP bestehenden Möglichkeiten ist es zum wichtigsten und am weitesten verbreiteten Protokoll geworden.
 \end{answer}
 
-\question{Was ist ein Remote Procedure Call (RPC), und welche Parameter wird man typischerweise dabei übergeben? Was haben RPCs mit dem Client/Server-Modell zu tun?}
+\question{Was ist ein \textit{Remote Procedure Call} (RPC), und welche Parameter wird man typischerweise dabei übergeben? Was haben RPCs mit dem \textit{Client/Server}-Modell zu tun?}
 \begin{answer}
 TODO
 \end{answer}

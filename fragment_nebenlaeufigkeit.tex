@@ -11,28 +11,24 @@ Eine Modellierungssprache, die diese Abhängigkeiten wiedergibt, sind Petri-Netz
 
 \question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}
 \begin{answer}
-Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es
-kann hier zu Verklemmungen, dem After-you-after-you Problem und dem Verhungern kommen.
-Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der gegenseitige Ausschluss
-nicht gewährleistet ist.
+Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es kann hier zu Verklemmungen (Deadlocks), dem After-you-after-you Problem und dem Verhungern kommen.
+Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der \crucial{gegenseitige Ausschluss} nicht gewährleistet ist.
 \end{answer}
 
-\question{Was sind kritische Abschnitte? Wo kommen sie vor?}
+\question{Grenze die Begriffe \textit{Nebenläufigkeit}, \textit{Quasi-Parallelität} und \textit{Parallelität} voneinander ab. Was verstehen wir unter Nichtdeterminismus?}
 \begin{answer}
-Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
+Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
 \end{answer}
 
-\question{Grenze die Begriffe Nebenläufigkeit, Quasi-Parallelität und Parallelität voneinander ab. Was verstehen wir unter Nichtdeterminismus?}
+\begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt:]
+\begin{enumerate}
+\item Erzeuger/Verbraucher (Producer/Consumer)
+\item Leser/Schreiber (Reader/Writer)
+\item Speisende Philosophen (Dining Philosophers)?
+\end{enumerate}
+\end{multilinequestion}
 \begin{answer}
-Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das
-Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
-\end{answer}
-
-\question{Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt?}
-\begin{answer}
-a) Erzeuger/Verbraucher (Producer/Consumer)
-b) Leser/Schreiber (Reader/Writer)
-c) Speisende Philosophen (Dining Philosophers)?
+TODO
 \end{answer}
 
 \question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
@@ -40,7 +36,7 @@ c) Speisende Philosophen (Dining Philosophers)?
 TODO 
 \end{answer}
 
-\question{Was besagt Prämemtion?}
+\question{Was besagt Prämemption?}
 \begin{answer}
 Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse zugunsten anderer.
 \end{answer}
@@ -62,7 +58,7 @@ Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt d
 für das Scheduling dar.
 \end{answer}
 
-\question{Die Routinen pthread create(), pthread join(), pthread exit() realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (wait(), fork() und exit()). Warum arbeitet pthread create() deutlich anders als fork()?}
+\question{Die Routinen \texttt{pthread\_create()}, \texttt{pthread\_join()}, \texttt{pthread\_exit()} realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (\texttt{wait()}, \texttt{fork()} und \texttt{exit()}). Warum arbeitet \texttt{pthread\_create()} deutlich anders als \texttt{fork()}?}
 \begin{answer}
 thr create() / fork()
 thr create():
@@ -88,7 +84,7 @@ eigenständiger Prozess erzeugt wird. Dieser wird auch vom Scheduler berücksich
 Betriebsystemkern bekannt ist.
 \end{answer}
 
-\question{Was versteht man unter einseitiger bzw. mehrseitiger Synchronisation? Gib jeweils ein Anwendungsbeispiel an.}
+\question{Was versteht man unter \textit{einseitiger} bzw. \textit{mehrseitiger Synchronisation}? Gib jeweils ein Anwendungsbeispiel an.}
 \begin{answer}
 TODO
 \end{answer}
@@ -112,12 +108,13 @@ In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnit
 
 \question{Was ist ein kritischer Abschnitt? Wie kann man den gegenseitigen Ausschluss gewährleisten? Warum ist ein Unterbrechungsausschluss dabei nicht immer das geeignete Mittel?}
 \begin{answer}
+Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
+
 Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
-Datenstruktur oder auf ein Betriebssystemmittel zugegriffen wird. Kritische Abschnitte
-müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder
-kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine "Schlossvariable"
-realisiert wied. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean
-TRUE). Andere Programmabläufe müssen nun den Status der Schlossvariablen nachfragen,
+Datenstruktur oder auf ein gemeinsames Betriebsmittel zugegriffen wird. Kritische Abschnitte müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine "Schlossvariable" realisiert wird. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean TRUE).
+
+\paragraph*{}
+Andere Programmabläufe müssen nun den Status der Schlossvariablen nachfragen,
 um zu erfahren, ob der kritische Abschnitt frei ist oder nicht.
 Möglichkeiten, den gegenseitigen Ausschluss zu gewährleisten:
 - eigene Absicht anmelden, dann überprüfen ob anderer auch will. Jeder Programmablauf benötigt
@@ -138,22 +135,18 @@ Wenn ein Prozess sich in einem kritisdchen Abschnitt befindet, und nicht selbst 
 herauskommt (z.B. Endlosschleife), wäre es nicht sinnvoll, hier die Unterbrechung auszuschalten.
 \end{answer}
 
-\question{Nach welchen Kriterien wird Korrektheit bzw. Güte von Locking-Algorithmen bewertet? Wie geht man dabei vor?}
+\question{Nach welchen Kriterien wird Korrektheit bzw. Güte von \textit{Locking-Algorithmen} bewertet? Wie geht man dabei vor?}
 \begin{answer}
 Der Zugriff auf Schlossvariablen darf nicht selbst in einem kritischen Abschnitt liegen. Locking-Algorithmen sollten verklemmungsfrei arbeiten.
 \end{answer}
 
-\question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von unteilbaren Operationen durchführen?}
+\question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von \textit{unteilbaren Operationen} durchführen?}
 \begin{answer}
-Nur unteilbare Operationen sind nicht unterbrechbar.
-Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-
-Ausführung. Wenn man ein Programm auf Maschinen-Code runterbricht, kann man sehr gut
-erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Prozesswechsel,
-erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher
-genau analysieren und Anfang und Ende festlegen.
+Nur unteilbare Operationen sind nicht unterbrechbar. Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-
+Ausführung. Wenn man ein Programm auf Maschinen-Code runterbricht, kann man sehr gut erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Prozesswechsel, erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher genau analysieren und Anfang und Ende festlegen.
 \end{answer}
 
-\question{Auf welche verschiedenen Arten kann man Verklemmungen angehen? Wie arbeitet der Bankiersalgorithmus?}
+\question{Auf welche verschiedenen Arten kann man \textit{Verklemmungen} angehen? Wie arbeitet der \textit{Bankiersalgorithmus}?}
 \begin{answer}
 Ein Deadlock liegt an wenn z.B. zwei oder mehrere Prozesse auf Betriebsmittel warten, die nur
 von anderen freigegeben werden kann, es aber nicht mehr zu der Freigabe kommen wird.
@@ -182,13 +175,10 @@ leistungsfähigkeit nicht sprengt.
 TODO
 \end{answer}
 
-\question{Grenze die Begriffe aktives und blockierendes Warten voneinander ab.}
+\question{Grenze die Begriffe \textit{aktives} und \textit{blockierendes} Warten voneinander ab.}
 \begin{answer}
 Beim aktiven Warten wird ständig die Schlüsselvariable eines kritischen Abschnitts überprüf, ob sieser nun frei geworden ist oder nicht. Durch das ständige Abfragen wird unter Unständen unnötig CPU-Zeit in Anspruch genommen.
-Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der kritische Abschnitt
-
-nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein
-wakeup() aus, um die schlafenden Prozesse zu wecken.
+Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der kritische Abschnitt nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein wakeup() aus, um die schlafenden Prozesse zu wecken.
 \end{answer}
 
 \question{Was ist ein Spinlock?}
@@ -225,11 +215,9 @@ Bei Verlassen des kritischen Abschnitts werden darauf wartende Prozesse aufgewec
 Interrupthandler sind zeitkritisch und haben keinen eigenen Prozesskontext, können sich also nicht schlafenlegen und können zur mehrseitigen Synchronisation kein blockierendes Warten verwenden.
 \end{answer}
 
-\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig sleep() aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von sleep() von einem Spinlock umgibt? Was wird man stattdessen tun?}
+\question{In einer UNIX-Multiprozessorumgebung können mehrere Prozesse nebenläufig \texttt{sleep()} aufrufen. Warum ist dies ein kritischer Abschnitt? Warum kann man ihn nicht einfach davor schützen, dass man den Aufruf von \texttt{sleep()} von einem \textit{Spinlock} umgibt? Was wird man stattdessen tun?}
 \begin{answer}
-Die gemeinsame Datenstruktur ist hier die Sleep-Queue. Wenn sich ein schlafender Prozess von
-einm Spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die
-Sleep-Queue nicht freigegeben hat.
+Die gemeinsame Datenstruktur ist hier die Sleep-Queue. Wenn sich ein schlafender Prozess von einem Spinlock umgibt, dann kann er unter Umständen nicht wieder aufgeweckt werden, da er die Sleep-Queue nicht freigegeben hat.
 
 Als Lösung wird eine Variante von sleep() eingeführt: sleepl().
 sleepl() gibt die Sleep-Queue wieder frei (gibt den Spinlock wieder ab), bevor die CPU abgegeben wird (vorm Schlafenlegen).
@@ -320,7 +308,7 @@ Signale/Ereignisse: myObj.wait()/myObj.notify()
 \begin{itemize}
 
   \item einseitige: Erzeuger-Verbraucher-Prinzip \\
-    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird bloockiert und gewartet bis V() kommt.
+    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird blockiert und gewartet bis V() kommt.
 
     P1: .. X Daten produzieren .. (kritischer Abschnitt); S.V <- Producer-Thread \\
     P2: S.P; .. Daten X verarbeiten .. (kritischer Abschnitt) <- Verbraucher-Thread
@@ -345,57 +333,47 @@ Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wun
 \question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}
 \begin{answer}
 Fünf Philosophen sitzen an einem Tisch mit fünf Tellern Reis. Zwischen jedem der Teller befindet
-sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder
-Philosoph zwei Stäbchen zum Essen benötigt, es können also nicht alle Philosophen gleichzeitig
-essen. Nur für zwei gleichzeitig speisende Philosophen sind ausreichend Stäbchen vorhanden.
-Jedes Stäbchen ist ein kritischer Abschnitt. Es kommt aber zu Verklemmungen, wenn jeder Philosoph
-z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
+sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder Philosoph zwei Stäbchen zum Essen benötigt, es können also nicht alle Philosophen gleichzeitig essen. Nur für zwei gleichzeitig speisende Philosophen sind ausreichend Stäbchen vorhanden.
+Jedes Stäbchen ist ein kritischer Abschnitt. Es kommt aber zu Verklemmungen, wenn jeder Philosoph z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
 Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer Paare schützen.
 \end{answer}
 
-\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen sleep()/wakeup()-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen muüsste man
-ergreifen?}
+\question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen \texttt{sleep()/wakeup()}-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen müsste man ergreifen?}
 \begin{answer}
-Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben,
-da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme
-muss der Abschnitt also wieder freigegeben werden.
+Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben, da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme muss der Abschnitt also wieder freigegeben werden.
 \end{answer}
 
 \question{Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}
 \begin{answer}
-Duch das Einreihen der Prozesse in eine FIFO-Queue kommt es zu einer festen Reihenfolge bei
-der Abarbeitung. Es kann hier zu Konvois kommen. Weiterhin kann es zu unnötig wielen Prozesswechseln
-kommen, wen die Prozesse aus der FIFO-Queue entnommen werden, prüfen ob sie den
-kritischen Abschnitt betreten können und wieder eingereiht werden.
-Zu donnernden Herden kann es kommen, wenn man das Semaphore-Counting benutzt. Alle Prozesse,
-die beim Eintreten in den kritischen Abschnitt schlafen gelegt wurden, warten praktisch
-auf eine Veränderung des Counters. Wenn nun ein anderer Prozess den kritischen Abschnitt frei
-gibet, indem er ein V() ausführt, werden alle wartenden Prozesse geweckt und donnern los. Es
-kommt aber nur einer in den kritischen Abschnitt hinein.
+Duch das Einreihen der Prozesse in eine FIFO-Queue kommt es zu einer festen Reihenfolge bei der Abarbeitung. Es kann hier zu Konvois kommen. Weiterhin kann es zu unnötig vielen Prozesswechseln kommen, wenn die Prozesse aus der FIFO-Queue entnommen werden, prüfen ob sie den kritischen Abschnitt betreten können und wieder eingereiht werden.
+
+\paragraph*{}
+Zu donnernden Herden kann es kommen, wenn man das Semaphore-Counting benutzt. Alle Prozesse, die beim Eintreten in den kritischen Abschnitt schlafen gelegt wurden, warten praktisch auf eine Veränderung des Counters. Wenn nun ein anderer Prozess den kritischen Abschnitt frei gibt, indem er ein V() ausführt, werden alle wartenden Prozesse geweckt und donnern los. Es kommt aber nur einer in den kritischen Abschnitt hinein.
 \end{answer}
 
 \question{Was ist ein Monitor? Unter welchen Bedingungen wird ein Monitor betreten bzw. wieder verlassen?}
 \begin{answer}
-Ein Monitor ist ein ADT (Abstrakter Datentyp), also mit Daten und Operationen auf diesen
-Daten. Die Zugriffsoperationen sind implizit gegen nebenläufigen Zugriff geschützt. Das heisst,
-der Programmierer muss sich keinen Gedanken mehr um den Schutz von kritischen Abschnitten
-
-innerhalb des Programmes zu machen, da der Nenbenläufigkeitsschutz im Monitor bereits implementiert
-ist. Vorteil dieser Lösung ist, dass eventuelles Vergessen von Schutzanweisungen nicht
-mehr möglich ist.
-Ein Monitor wird betreten, wenn von einer Prozedur des Programms eine entsprechende Monitorfunktion
-aufgerufen wird. Verlassen wird er, wenn er warten muss (wait()) oder wenn er fertig
+Ein Monitor ist ein ADT (Abstrakter Datentyp), also mit Daten und Operationen auf diesen Daten. Die Zugriffsoperationen sind implizit gegen nebenläufigen Zugriff geschützt. Das heisst, der Programmierer muss sich keinen Gedanken mehr um den Schutz von kritischen Abschnitten innerhalb des Programmes zu machen, da der Nenbenläufigkeitsschutz im Monitor bereits implementiert
 ist.
+
+\paragraph*{}
+Vorteil dieser Lösung ist, dass eventuelles Vergessen von Schutzanweisungen nicht mehr möglich ist. Ein Monitor wird betreten, wenn von einer Prozedur des Programms eine entsprechende Monitorfunktion aufgerufen wird. Verlassen wird er, wenn er warten muss (wait()) oder wenn er fertig ist.
 \end{answer}
 
-\question{Aus welchen Komponenten besteht ein Petrinetz (mit Marken)?Was kann man damit beschreiben?}
+\question{Aus welchen Komponenten besteht ein Petrinetz (mit Marken)? Was kann man damit beschreiben?}
 \begin{answer}
 Ein Petrinetz ist ein gerichteter Graph, der aus Zuständen (Stellen) und Zustandübergängen
 (Transistionen) besteht. Mit Marken (Tokens) ist der aktuelle Ausführungszustand beschreibbar.
 Mit einem Petrinetz kann man grafisch die Synchronisationszusammenhänge darstellen.
 \end{answer}
 
-\question{Wie kann man durch ein Petrinetz typische Sznchronisationsvorschriften ausdrücken?}
+\begin{multilinequestion}[Wie kann man durch ein Petrinetz typische Synchronisationsvorschriften ausdrücken:]
+\begin{enumerate}
+\item Sequenz
+\item Beschränkte Nebenläufigkeit
+\item Unabhängigkeit?
+\end{enumerate}
+\end{multilinequestion}
 \begin{answer}
 a) Sequenz
 b) beschränkte Nebenläufigkeit
@@ -447,7 +425,7 @@ oder ein Schreiber ohne Leser. Damit werden inkonsistente Ergebnisse verhindert.
 Als Pfadausdruck: leser+writer
 \end{answer}
 
-\question{Was versteht man unter synchronem bzw. asynchronem Nachrichtenaustausch? Inwiefern sind diese beiden Kommunikationsformen aufeinander abbildbar?}
+\question{Was versteht man unter \textit{synchronem} bzw. \textit{asynchronem Nachrichtenaustausch}? Inwiefern sind diese beiden Kommunikationsformen aufeinander abbildbar?}
 \begin{answer}
 Bei synchronem Datenaustausch warten Sender und Empfänger aufeinander. Das heist, send()
 und recieve() wirken blockierend aufeinander. Der Empfänger muss bereit sein, die Nachricht aufzunehmen.
