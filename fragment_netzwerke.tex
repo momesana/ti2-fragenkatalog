@@ -2,22 +2,24 @@
 
 \question{Wozu verwendet man \textit{Kanäle} bzw. \textit{Ports}? Was ist das?}
 \begin{answer}
-Kommunikation zwischen zwei Prozessen setzt die Benennung der Partner voraus. Besser wäre hier den Kanal zu benennen, über den sie kommunizieren. Die Partner bleiben dadurch "anonym". Ports geben an, wohin gesendet werden soll. Sie werden verwendet, wenn es nur einen Sender oder Empfänger auf einem Kanal gibt. Durch Ports ist eine dynamische Zuordnung zu Prozessen möglich.
+Kommunikation zwischen zwei Prozessen setzt die Benennung der Partner voraus. Besser wäre es, hier den Kanal zu benennen, über den sie kommunizieren. Die Partner bleiben dadurch ,,anonym''. Ports geben an, wohin gesendet werden soll. Sie werden verwendet, wenn es nur einen Sender oder Empfänger auf einem Kanal gibt. Durch Ports ist eine dynamische Zuordnung zu Prozessen möglich.
 \end{answer}
 
 \question{Was ist ein \textit{guarded command}? Warum kann die Verwendung eines solchen Konzepts gerade im Zusammenhang mit Nachrichtenaustausch interessant sein?}
 \begin{answer}
+Guarded commands tauchen im Protokoll ,,CSP'' (Communicating Sequential Processes) auf, welches das Beschreiben von Algorithmen mit synchronem Nachrichtenaustausch ermöglicht.
+
 Durch guarded commands ist es möglich, auf verschiedene Sender als Empfänger entsprechend
-zu reagieren. Mit Hilfe von guarded commands können Unterscheidungen getroffen werden.(z.B.
+zu reagieren. Mit Hilfe von guarded commands können Unterscheidungen getroffen werden (zum Beispiel
 if...else if....).
 Wenn mehrere Wächter zutreffen, ist die Auswahl nichtdeterministisch.
 \end{answer}
 
-\question{Wie arbeitet der \textit{Korridor}-Algorithmus zum überwachen mehrerer Eingabequellen in etwa?}
+\question{Wie arbeitet der \textit{Korridor}-Algorithmus zum Überwachen mehrerer Eingabequellen (\texttt{select()}) in etwa?}
 \begin{answer}
-Der Korridor-Algorithmus arbeitet ähnlich wie ein Bürobote, der auf seinem Rundgang durch einen Korridor mit vielen Büros geht. Der Bote hat einen "Warteraum", in dem er im Ruhezustand sitzt. An jedem Büro ist eine Lampe o.ä. angebracht, die abzuarbeitende Aufträge anzeigt.
+Der Korridor-Algorithmus arbeitet ähnlich wie ein Bürobote, der auf seinem Rundgang durch einen Korridor mit vielen Büros geht. Der Bote hat einen ,,Warteraum'', in dem er im ruhenden Zustand sitzt. An jedem Büro ist eine Lampe o.ä. angebracht, die abzuarbeitende Aufträge anzeigt.
 
-Wenn der Bote von seinem Warteraum aus sieht, das ein Auftrag abzuarbeiten ist, geht er an den Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge am Beginn seiner Runde entstanden sind.
+Wenn der Bote von seinem Warteraum aus sieht, dass ein Auftrag abzuarbeiten ist, geht er an den Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge zu Beginn seiner Runde entstanden sind.
 \end{answer}
 
 \begin{multilinequestion}[Worin unterscheiden sich die Eigenschaften der folgenden UNIX-Mechanismen zur Interprozesskommunikation:]
@@ -34,17 +36,17 @@ Wie lassen sich die Kommunikationseigenschaften von Sockets mit normaler Briefpo
 \begin{answer}
 
 \paragraph*{Pipe:}
-unidirektionaler sequentieller Bytestrom von stout eines Prozesses zu stdin eines anderen Prozesses. Um eine Pipe verwenden zu können, müssen die beiden Prozesse verwand sein.
+Unidirektionaler sequentieller Bytestrom von stdout eines Prozesses zu stdin eines anderen Prozesses. Um eine Pipe verwenden zu können, müssen die beiden Prozesse verwandt sein.
 
 \paragraph*{Named Pipe (FIFO):}\label{netzwerke:named-pipe}
 Das Pipe-Objekt benötigt einen eindeutigen Namen (Kanal-Bezeichner). Die
 beiden miteinander kommunizierenden Prozesse müssen nicht verwandt sein, auch eine Named Pipe ist ein unidirektionaler sequentieller Bytestrom.
 
 \paragraph*{Sockets:}\label{netzwerke:sockets}
-Es gibt zwei Arten von Sockets: Stream-Sockets und Datagramm-Sockets.
-Stream-Socket: Birdirektionale Pipe, Bytestrom, sequentielle übertragung, zuverlässig und verbindungsorientiert (Vergleich: Telefongespräch)
-Datagramm-Socket: Packetübergabe, Nachrichten, beliebige Reihenfolge, u.U. unzuverlässig (Verluste
-sind möglich), verbindungslos (Vergleich: Brief-/Packetzustellung)
+Es gibt zwei Arten von Sockets: Stream-Sockets und Datagram-Sockets.
+Stream-Socket: Bidirektionaler Pipe, Bytestrom, sequentielle übertragung, zuverlässig und verbindungsorientiert (Vergleich: Telefongespräch)
+Datagram-Socket: Paketübergabe, Nachrichten, beliebige Reihenfolge, u.U. unzuverlässig (Verluste
+sind möglich), verbindungslos (Vergleich: Brief-/Paketzustellung)
 \end{answer}
 
 \question{Wie lassen sich die Kommunikationseigenschaften von Sockets in die generische Systemaufrufschnittstelle zum Zugriff auf Dateien einordnen?}
@@ -52,7 +54,7 @@ sind möglich), verbindungslos (Vergleich: Brief-/Packetzustellung)
 Man erzeugt sie, bekommt den Deskriptor zurück und kann auf ihnen operieren.
 \end{answer}
 
-\question{Warum kommt dem Adressierungsproblem in der Interkommunikation eine so grosse Bedeutung zu? in welche zwei Teile zerfällt eine Adressangabe typischerweise?}
+\question{Warum kommt dem Adressierungsproblem in der Interkommunikation eine so große Bedeutung zu? In welche zwei Teile zerfällt eine Adressangabe typischerweise?}
 \begin{answer}
 Ohne eindeutige Adressierung ist Kommunikation unmöglich. Nur die eindeutige und funktionierende
 Adressierung ermöglicht den Austausch von Nachrichten bzw. Inhalten.
@@ -62,7 +64,7 @@ Flusskontrolle, zur Adressierung und zur Netzkoppelung. Dies ist üblicherweise 
 Protokollhierachie festgelegt, TCP/IP, OSI-Schichten.
 \end{answer}
 
-\question{Was ist ein (Kommunikations-) Protokoll?}
+\question{Was ist ein (Kommunikations-)Protokoll?}
 \begin{answer}
 Protokoll: Verabredung über die Art und Weise des Kommunikationsvorgangs.
 \end{answer}
@@ -82,25 +84,29 @@ Daten müssen entsprechen umgewandelt werden.
 \question{Skizziere einige Eigenschaften typischer Netztopologien.}
 \begin{answer}
 - Vollständige Vermaschung:
-Ist eine aufwendige, d.h. teure Möglichkeit. Zum einen werden besonders viele Verkabelungen
+Ist eine aufwändige, d.h. teure Möglichkeit. Zum einen wird besonders viel Verkabelung
 benötigt, zum anderen müssen alle Adressen aller beteiligten Computer auf jedem einzelnen Netzwerkrechner
 gespeichert werden.
+
 - Ring:
 Ein Ringsystem bietet den Vorteil, dass die Nachrichten einfach in eine Richtung losgeschickt
-werden und die beteiligten Computer nur überprüfen ob die Nachricht für sie ist. Wenn nicht,
-wird das Datenpacket weitergeleitet.
-Es hat den Nachteil besonders grosser Störanfälligkeit. Wenn ein einziger Netzwerkrechner oder
-ein Kabel ausfält, ist die Kommunikation "dahinterliegenden" Rechner gestört.
+werden und die beteiligten Computer nur überprüfen, ob die Nachricht für sie ist. Wenn nicht,
+wird das Datenpaket weitergeleitet.
+Es hat den Nachteil besonders großer Störanfälligkeit. Wenn ein einziger Netzwerkrechner oder
+ein Kabel ausfällt, ist die Kommunikation ,,dahinterliegender'' Rechner gestört.
+
 - Bus:
-Bei einem Bussystem ist die grösste Stöanfälligkeit der Bus selbst. Fällt diese Leitung aus, sind
+Bei einem Bussystem ist die größte Störanfälligkeit der Bus selbst. Fällt diese Leitung aus, sind
 u.U. alle Rechner vom Netz abgeschnitten. Ausserdem muss bei dieser Netzvariante besonderes
-Augenmerk auf die Reihenfolge der Nachrichtenübetragung gelegt werden.
+Augenmerk auf die Reihenfolge der Nachrichtenübertragung gelegt werden.
+
 - Stern:
 Bei einem Stern geschieht die Speicherung der Adressen für die Weiterleitung nur auf dem Zentralrechner.
 Besonderer Nachteil eines Sterns ist die Möglichkeit, dass der zentrale Rechner ausfällt, in
 diesem Fall ist keinerlei Kommunikation mehr möglich. Allerdings stört der Ausfall eines einzelnen
 Computers oder einer übertragungsleitung die Funktionsfähigkeit des restlichen Netzes in keiner
 Weise.
+
 - allgemeines Netz:
 Ein allgemeines Netz ist durch die Möglichkeit bei Störungen andere Wege zu suchen, in seiner
 Funktionsfähigkeit eine sehr Fehler tolerante Netzwerkvariante.
@@ -109,7 +115,7 @@ Funktionsfähigkeit eine sehr Fehler tolerante Netzwerkvariante.
 \question{Welche besondere Bedeutung kommt dem Protokoll IP zu?}
 \begin{answer}
 Das Internet Protokoll sorgt für die Integration von Anwendungen und Medien. Es ermöglicht
-eine Netzübergreifende Adressierung und ist Packet-orientiert.
+eine Netzübergreifende Adressierung und ist Paket-orientiert.
 Durch die mit IP bestehenden Möglichkeiten ist es zum wichtigsten und am weitesten verbreiteten Protokoll geworden.
 \end{answer}
 
