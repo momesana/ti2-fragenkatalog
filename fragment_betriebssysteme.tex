@@ -466,22 +466,26 @@ Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Fr
 
 \question{Was versteht man unter \textit{Paging}, was unter \textit{Segmentierung}? Wo tritt \textit{interne Fragmentierung}, wo \textit{externe Fragmentierung} auf? Was versteht man darunter?}
 \begin{answer}
-\textbf{Segmentierung:} Speicher wird in verschieden grosse Stücke unterteilt, das ermöglicht die exible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte groß:
+\textbf{Segmentierung:} Speicher wird in verschieden große Stücke unterteilt, das ermöglicht die flexible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte groß. Segmentierung hat das Problem der externen Fragmentierung.
 
-\textbf{Paging:} exible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (PageFrames)
-fester Grösse unterteilt, die Prozessadressräume wiederum liegen in Seiten (Pages) von
-gleicher Grösse. Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung.
+\textbf{Paging:} flexible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (Page-Frames)
+fester Größe unterteilt. Die Prozessadressräume wiederum liegen in Seiten (Pages) von
+gleicher Größe (meist 4 KiB). Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung (statt externer).
 
-\textbf{externe Fragmentierung:} wenn durch die angewendete Logik Speicher in unterschiedlich grosse
+\textbf{externe Fragmentierung:} Wenn durch die angewendete Logik Speicher in unterschiedlich große
 Stücke eingeteilt wird und ganze Stücke freibleiben.
 
-\textbf{interne Fragmentierung:} wenn innerhalb von gleich grossen Stücken der Speicher nicht restlos
+\textbf{interne Fragmentierung:} Wenn innerhalb von gleich großen Stücken der Speicher nicht restlos
 ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
 \question{Was ist Paging und warum macht man das? Wann tritt ein Page-Fault auf und was passiert dann?}
 \begin{answer}
-tbd
+Beim Paging wird der Hauptspeicher in Kacheln (Page-Frames) fester Größe unterteilt.
+Wird eine neue Page im Speicher benötigt und ist kein Page-Frame frei, kommt es zur Verdrängung.
+Wenn diese Page später angefordert wird, tritt ein Page-Fault auf, da sich diese Seite nicht im Working-Set des Hauptspeichers befindet.
+
+Es gibt verschiedene Verdrängungsstrategien wie FIFO, LFU und LRU oder NRU.
 \end{answer}
 
 \question{Aus welchen Teilen besteht eine \textit{virtuelle Adresse} zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
@@ -498,19 +502,19 @@ In den jeweiligen (unterschiedlichen) Page-Tabellen sind dieselben Seiten einget
 
 \question{Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in etwa?}
 \begin{answer}
-LRU (Least-Recently-Used)
+\textbf{LRU (Least-Recently-Used):}
 LRU entfernt die Seite im Hauptspeicher, auf die am längsten nicht mehr zugriffen
 wurde. Das Lokalitätsprinzip wird in der Regel gut erfasst. LRU besitzt eine gute
 Aproximation an den optimalen Algorithmus,
 aber das erfassen aller Zugriffszeiten auf die Seiten ist notwendig, d.h. bei jedem
 Zugriff müssen weitere Speicherzugriffe erfolgen. LRU ist zu aufwendig ohne Spezialhardware.
 
-FIFO (First-in-First-Out)
+\textbf{FIFO (First-in-First-Out):}
 FIFO entfernt die älteste Seite und ist einfach zu realisieren: als verkettete Liste der
 Page Frames nach Belegungsalter.
 Aber: bestimmt das Working Set in der Regel nicht gut.
 
-Second-Chance-FIFO
+\textbf{Second-Chance-FIFO:}
 Funktioniert (im Prinzip) wie FIFO: als verkettete Liste nach Belegungsalter. Wenn
 eine Seite (nach FIFO) zum Löschen an der Reihe ist wird überprüft ob sie seit
 ihrer letzten überprüfung referenziert wurde. Wenn ja: sie wird wieder (als jüngste
@@ -518,9 +522,9 @@ Seite) in die Liste eingehängt. Wenn nein: löschen der Seite.
 In diesem Algorithmus wird unterschiedliche Benutzungshäufigkeit einkalkulliert,
 aber er ist sehr aufwendig, da auch eine FIFO-Liste geführt werden muss (s.o.)
 
-NRU (Not-Recently-Used)
+\textbf{NRU (Not-Recently-Used):}
 NRU trifft eine zufällige Auswahl aus den kürzlich nicht referenzierten Seiten (z.B.
-mit zyklischer Suche nach Page Frame-Nummern). Der gewählte Modus des zurücksetzens
+mit zyklischer Suche nach Page Frame-Nummern). Der gewählte Modus des Zurücksetzens
 des Referenzbits entscheidet über die Güte".
 Mögliche Optimierung:
 Unterscheidung zwischen Nur-Lese-Zugriffen und Schreib-Zugriffen, wird in Dirty-
