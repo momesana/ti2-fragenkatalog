@@ -20,7 +20,7 @@ Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der \crucial{
 Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
 \end{answer}
 
-\begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden "klassischen" Szenarien ausgedrückt:]
+\begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden ,,klassischen'' Szenarien ausgedrückt:]
 \begin{enumerate}
 \item Erzeuger/Verbraucher (Producer/Consumer)
 \item Leser/Schreiber (Reader/Writer)
@@ -31,7 +31,7 @@ Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Parale
 TODO
 \end{answer}
 
-\question{Was ist ein Thread ("Faden")? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
+\question{Was ist ein Thread (,,Faden'')? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
 \begin{answer}
 TODO 
 \end{answer}
@@ -53,7 +53,7 @@ es zu kritischen Abschnitten kommen. Eine Synchronisation ist erforderlich. Eine
 Arbeit (eine Prozedur) zugewiesen werden. Ein Thread ist beendet, wenn die Umgebung, der Prozess
 terminiert. Ein Thread ist also von der Umgebung abhängig.
 Ein Problem ist, dass der Betriebssystemkern nichts vom Erzeugen der Threads erfährt, es ist also
-keine "echte Nebenläufigkeit" gegeben.
+keine ,,echte Nebenläufigkeit'' gegeben.
 Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt die Grundlage
 für das Scheduling dar.
 \end{answer}
@@ -86,7 +86,36 @@ Betriebsystemkern bekannt ist.
 
 \question{Was versteht man unter \textit{einseitiger} bzw. \textit{mehrseitiger Synchronisation}? Gib jeweils ein Anwendungsbeispiel an.}
 \begin{answer}
-TODO
+Einseitige Synchronisation: Producer-Consumer-Problem mit unendlicher Pufferkapazität; benötigt eine Semaphore
+\begin{verbatim}
+Sem s(0);
+
+Producer:
+erzeugen();
+s.V();
+
+Consumer:
+s.P();
+verbrauchen();
+\end{verbatim}
+
+Mehrseitige Synchronisation: Producer-Consumer-Problem mit Pufferkapazität; benötigt zwei Semaphoren
+\label{mehrseitige-synchronisation-beispiel}
+
+\begin{verbatim}
+Sem s1(0);
+Sem s2(3);
+
+Producer:
+s2.P();
+erzeugen();
+s1.V();
+
+Consumer:
+s1.P();
+verbrauchen();
+s2.V();
+\end{verbatim}
 \end{answer}
 
 \question{Was ist der Unterbrechungsauschluss?}
@@ -111,7 +140,7 @@ In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnit
 Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
 
 Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
-Datenstruktur oder auf ein gemeinsames Betriebsmittel zugegriffen wird. Kritische Abschnitte müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine "Schlossvariable" realisiert wird. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean TRUE).
+Datenstruktur oder auf ein gemeinsames Betriebsmittel zugegriffen wird. Kritische Abschnitte müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine ,,Schlossvariable'' realisiert wird. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean TRUE).
 
 \paragraph*{}
 Andere Programmabläufe müssen nun den Status der Schlossvariablen nachfragen,
@@ -279,7 +308,7 @@ Schutz erfolgt nur gegenüber anderen Methoden der Klasse, die ebenfalls synchro
 \begin{answer}
 kurz für: mutual exclusion
 
-Erlauben den gegenseitigen Ausschluss.
+Erlauben den gegenseitigen Ausschluss. Sie sind als mehrseitige Synchronisation (allerdings Zugriff auf die selbe Semaphor-Variable) realisiert.
 
 \begin{verbatim}
   IrgendeineKlasse myObj = new IrgendeineKlasse();
@@ -297,28 +326,30 @@ Erlauben den gegenseitigen Ausschluss.
   myObj.unlock();
 \end{verbatim}
 
+Mutexes lassen sich auch über Semaphore umsetzen.
+
 Signale/Ereignisse: myObj.wait()/myObj.notify()
 \end{answer}
 
-
-
 \question{Wie wird eine einseitige bzw. mehrseitige Synchronisation durch Semaphore ausgedrückt?}
 \begin{answer}
-
 \begin{itemize}
 
   \item einseitige: Erzeuger-Verbraucher-Prinzip \\
-    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prorzess A ist, (z.B. Ereignis), dann muss vorher ein P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, ein V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird blockiert und gewartet bis V() kommt.
+    Die Semaphore muss mit 0 vorinitialisiert werden. Wenn in einem Prozess B etwas ausgeführt werden soll, was abhängig von einem anderen Prozess A ist (zum Beispiel ein Ereignis), dann muss vorher P() ausgeführt werden. In A muss, wenn das betreffende Ereignis stattgefunden hat, V() ausgeführt werden. Wurde das V() nicht ausgeführt, und versucht B jetzt P() auszuführen, so wird blockiert und gewartet bis V() kommt.
 
-    P1: .. X Daten produzieren .. (kritischer Abschnitt); S.V <- Producer-Thread \\
-    P2: S.P; .. Daten X verarbeiten .. (kritischer Abschnitt) <- Verbraucher-Thread
+    P1: .. Daten produzieren .. (kritischer Abschnitt); S.V (Producer-Thread) \\
+    P2: S.P; .. Daten verarbeiten .. (kritischer Abschnitt) (Verbraucher-Thread)
 
     S = Sempaphor
 
-  \item mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit zwei Semaphoren.
+  \item mehrseitige Synchronisation: Funktioniert wie einseitige, jedoch mit einer oder mehren Semaphoren.
+        Bei einer Semaphore S greifen alle Threads auf S zu:
 
       P1: S.P; kritischer Abschnitt 1; S.V \\
       P2: S.P; kritischer Abschnitt 2; S.V
+
+        Für ein Beispiel mit mehreren Semaphoren, siehe \ref{mehrseitige-synchronisation-beispiel}.
 
 \end{itemize}
 \end{answer}
@@ -343,7 +374,7 @@ Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer
 Bevor sich ein Prozess schlafenlegt, wäre es sinnvoll den kritischen Abschnitt wieder freizugeben, da dieser sonst unter Umständen nicht wieder aufgeweckt werden kann. Als zusätzliche Massnahme muss der Abschnitt also wieder freigegeben werden.
 \end{answer}
 
-\question{Welche Probleme gibt es mit "fairen Semaphoren"? Was sind "Konvois", was sind "donnernde Herden"?}
+\question{Welche Probleme gibt es mit ,,fairen Semaphoren''? Was sind ,,Konvois'', was sind ,,donnernde Herden''?}
 \begin{answer}
 Duch das Einreihen der Prozesse in eine FIFO-Queue kommt es zu einer festen Reihenfolge bei der Abarbeitung. Es kann hier zu Konvois kommen. Weiterhin kann es zu unnötig vielen Prozesswechseln kommen, wenn die Prozesse aus der FIFO-Queue entnommen werden, prüfen ob sie den kritischen Abschnitt betreten können und wieder eingereiht werden.
 
@@ -399,8 +430,8 @@ dem aus keine Transistionen mehr ausgeführt werden kann.
 Mit einem Pfadausdruck kann man Angaben über mögliche Nebenläufigkeit von Zugriffsoperationen
 eines ADTs machen.
 Operator : : (Beschränkte) Nebenläufigkeit
-Operator + : Alternative "Entweder ... oder ..."
-Operator ; : Sequenz "Erst ..., dann ..."
+Operator + : Alternative ,,Entweder ... oder ...''
+Operator ; : Sequenz ,,Erst ..., dann ...''
 Operator | : Unabhängikeit von Prozessen
 \end{answer}
 
@@ -416,6 +447,31 @@ Datentyps (ADT mit expliziter Synchronisationsvorschrift) sind zu spezifizieren.
 heisst alles davon abweichende ist verboten.
 Offene Pfadausdrücke: alle Einschränkungen von Ausführungsreihenfolgen sind im Pfadausdruck
 zu spezifizieren. Das heisst alles andere ist erlaubt.
+\end{answer}
+
+\question{Welches Problem entsteht bei Nebenläufigkeit, wenn bspw. zwei Threads die Variable i inkrementieren möchten und was verursacht dieses? Wie heißt dieses Problem genau? Wie kann man dies Semaphoren lösen?}
+\begin{answer}
+Es handelt sich um das Leser-/Schreiber-Problem. Das Problem führt dazu, dass der zweite Thread u.U. mit dem alten Wert weiterarbeitet. Lesende Zugriffe stören sich nicht gegenseitig und können parallel erfolgen. Jedoch ist nebenläufiges Schreiben problematisch.
+
+Auf Assembler-Ebene ist ersichtlich, dass Inkrementieren mehr als eine Instruktion erfordert. Deswegen ist das Definieren des kritischen Blocks notwendig.
+
+Mit Semaphoren lassen sich beide Threads synchronisieren. Es gibt zwei Möglichkeiten: Gegenseitiger Ausschluss (Mutual Exclusion) und mehrseitige Synchronisation.
+
+Gegenseitiger Ausschluss:
+
+\begin{verbatim}
+Sema1(1);
+
+Thread 1:
+Sema1.P()
+i++
+Sema1.V()
+
+Thread 2:
+Sema1.V()
+i++
+Sema1.P()
+\end{verbatim}
 \end{answer}
 
 \question{Wie würde man das klassische Reader-/Writer-Problem als Pfadausdruck formulieren?}
@@ -442,15 +498,19 @@ ein Pufferprozess eingeführt werden.
 
 \question{Wie kann man die Sychronisationseigenschaften von synchronem bzw. asynchronem Nachrichtenaustausch mit Semaphoren modellieren?}
 \begin{answer}
+\begin{verbatim}
 Sema1(0);
 Sema2(0);
+
 Synchron:
-A B
+A       B
 send(); s1.P();
-s1.V(); recieve();
+s1.V(); receive();
 s2.P(); s2.V();
+
 Asynchron:
-A B
+A       B
 send(); s1.P();
-s1.V(); recieve();
+s1.V(); receive();
+\end{verbatim}
 \end{answer}
