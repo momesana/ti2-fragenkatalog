@@ -375,24 +375,60 @@ Aktuelles Verzeichnis
 Geöffnete Dateien.
 \end{answer}
 
-\question{Skizziere kurz die Prozesserzeugung in UNIX. Welche Rolle spielen die Systemaufrufe fork() und exec() dabei?}
+\question{Skizziere kurz die Prozesserzeugung in UNIX. Welche Rolle spielen die Systemaufrufe fork() und exec() dabei? Wie unterscheiden sich Vater- und Kindprozess voneinander?}
 \begin{answer}
-Der Prozess Nummer Eins (INIT) wird "von Hand" beim Systemstart erzeugt.
+Der Prozess Nummer Eins (init) wird ,,von Hand'' beim Systemstart erzeugt (standardmäßig \texttt{/sbin/init}, andere Pfade können dem Kernel im Boot-Loader als Parameter übergeben werden).
 Andere Prozesse werden bei Bedarf als Kindprozesse mit fork() (oft als Kind-Prozesse
 der Shell) erzeugt. So entsteht eine Hierachie von Prozessen. Der Kindprozess erhält eine
-neue Prozess-ID, ist aber zunächst eine Kopie des Vaters, d.h. der"gleiche" Adressraum
-mit gleicher Aufteilung von Text, Data und Stack. Normalerweise soll das Kind ein anderes
-Programm ausführen, dieses wird mit exec() gestartet, damit wird dann auch der
+neue Prozess-ID, ist aber zunächst eine Kopie des Vaters, d.h. der ,,gleiche'' Adressraum
+mit gleicher Aufteilung (d.h., gleiche Segmente) von Text, Data und Stack. Normalerweise soll das Kind ein anderes
+Programm ausführen. Dieses wird mit exec() gestartet. Damit wird dann auch der
 Adressraum ausgetauscht.
 \end{answer}
 
-\question{Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB ("Zombie")?}
+\question{Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB (,,Zombie'')?}
 \begin{answer}
-Das Kind meldet bei der Termination das Signal SIGCHILD an den Vater, dieser behnadelt
+Das Kind meldet bei der Termination das Signal SIGCHLD an den Vater, dieser behnadelt
 durch den Aufruf wait() den Kindprozess und der Kindprozess terminiert
 oder der Vater ignoriert das Signal. In diesem Fall wird das Kind zum Zombie. Der Zombie
 wird dann entweder später vom Vater behandelt oder (je nach UNIX-Variante) durch das
 Betriebssystem. Z.B. kann der INIT-Prozess die Proc-Struktur wieder freigeben.
+\end{answer}
+
+\question{Wie werden mehrere Prozesse in einer Einprozessormaschine verwaltet?}
+\begin{answer}
+In einer Einprozessormaschine kann zu jedem Zeitpunkt nur ein Prozess in Ausführung sein.
+Damit alle Programme einmal an die Reihe kommen und ausgeführt werden, gibt es den Scheduler.
+Dieser ,,simuliert'' auf Einprozessormaschinen Parallelität, indem jeder Prozess nur für
+einen begrenzten Zeitraum (,,Zeitfenster'') ausgeführt wird.
+
+Es gibt innerhalb des Kernels zwei Warteschlangen: die Run- und die Sleep-Queue.
+Letztere kommt zum Tragen, wenn ein Prozess sich schlafenlegt (zum Beispiel mit \texttt{sleep()}).
+In diesem Fall wäre es unsinnig, den Prozess weiter auszuführen. Stattdessen findet ein Kontextwechsel
+statt und ein anderer Prozess wird ausgeführt. Für letzteres existiert die Run-Queue. In dieser befinden
+sich alle fortzuführenden Prozesse.
+
+Für die Verwaltung der Warteschlangen gibt es unterschiedliche Strategien: FIFO und Shortest Job Next.
+Bei ersterem werden die Prozesse nach und nach eingereiht, während der erste immer bearbeitet wird.
+Bei Shortest Job Next sind alle Prozesse nach ihrer approximierten Bearbeitungszeit sortiert.
+
+Besser sind jedoch Zeitscheiben-orientierte Verfahren. Prozesse werden hier für eine begrenzte
+Zahl an Sekunden ausgeführt (bei Unterbrechungen wie \texttt{sleep()} kürzer). Ein solches Verfahren ist Round Robin.
+Es gibt Variationen, bspw. unterschiedlich lange Zeitscheiben oder mehrfaches Einreihen in Run-Queue.
+
+Ebenfalls gibt es die Möglichkeit des Schedulings nach Prioritäten, die sich aus dynamischen und statischen
+Faktoren berechnen ließen.
+\end{answer}
+
+\question{Welche Scheduling-Strategie ist empfehlenswert? Was wird bei Unix-Systemen genutzt?}
+\begin{answer}
+In Unix findet eine Kombination der genannten Methoden statt: zunächst wird die CPU nach Ablauf der Zeitscheibe abgegeben. Bei Warten auf Ereignisse wird die CPU ebenfalls abgegeben. Es gibt eine Basispriorität (\texttt{nice()}), welche in der Proc-Struktur gespeichert wird.
+Diese berechnet sich teilweise aus dem CPU-Konto, welches die bereits zugesagten CPU-Zeiten führt.
+Die Zeit vom CPU-Konto wird automatisch reduziert, damit Prozesse die lange laufen, nicht benachteiligt werden.
+Wartende Prozesse befinden sich in der Sleep-Queue und werden aufgeweckt, wenn das Ereignis eintritt. In dem Fall werden sie wieder in die Run-Queue eingereiht.
+Die Sleep-Queue ist über den Waiting-Channel indiziert während die Run-Queue über die Priorität indiziert ist.
+Damit mehrere Prozesse auf den selben Waiting-Channel warten können bzw. die gleiche Prioritäten haben können,
+sind die Queues als Arrays von Listen (genauer: Hash-Tabellen) organisiert.
 \end{answer}
 
 \question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung? Wie funktioniert der Buddy-Algorithmus in etwa?}
@@ -430,21 +466,22 @@ Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Fr
 
 \question{Was versteht man unter \textit{Paging}, was unter \textit{Segmentierung}? Wo tritt \textit{interne Fragmentierung}, wo \textit{externe Fragmentierung} auf? Was versteht man darunter?}
 \begin{answer}
-Segmentierung:
-Speicher wird in verschieden grosse Stücke unterteilt, das ermöglicht die 
-exible Zuteilung
-kleiner Speicherbereiche und Shared Memory.
-Es sind Adressumsetzungstabellen pro Prozess notwendig.
-Segmente enthalten unterschiedlich viele Pages und sind maximal 210Bytegross:
-Paging:
+\textbf{Segmentierung:} Speicher wird in verschieden grosse Stücke unterteilt, das ermöglicht die exible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte groß:
 
-exible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (PageFrames)
+\textbf{Paging:} exible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (PageFrames)
 fester Grösse unterteilt, die Prozessadressräume wiederum liegen in Seiten (Pages) von
 gleicher Grösse. Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung.
-externe Fragmentierung: wenn durch die angewendete Logik Speicher in unterschiedlich grosse
+
+\textbf{externe Fragmentierung:} wenn durch die angewendete Logik Speicher in unterschiedlich grosse
 Stücke eingeteilt wird und ganze Stücke freibleiben.
-interne Fragmentierung: wenn innerhalb von gleich grossen Stücken der Speicher nicht restlos
+
+\textbf{interne Fragmentierung:} wenn innerhalb von gleich grossen Stücken der Speicher nicht restlos
 ausgenutzt wird und so Speicher ungenutzt bleibt.
+\end{answer}
+
+\question{Was ist Paging und warum macht man das? Wann tritt ein Page-Fault auf und was passiert dann?}
+\begin{answer}
+tbd
 \end{answer}
 
 \question{Aus welchen Teilen besteht eine \textit{virtuelle Adresse} zumeist? Wie ermittelt sich daraus die entsprechende Hauptspeicheradresse, d.h. wie läuft die Adressverwaltung in etwa ab?}
