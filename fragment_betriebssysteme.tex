@@ -433,18 +433,20 @@ sind die Queues als Arrays von Listen (genauer: Hash-Tabellen) organisiert.
 
 \question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung? Wie funktioniert der Buddy-Algorithmus in etwa?}
 \begin{answer}
-First-Fit-Algorithmus:
+\textbf{First-Fit-Algorithmus:}
 Der erste Block, der gross genug ist, wird verwendet indem er in zwei Teile gespalten wird
 (gross genug für die Anforderung und Rest).
 Das führt zu einer Ansammlung von kleinen Blöcken am Anfang der Liste, es werden immer
 mehr Blöcke und sie werden im Mittel immer kleiner. Das führt zu im Mittel längerer
 Suche, kleine Anforderungen können schnell erfüllt werden.
-Best-Fit-Algorithmus:
+
+\textbf{Best-Fit-Algorithmus:}
 Die Liste wird immer ganz durchsucht, der Block mit dem kleinsten Verschnitt wird ausgew
 ählt.
 Es entstehen extrem viele kleine Blöcke. Die Suche dauert sehr lange da immer die ganze
 Liste durchsucht wird. Es sind lange auch grosse Blöcke verfügbar.
-Buddy-Algorithmus:
+
+\textbf{Buddy-Algorithmus:}
 Blöcke sind immer 2k gross. Bei der Freigabe eines Blockes wird er, wann immer sein
 Nachbar (Buddy) frei ist, mit dem Nachbarn verschmolzen.
 Das vereinfacht das splitten und zusammenfügen der Blöcke. Allerding entsteht freier Speicher
