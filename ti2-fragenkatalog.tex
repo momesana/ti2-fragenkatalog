@@ -82,18 +82,18 @@
 	{}
 
 % Used for the right vertical bar next to the answer blocks
-\newlength\RightBarWidth
-\setlength\RightBarWidth{1pt}
-\newenvironment{rightbar}
-	{
-	\def\FrameCommand##1{%
-	\hspace{\textwidth}\hspace{-\RightBarWidth}%
-	{\color{dkgreen}\vrule width \RightBarWidth}
-	\hspace{-\textwidth}##1\hfill}%
-	\MakeFramed{\addtolength\hsize{-\width-\RightBarWidth-\columnsep}%
-	\FrameRestore}%
-	}
-	{\endMakeFramed}
+% \newlength\RightBarWidth
+% \setlength\RightBarWidth{1pt}
+% \newenvironment{rightbar}
+% 	{
+% 	\def\FrameCommand##1{%
+% 	\hspace{\textwidth}\hspace{-\RightBarWidth}%
+% 	{\color{dkgreen}\vrule width \RightBarWidth}
+% 	\hspace{-\textwidth}##1\hfill}%
+% 	\MakeFramed{\addtolength\hsize{-\width-\RightBarWidth-\columnsep}%
+% 	\FrameRestore}%
+% 	}
+% 	{\endMakeFramed}
 
 % Make footnotes available inside frames
 \makeatletter
@@ -122,9 +122,9 @@
 \makeatother
 
 % Answer environment
-\newenvironment {answer}
-                {\bufferfootnotes\begin{rightbar} }
-                {\end{rightbar}\stopbufferingfootnotes}
+\newenvironment{answer}
+                {\bufferfootnotes }
+                {\stopbufferingfootnotes}
                   
 \title{Technische Informatik 2 \\ Fragenkatalog \\ WiSe 2012/2013 \\[5pt] \Large{Universität Bremen}}
 \date{\today}
@@ -136,10 +136,10 @@
 
 % Abstract section
 \begin{abstract}
-Seit jeher gibt es auf den \textbf{Übungsbl"attern} des Kurses \textit{Technische Informatik 2} der Universität Bremen Zusatzfragen, die der Vorbereitung auf das \textbf{Fachgespräch} dienen sollen. Nachfolgend finden Sie die von freiwilligen Studenten und Tutoren zusammengetragenen Antworten auf diese Fragen.
+Seit jeher gibt es auf den \textbf{Übungsblättern} des Kurses \textit{Technische Informatik 2} der Universität Bremen Zusatzfragen, die der Vorbereitung auf das \textbf{Fachgespräch} dienen sollen. Nachfolgend finden Sie die von freiwilligen Studenten und Tutoren zusammengetragenen Antworten auf diese Fragen.
 
 \paragraph*{}
-Jeder kann dazu beitragen, die Antworten zu erweitern, zu verbessern oder zu aktualisieren, indem er die Repository auf Github cloned, das Dokument überarbeitet und anschließend Merge-Requests einreicht. Das Repository befindet sich unter  \url{https://github.com/momesana/ti2-fragenkatalog/}.
+Jeder kann dazu beitragen, die Antworten zu erweitern, zu verbessern oder zu aktualisieren, indem er das Repository auf Github cloned, das Dokument überarbeitet und anschließend Merge-Requests einreicht. Das Repository befindet sich unter  \url{https://github.com/momesana/ti2-fragenkatalog/}.
 \end{abstract}
 
 \newpage
@@ -163,7 +163,7 @@ Jeder kann dazu beitragen, die Antworten zu erweitern, zu verbessern oder zu akt
 %\end{answer}
 
 % This included Fragment contains questions regarding Operating Systems
-\include{fragment_betriebssysteme}
+\input{fragment_betriebssysteme}
 
 % This included Fragment comprises of questions that revolve multithreading
 \include{fragment_nebenlaeufigkeit}
@@ -176,3 +176,8 @@ Jeder kann dazu beitragen, die Antworten zu erweitern, zu verbessern oder zu akt
 
 \end{document}
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
