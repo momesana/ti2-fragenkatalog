@@ -11,34 +11,60 @@ Eine Modellierungssprache, die diese Abhängigkeiten wiedergibt, sind Petri-Netz
 
 \question{Skizziere kurz einige Probleme des nebenläufigen Zugriffs auf Betriebsmittel.}
 \begin{answer}
-Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es kann hier zu Verklemmungen (Deadlocks), dem After-you-after-you Problem und dem Verhungern kommen.
-Bei nebenläufigeZugriff kann es zu inkonsisten Daten kommen, wenn der \crucial{gegenseitige Ausschluss} nicht gewährleistet ist.
+Zwei Prozesse dürfen nicht gleichzeitig auf ein Betriebsmittel zugreifen (kritischer Abschnitt). Es kann hier zu \crucial{Verklemmungen (Deadlocks), dem After-you-after-you Problem und dem Verhungern} kommen.
+
+Bei nebenläufigem Zugriff kann es zu inkonsistenten Daten kommen, wenn der \crucial{gegenseitige Ausschluss} nicht gewährleistet ist.
 \end{answer}
 
 \question{Grenze die Begriffe \textit{Nebenläufigkeit}, \textit{Quasi-Parallelität} und \textit{Parallelität} voneinander ab. Was verstehen wir unter Nichtdeterminismus?}
 \begin{answer}
-Nebenläufigkeit ist das Abarbeiten von mehreren Prozessen mit einer CPU. Paralellität ist das Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
+\begin{description}
+\item[Nebenläufigkeit] \hfill \\ ist das Abarbeiten von mehreren Prozessen mit einer CPU. 
+\item[Quasi-Parallelität]  \hfill \\ ist z.B. paralleles Arbeiten auf einem Einprozessorsystem. In der CPU wird nichts parallel bearbeitet, für uns scheint es am Monitor aber so.
+\item[Paralellität] \hfill \\  ist das Abarbeiten von Prozessen mit einer Mehrprozessormaschine.
+\item[Nichtdeterminismus] \hfill \\  ist ein Konzept, in dem Algorithmen oder Maschinen bei gleicher Eingabe mehrere Möglichkeiten für den Übergang in den nachfolgenden Zustand haben. 
+\end{description}
 \end{answer}
 
 \begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden ,,klassischen'' Szenarien ausgedrückt:]
 \begin{enumerate}
-\item Erzeuger/Verbraucher (Producer/Consumer)
+\item Kritischer Abschnitt (Critical Section)
 \item Leser/Schreiber (Reader/Writer)
+\item Erzeuger/Verbraucher (Producer/Consumer)
 \item Speisende Philosophen (Dining Philosophers)?
 \end{enumerate}
 \end{multilinequestion}
 \begin{answer}
-TODO
+\begin{description}
+\item[Kritischer Abschnitt] \hfill \\
+Zwei nebenläufige Vorgänge greifen auf das selbe Betriebsmittel zu (z.B. zwei Threads auf eine gemeinsame Variable). Das Ergebnis hängt von der tatsächlichen Ausführungsreihenfolge ab und es entsteht (ungewollter) nicht-Determinismus.\\
+Lösung: Gegenseitiger Ausschluss oder Mehrseitige Synchronisation.
+\item[Leser/Schreiber] \hfill \\
+Datenbestand, auf den verschiedene Prozesse lesend bzw. schreibend zugreifen. Z.B. Datenbank (Datensätze mit mehreren Komponenten). Paralleles Lesen ist ok. Aber nicht parallel lesen und schreiben. \\
+Abhilfe: z.B. Verwendung eines Locking-Verfahrens
+\item[Erzeuger/Verbraucher] \hfill \\
+Gemeinsames Kommunikationsobjekt (Warteschlange: Speicherbereich, Datei, Pipe,...).
+Erst schreiben, dann lesen - Verbraucher muss auf den Erzeuger warten. Viele mögliche Probleme (Count-Zähler führt nicht korrekt Buch: kritischer Abschnitt; Elemente in scheinbar leerer Warteschlange, Platz in scheinbar voller Warteschlange; Lost-Wakeup, Verklemmung).
+\item[Speisende Philosophen] \hfill \\
+Fünf Philosophen und nur fünf Stäbchen zum Reisessen. Mehrseitige Synchronisation nötig und Gefahr von Verklemmungen, Philosophen verhungern.\\
+Mögliche Lösung durch Vermeidung (Bankiers Algorithmus): Es dürfen nur vier Philosophen an den Tisch.
+\end{description}
 \end{answer}
 
 \question{Was ist ein Thread (,,Faden'')? Skizziere ein sinnvolles Anwendungsbeispiel für die Verwendung mehrerer Threads innerhalb eines Prozesses.}
 \begin{answer}
-TODO 
+\begin{description}
+\item[Threads] können parallel durchlaufen werden, auch wenn sie zu einem gleichen Prozess gehören. Sie ermöglichen also Parallelisierung/Nebenläufigkeit. Bringen aber damit auch bekannte Gefahren mit sich. 
+\end{description}
+
+Ein Prozess könnte eine Operation auf mehrere Datensätze ausführen, das ist sehr gut parallelisierbar.
+
+Oder ein Prozess hat eine Grafische Benutzeroberfläche (GUI) und führt Berechnungen durch. Dann soll die GUI immer beidenbar sein, auch wenn grade eine aufwändige Berechnung läuft.
 \end{answer}
 
 \question{Was besagt Prämemption?}
 \begin{answer}
-Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse zugunsten anderer.
+Präemption ist die \crucial{zeitweise Unterbrechung} der Bearbeitung einzelner Prozesse zugunsten anderer.
 \end{answer}
 
 \question{Grenze den Thread-Begriff gegen den UNIX-Prozess ab (Adressraum, Zustandsinformationen etc.). Was haben Light-Weight-Prozesse (LWPs) damit zu tun?}
@@ -46,47 +72,57 @@ Präemption ist die zeitweise Unterbrechung der Bearbeitung einzelner Prozesse z
 Ein Prozess hat einen eigenen Adressraum und ist somit stark abgeschottet gegenüber anderen
 Prozessen. Prozesse können aus anderen Prozessen erzeugt werden und arbeiten trotzdem weiter,
 wenn der Vater-Prozess terminiert ist. Prozesse sind eigenständig.
-Threads sind mehrere Kontrollfäden in einer Hülle, nämlich dem Prozess, aus dem sie aufgerufen
-wurden. Threads haben zwar einen eigenen Ausführungszustand (PC,Stack) dafür aber eine
-gemeinsame Umgebung (Adressraum, offenen Dateien, gemeinsame Datenstrukturen). Hier kann
+\crucial{Threads sind mehrere Kontrollfäden in einer Hülle, nämlich dem Prozess}, aus dem sie aufgerufen
+wurden. Threads haben zwar einen \crucial{eigenen Ausführungszustand (PC, Stack)} dafür aber eine
+\crucial{gemeinsame Umgebung} (Adressraum, offenen Dateien, gemeinsame Datenstrukturen). Hier kann 
 es zu kritischen Abschnitten kommen. Eine Synchronisation ist erforderlich. Einem Thread muss
-Arbeit (eine Prozedur) zugewiesen werden. Ein Thread ist beendet, wenn die Umgebung, der Prozess
-terminiert. Ein Thread ist also von der Umgebung abhängig.
+Arbeit (eine Prozedur) zugewiesen werden. Ein Thread ist beendet, wenn die Umgebung, also der Prozess,
+terminiert. Ein \crucial{Thread ist also von der Umgebung abhängig}.
 Ein Problem ist, dass der Betriebssystemkern nichts vom Erzeugen der Threads erfährt, es ist also
 keine ,,echte Nebenläufigkeit'' gegeben.
-Light-Weight-Prozessen dagegen sind dem Bestriebsystemkern bekannt. Das stellt die Grundlage
+Light-Weight-Prozesse dagegen sind dem Bestriebsystemkern bekannt. Das stellt die Grundlage
 für das Scheduling dar.
 \end{answer}
 
 \question{Die Routinen \texttt{pthread\_create()}, \texttt{pthread\_join()}, \texttt{pthread\_exit()} realisieren die Erzeugung und Termination von Threads in der UNIX-Multithreading-Umgebung. Vergleiche ihre Funktionalität mit den Systemaufrufen zur Erzeugung und Termination von Prozessen (\texttt{wait()}, \texttt{fork()} und \texttt{exit()}). Warum arbeitet \texttt{pthread\_create()} deutlich anders als \texttt{fork()}?}
 \begin{answer}
-thr create() / fork()
-thr create():
-Thread wird Prozedur zugewiesen, hat eigen Ausführungszustand (PC,Stack)
-fork():
+\begin{description}
+
+\item[pthread\_create()] \hfill \\ 
+Thread wird Prozedur zugewiesen, hat eigenen Ausführungszustand (PC,Stack)
+
+\item[fork()] \hfill \\ 
 erstellt eine Kopie des Adressraumes. Kind kann weiterarbeiten nachdem der Vater bereits terminierte.
-thr join() / wait()
-thr join():
+
+\item[pthread\_join()] \hfill \\ 
 sammelt Thread ein wenn er beendet ist. Bei Prozessende werden eventuell nichtabgeschlossene
 Threads beendet.
-wait():
+
+\item[wait()] \hfill \\ 
 wartet auf die Terminierung eines Prozesses. Welcher Prozess kann über die Prozess-ID abgefragt
 werden.
-thr exit() / exit()
-thr exit():
+
+\item[pthread\_exit()] \hfill \\ 
 zum vorzeitigen Beenden von Threads
-exit():
+
+\item[exit()] \hfill \\ 
 zum vorzeitigen Beenden von Prozessen
-thr create erzeugt in einer gemeinsamen Umgebung einen eigenen Ausführungszustand. Dazu muss
+\end{description}
+
+\texttt{pthread\_create()} erzeugt in einer gemeinsamen Umgebung einen eigenen Ausführungszustand. Dazu muss
 beim Erzeugen unter anderem auch eine Stack-Info erstellt werden. Mit Threads ist es möglich,
-von einem Programmfaden in mehrere überzugehen. fork() ist dagegen so ausgelegt, dass ein
+von einem Programmfaden in mehrere überzugehen. 
+
+\texttt{fork()} ist dagegen so ausgelegt, dass ein
 eigenständiger Prozess erzeugt wird. Dieser wird auch vom Scheduler berücksichtigt, da er dem
 Betriebsystemkern bekannt ist.
 \end{answer}
 
 \question{Was versteht man unter \textit{einseitiger} bzw. \textit{mehrseitiger Synchronisation}? Gib jeweils ein Anwendungsbeispiel an.}
 \begin{answer}
-Einseitige Synchronisation: Producer-Consumer-Problem mit unendlicher Pufferkapazität; benötigt eine Semaphore
+\begin{description}
+
+\item[Einseitige Synchronisation] Producer-Consumer-Problem mit unendlicher Pufferkapazität; benötigt eine Semaphore
 \begin{verbatim}
 Sem s(0);
 
@@ -99,7 +135,7 @@ s.P();
 verbrauchen();
 \end{verbatim}
 
-Mehrseitige Synchronisation: Producer-Consumer-Problem mit Pufferkapazität; benötigt zwei Semaphoren
+\item[Mehrseitige Synchronisation] Producer-Consumer-Problem mit Pufferkapazität; benötigt zwei Semaphoren
 \label{mehrseitige-synchronisation-beispiel}
 
 \begin{verbatim}
@@ -116,6 +152,7 @@ s1.P();
 verbrauchen();
 s2.V();
 \end{verbatim}
+\end{description}
 \end{answer}
 
 \question{Was ist der Unterbrechungsauschluss?}
