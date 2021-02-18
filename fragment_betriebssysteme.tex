@@ -97,6 +97,7 @@
 	\end{center}
   }
 \end{answer}
+\color{black}
 
 \question{Welche Vorteile bietet es, auf Terminals in UNIX wie auf Dateien zuzugreifen? Was versteht man unter Ein-/Ausgabeumlenkung?}
 \begin{answer}
@@ -282,8 +283,7 @@
 
 \question{Was ist ein Interrupt? Nenne Beispiele für mögliche Interrupt-Quellen. Warum werden sie unterschiedlich priorisiert? Wie wird ein Interrupt in etwa behandelt?}
 \begin{answer}
-  Ein Interrupt ist eine externe Unterbrechung eines Prozesses. Eine Quelle kann z. Bsp. die
-  Hardware sein. Hardwareinterrupts haben generell eine höhere Priorität als Softwareinterrupts.
+  Ein Interrupt ist eine \crucial{externe Unterbrechung eines Prozesses}. Eine Quelle kann z.B. die Hardware sein. Hardwareinterrupts haben generell eine höhere Priorität als Softwareinterrupts.
   Beim Clock-Tic ist die Quelle eben die Hardware, und der Prozess hat eine sehr hohe
   Priorität, da ansonsten die System-Uhr nicht mehr genau laufen würde, was sich fatal auf
   andere Programme auswirken kann, die sich nach dieser Uhr zu richten haben.
@@ -292,8 +292,8 @@
 
 \question{Was ist ein Trap? Nenne Beispiele. Inwiefern unterscheiden sich Traps von Interrupts?}
 \begin{answer}
-  Ein Trap ist ein interne Unterbrechung eines Programms in Ausführung, die vom System
-  kommt. Beim Trap wird in den Kernel-Mode gewechselt, da es ja ein Systemaufruf ist.
+  Ein Trap ist ein \crucial{interne Unterbrechung eines Programms in Ausführung, die vom System
+  kommt. Beim Trap wird in den Kernel-Mode gewechselt}, da es ja ein Systemaufruf ist.
   Die Regelung erfolgt durch den Trap-Handler, der bei Bedarf dann auch Signale senden
   kann. Division durch 0 wäre ein solches Beispiel. Es wird ein Trap ausgelöst, der durch den
   Trap-Handler gejagt wird, welcher wiederum das Signal sigfpe lossendet (SignalFloating-
@@ -309,45 +309,40 @@
 \question{Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}
 \begin{answer}
   \subsection*{Einfaches Modell:}
-  \begin{itemize}
-  \item Ready
-  \item Run
-  \item Sleep
-  \item Zombie
-  \end{itemize}
-
-
-  \subsection*{Erweitertes Modell:}
 
   \begin{description}
-  \item[dead]\hfill \\ Der Prozess wurde beendet, er belegt jedoch noch Speicherplatz.
-
   \item[ready]\hfill \\ Der Prozess wartet auf Zuteilung der CPU (Zeitschlitz). Gibt es den Ready-Zustand, so befinden sich höchstens so viele Prozesse im Zustand running, wie CPUs vorhanden sind.
 
   \item[running]\hfill \\ Entweder genau der Prozess, der gerade bearbeitet wird, oder alle Prozesse, die momentan Rechenarbeit verrichten können.
 
   \item[sleep]\hfill \\ Der Prozess wurde auf eigenen Wunsch zurückgestellt. Er kann Signale entgegennehmen, wie z. B. Timer, oder Ergebnisse von Kindprozessen.
 
+  \item[zombie]\hfill \\ Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
+  \end{description}
+  
+  \subsection*{Mit erweitertem Modell:}
+\begin{description}
+
+  \item[dead]\hfill \\ Der Prozess wurde beendet, er belegt jedoch noch Speicherplatz.
+
   \item[trace]\hfill \\ Der Prozess wurde von außen angehalten, üblicherweise durch einen Debugger.
 
   \item[wait]\hfill \\ Der Prozess wartet auf ein Ereignis, üblicherweise eine Benutzereingabe.
 
   \item[uninterruptible sleep]\hfill \\ Der Prozess wartet auf ein Ereignis, üblicherweise Hardware. Tritt dieses Ereignis ein, ohne dass der anfragende Prozess es entgegennimmt, so kann das System instabil werden.
-
-  \item[zombie]\hfill \\ Der Prozess wurde beendet und aus dem Arbeitsspeicher gelöscht, aber noch nicht aus der Prozessliste entfernt.
   \end{description}
 
 \end{answer}
 
 \question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechenintensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
 \begin{answer}
-  Ein Scheduler soll schlank (effizient) und fair sein, d. h. der Rechenaufwand der Prozessverwaltung
-  darf nicht so gross werden, dass die Effizienz darunter leidet, und jeder Prozess soll
+  Ein Scheduler soll schlank \crucial{(effizient) und fair} sein, d. h. der Rechenaufwand der Prozessverwaltung
+  darf nicht so groß werden, dass die Effizienz darunter leidet, und jeder Prozess soll
   gerechterweise auch drankommen. Auch die Zeitscheiben sollen eine angemessene Grösse
   haben.
 \end{answer}
 
-\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten "simulieren"?}
+\question{Wie könnte man mit Hilfe eines Round-Robin-Schedulers Prozess-Prioritäten ``simulieren"?}
 \begin{answer}
   Man könnte die Anzahl der Durchläufe für die Prozesse mit einer hohen Priorität erhöhen,
   so dass diese in einem Durchlauf mehrere Male dran kommen, oder man gibt den wichtigen
@@ -356,15 +351,15 @@
 
 \question{Warum bestehen die \textit{Sleep}- und die \textit{Run-Queue} in UNIX nicht aus jeweils einer einzigen Warteschlange? Wie sind sie stattdessen organisiert?}
 \begin{answer}
-  Sleep-Queue und Run-Queue bestehen aus jeweils einem Array. Jede Priorität hat darin
-  eine eigene Liste, das Handling zwischen den Queues ist abhängig von der Priorität. Diese
+  \crucial{Sleep-Queue und Run-Queue bestehen aus jeweils einem Array. Jede Priorität hat darin
+  eine eigene Liste}, das Handling zwischen den Queues ist abhängig von der Priorität. Diese
   Aufteilung besteht, da sonst immer alles durchsucht werden müsste.
 \end{answer}
 
 \question{Warum werden die Zustandsinformationen eines UNIX-Prozesses teilweise in der \textit{Proc-Struktur} und teilweise in der \textit{User-Struktur} abgelegt? Nenne jeweils drei charakteristische Beispiele für Angaben darin.}
 \begin{answer}
-  Die in der Proc-Struktur abgelegten Zustandsinformationen sind für alle Prozesse verfügbar,
-  die in der User-Struktur abgelegten sind nur für den laufenden Prozess verfügbar.
+  Die in der \crucial{Proc-Struktur abgelegten Zustandsinformationen sind für alle Prozesse verfügbar},
+  die in der \crucial{User-Struktur abgelegten sind nur für den laufenden Prozess verfügbar}.
   Beispiele für Angaben in der Proc-Struktur:
   Signale, die zur Verarbeitung anstehen
   Prozesszustände
@@ -434,7 +429,7 @@
 \question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung? Wie funktioniert der Buddy-Algorithmus in etwa?}
 \begin{answer}
   \textbf{First-Fit-Algorithmus:}
-  Der erste Block, der gross genug ist, wird verwendet indem er in zwei Teile gespalten wird
+  Der erste Block, der groß genug ist, wird verwendet indem er in zwei Teile gespalten wird
   (gross genug für die Anforderung und Rest).
   Das führt zu einer Ansammlung von kleinen Blöcken am Anfang der Liste, es werden immer
   mehr Blöcke und sie werden im Mittel immer kleiner. Das führt zu im Mittel längerer
@@ -447,7 +442,7 @@
   Liste durchsucht wird. Es sind lange auch grosse Blöcke verfügbar.
 
   \textbf{Buddy-Algorithmus:}
-  Blöcke sind immer $2^k$ gross. Bei der Freigabe eines Blockes wird er, wann immer sein
+  Blöcke sind immer $2^k$ groß. Bei der Freigabe eines Blockes wird er, wann immer sein
   Nachbar (Buddy) frei ist, mit dem Nachbarn verschmolzen.
   Das vereinfacht das splitten und zusammenfügen der Blöcke. Allerding entsteht freier Speicher
   innerhalb der Blöcke.
@@ -456,8 +451,8 @@
 
 \question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher werden typischerweise bereitgestellt?}
 \begin{answer}
-  Die Systeme bieten eine Speicherhierachie an da die Geschwindigkeit sich konträr zu den
-  Kosten verhält. Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set). Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
+  Die Systeme bieten eine Speicherhierachie an, da die Geschwindigkeit sich proportional zu den
+  Kosten verhält - \crucial{der schnellste Speicher ist der teuerste}. Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set). Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
 \end{answer}
 
 \question{Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}
@@ -483,7 +478,7 @@
 
 \question{Was ist Paging und warum macht man das? Wann tritt ein Page-Fault auf und was passiert dann?}
 \begin{answer}
-  Beim Paging wird der Hauptspeicher in Kacheln (Page-Frames) fester Größe unterteilt.
+  Beim Paging wird der Hauptspeicher in Kacheln \crucial{(Page-Frames) fester Größe} unterteilt.
   Wird eine neue Page im Speicher benötigt und ist kein Page-Frame frei, kommt es zur Verdrängung.
   Wenn diese Page später angefordert wird, tritt ein Page-Fault auf, da sich diese Seite nicht im Working-Set des Hauptspeichers befindet.
 
@@ -537,7 +532,8 @@
 
   Bei Lastspitzen summiert sich die Verdrängung von beschriebenen Seiten, daher
   wird NRU oft nicht verwendet.
-  Aging
+  
+  \textbf{Aging:}
   Beim Aging altern die Seiten duch shiften eines Schieberegisters das für jede Seite
   angelegt wird. Das führt zu einer guten Annäherung an LRU, aber auch zu unbertretbar
   hohem Aufwand. Bei Vereinfachung des Algorithmus (z.B. von Schieberegister
@@ -547,7 +543,7 @@
 
 \question{In welche dieser Kategorien kann man den Clock-Hand-Algorithmus einordnen?}
 \begin{answer}
-  LRU (ohne Dirty-Bit)
+  LRU (ohne Dirty-Bit).
 \end{answer}
 
 \begin{multilinequestion}[Warum ist ein perfekter Algorithmus zur Verdrängung von Pages aus dem Hauptspeicher nicht realisierbar?]
@@ -619,7 +615,7 @@
 
   \texttt{lseek()}\\
   wird mit den Parametern File Descriptor, offset und whence aufgerufen. Die aktuelle Position im
-  File Descriptor wird um offset Bytes gemäss whence verschoben (d.h. 0 = vom Anfang, 1 = vom
+  File Descriptor wird um offset Bytes gemäß whence verschoben (d.h. 0 = vom Anfang, 1 = vom
   Ende, 2 = von der aktuellen Position aus).
   Zusammengefasst: lseek setzt den Zeiger, der innerhalb einer Datei die Position anzeigt.
   \\
@@ -632,7 +628,7 @@
 
   \texttt{write()}\\
   mit den Parametern fd, buf und len funktioniert analog zu read() und liefert die Anzahl der geschriebenen
-  Bztes zurück.
+  Bytes zurück.
 \end{answer}
 
 \question{Wie sieht die Struktur des UNIX-V7-Dateisystems auf der Platte in etwa aus? Warum erfolgt die Verwaltung der Freispeicherliste über \textit{Indirekt}-Blöcke?}
@@ -642,8 +638,7 @@
   \item Der Dateiinhalt ist Block-orientiert mit speziellem Block-Index organisiert. 
   \item Der Boot-Block ist Block 0 des Root-Dateisystems und wird beim booten geladen. 
   \item Der Superblock enthält die Verwaltungsinformationen des Dateisystems: Größe, Verwaltung der freien Inodes, Verwaltung der freien Blöcke (mit verketteter Liste von Blöcken mit freien Blocknummern) 
-  \item
-    
+  \item Der Superblock verweist auf Inodes und freie Blöcke
   \item Inodes dienen zur Ablage der Verwaltungsinformationen der Dateien. Jede Datei hat einen Inode mit:
     \begin{itemize}
     \item eindeutigem Bezeichner (heisst: Inodenummer, diese gibt die Position an) 
@@ -656,7 +651,18 @@
     \item Zugriffsrechte: Kleine Dateien bis zu zehn Blöcken werden direkt im Inode-Block gespeichert.
     \end{itemize}
 
-  \item In Indirekten Blöcken sind alle Dateien größer als zehn Blöcke organisiert. Jeder Indirekt Block ist auch in den Inodes mit einem Eintrag vorhanden. Mit Indirekten Blöcken sind große Dateien realisierbar, mit maximal vier Zugriffen für einen Dateiblock. Die Aufteilung in verschiedene Blöcke dient insbesondere der Sicherheit, so wird z.B. der Superblock, ohne den der Rest des Systems nicht mehr zugreifbar ist, mehrfach an verschiedenen Stellen der Platte gespeichert. So können die wichtigsten Informationen bei der Zerstörung des Original- Superblockes wiederhergestellt werden. Des weiteren können durch Verschleiß kaputte Blöcke als nicht benutzbar deklariert werden. Das Gegenbeispiel zur Organisation in Blöcken ist die Organisation als verkettete Liste, heißt bei eine Störung der verketteten Liste durch einen kaputten Block (z.B.) sind alle folgenden Listeneinträge nicht mehr erreichbar.
+  \item Organisation der Indirekten Blöcke:
+  \begin{itemize}
+  \item Dateien größer als 10 Blöcke
+  \item Jeder ind. Block ist in Inodes eingetragen
+  \item Sehr große Dateien mit maximal vier Zugriffen/Dateiblock realisierbar
+  \item Blockaufteilung für Sicherheit: 
+  \begin{itemize}
+  \item Superblock mehrfach in Kopie vorhanden
+  \item Mechanisch kaputte Blöcke werden aussortiert
+  \end{itemize}
+  \item Das Gegenteil wäre Organisation in verketteter Liste, ist hier ein Stück kaputt, ist die Liste auch kaputt.
+  \end{itemize}
   \end{itemize}
 \end{answer}
 
@@ -675,7 +681,7 @@
 
 \question{Was geschieht durch einen mount()-Systemaufruf in etwa?}
 \begin{answer}
-  Unter UNIX kann eine physikalische Harddisk in mehrere logische Partitionen eingeteilt sein. Jede dieser Patitionen enthält ihr eigenes Dateisystem, ein UNIX-System kann also aus mehreren solcher Dateisysteme zusammengesetzt sein. Mit dem Befehl mount wird ein weiteres Dateisystem in einen solchen Dateibaum (Wurzel: Root) eingehängt, d.h. verfügbar gemacht. Beim mounten werden logische Geräte (z.B. CDROM, Partition, ...) und der Mount Point übergeben.
+  Unter UNIX kann eine physikalische Harddisk in mehrere logische Partitionen eingeteilt sein. Jede dieser Patitionen enthält ihr eigenes Dateisystem, ein UNIX-System kann also aus mehreren solcher Dateisysteme zusammengesetzt sein. Mit dem Befehl mount wird ein \crucial{weiteres Dateisystem in einen solchen Dateibaum (Wurzel: Root) eingehängt}, d.h. verfügbar gemacht. Beim mounten werden logische Geräte (z.B. USB-Stick, CDROM, Partition, ...) und der Mount Point übergeben.
 \end{answer}
 
 \question{Welche Vorteile bietet es, Dateien mit dem UNIX-Systemaufruf \texttt{mmap()} in den virtuellen Adressraum eines Prozesses abzubilden?}
@@ -692,27 +698,27 @@
 
 \question{Wie ist eine Platte intern organisiert? Wie wirkt sich dies auf den Informationszugriff aus? Wie geht das UNIX Fast File System damit um?}
 \begin{answer}
-  Eine physikalische Festplatte besteht aus sechs bis zehn internen Platten (Scheiben). Auf jede
-  dieser internen Platten greift jeweils von oben und von unten ein Lese-Schreibkopf zu. Jede
-  Oberfläche ist in Spuren unterteilt, jede Spur in Sektoren. übereinanderliegende Spuren auf den
-  verschiedenen Oberflächen bilden Zylinder. Da für jede Armbewegung relativ viel Zeit benötigt
+  Eine physikalische Festplatte besteht aus sechs bis zehn internen \crucial{Platten} (Scheiben). Auf jede
+  dieser internen Platten greift jeweils von oben und von unten ein \crucial{Lese-Schreibkopf} zu. Jede
+  Oberfläche ist in \crucial{Spuren} unterteilt, jede Spur in \crucial{Sektoren}. übereinanderliegende Spuren auf den
+  verschiedenen Oberflächen bilden \crucial{Zylinder}. Da für jede Armbewegung relativ viel Zeit benötigt
   wird, sollten Armbewegungen möglichst vermieden werden. D.h. zusammengehörende Daten sollten
   in hintereinanderliegenden Sektoren in derselben Spur untergebracht werden, damit das Lesen
   und Schreiben in Vorgang ohne weitere Armbewegung vorgenommen werden kann. Ist die Datenmenge
   größer, sollten die Spuren innerhalb des gleichen Zylinders verwendet werden.
 
-  % FIXME
+  % FIXME % why?
   UNIX Fast File System:
   Das System arbeitet auf vier bzw. acht Byte großen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
 \end{answer}
 
 \question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle zum Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
 \begin{answer}
-  In UNIX sind Geräte als Datein dargestellt. Dies bietet für Anwender und Programmierer den
+  In UNIX sind Geräte als Dateien dargestellt. Dies bietet für Anwender und Programmierer den
   Vorteil, dass sie einheitlich zu behandeln sind.
 
   \paragraph*{Laut Wikipedia:}
-  Everything is a file (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
+  \crucial{Everything is a file} (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
 \end{answer}
 
 \question{Was ist ein \textit{Gerätetreiber}, was ein \textit{Geräte-Controller}? Welche Aufgaben haben sie?}
@@ -732,14 +738,15 @@
 \question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine \textit{High Water Mark} bzw. eine \textit{Low Water Mark}?}
 \begin{answer}
   Der Zugriff über Warteschlangen erfolgt um eine Vermischung von Aufträgen und das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
-  Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird oder ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt" werden können.
+  Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird und ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt'' werden können.
 \end{answer}
 
 \question{Worin unterscheidet sich Direct Memory Access (DMA) von Programmed I/O?}
 \begin{answer}
-  Beim Programmed
-  I/O ist der Ablauf wie unter 7.2 beschrieben, da der Treiber ein Teil des Betriebssystems ist, bleibt letztendlich die Kontrolle des Vorgangs bei der CPU. Beim Direct Memory Access (DMA) liegt nach dem Anstoss eines Auftrages der Zugriff auf den
-  Hauptspeicher und die daraus vorzunehmenden Kopiervorgänge in der "Verantwortung" des Controllers.
+  Beim Programmed I/O ist der Ablauf wie eben beschrieben. Da der Treiber ein Teil des Betriebssystems ist, bleibt letztendlich die Kontrolle des Vorgangs bei der CPU. 
+  
+  Beim Direct Memory Access (DMA) liegt nach dem Anstoss eines Auftrages der Zugriff auf den
+  Hauptspeicher und die daraus vorzunehmenden Kopiervorgänge in der "Verantwortung'' des Controllers.
   Der Controller greift nach der Abarbeitung eines Auftrages ohne Einbeziehung der CPU
   auf den Hauptspeicher zu. Zu diesem Zweck muss der Auftrag selbst die entsprechenden Speicherbereiche
   angeben.
