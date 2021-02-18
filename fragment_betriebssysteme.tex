@@ -225,14 +225,14 @@
 
 \question{In welche Bereiche (Segmente) ist der virtuelle Adressraum eines Programmes in Ausführung unter UNIX unterteilt, und welche Eigenschaften kennzeichnen sie?}
 \begin{answer}
-  Der virtuelle Adressraum ist in \crucial{Text}, \crucial{Data} und \crucial{Stack} unterteilt. Im Text-Teil befindet siche
-  der eigentliche Programmcode, im Data-Teil die Daten und auf dem Stack alle temparären
+  Der virtuelle Adressraum ist in \crucial{Text}, \crucial{Data} und \crucial{Stack} unterteilt. Im Text-Teil befindet sich
+  der eigentliche Programmcode, im Data-Teil die Daten und auf dem Stack alle temporären
   Daten (z.B. Variablen).
 \end{answer}
 
 \question{Wozu wird der Stack verwendet?}
 \begin{answer}
-  Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen tempor"ar anfallenden Daten eines Prozesses} abgelegt. Das umfasst unter anderem die Rücksprung-Addresse, die an die Funktion übergebenen Argumente und lokale Variablen.
+  Auf einem Stack werden die \crucial{innerhalb von Funktionsaufrufen temporär anfallenden Daten eines Prozesses} abgelegt. Das umfasst unter anderem die Rücksprung-Addresse, die an die Funktion übergebenen Argumente und lokale Variablen.
 \end{answer}
 
 \question{Welchem Zweck dienen Bibliotheken (Libraries)?}
@@ -265,7 +265,7 @@
   Position-independent Code (PIC, engl. für positionsunabhängiger Code) ist \crucial{Maschinencode, der ausgef"uhrt werden kann, unabh"angig davon, an welcher absoluten Adresse im Hauptspeicher er sich befindet}. PIC wird üblicherweise für dynamische Bibliotheken verwendet, damit diese für jedes Programm an eine Speicherposition geladen werden können, wo sie sich nicht mit anderen Objekten dieses Programms überlappen.\footnote{http://de.wikipedia.org/wiki/Position-Independent\_Code} 
 \end{answer}
 
-\question{Durch welche "Qualitätsmerkmale" sollten Betriebssysteme gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
+\question{Durch welche "Qualitätsmerkmale`` sollten Betriebssysteme gekennzeichnet sein? Nenne Beispiele für konkurrierende Anforderungen.}
 \begin{answer}
   \crucial{Effizienz, Kosten, Bedienbarkeit, Zuverl"assigkeit, Verf"ugbarkeit, Sicherheit, Wartbarkeit.
     Der Kostenpunkt kann mit jeder anderen Anforderung konkurrieren.} Je besser ein Aspekt werden soll, desto mehr Zeit und Entwicklungsarbeit, sprich Geld muss in diesen Aspekt investiert werden. Am Beispiel Windows lässt sich wunderbar erkennen, wie \crucial{Bedienbarkeit und Zuverl"assigkeit im Widerspruch} zueinander stehen können. Die Sicherheit eines OS's lässt sich oft auch nicht mit einer ausgereiften Bedienbarkeit vereinbaren, oder umgekehrt, siehe Win vs. Linux.
