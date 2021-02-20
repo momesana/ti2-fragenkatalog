@@ -186,7 +186,7 @@
 \end{multilinequestion}
 
 \begin{answer}
-  Der Prozessbaum sieht nach Eingabe der obigen Befehle folgendermaßen aus:
+  Der Prozessbaum sieht nach Eingabe der obigen Befehle folgenderma"sen aus:
   \begin{figure}[H]
     \caption{Prozessbaum nach den Eingaben}
     \centering
@@ -246,7 +246,7 @@
 
 \question{Welche Aufgabe erfüllt ein Linker?}
 \begin{answer}
-  Ein Linker oder Binder verbindet einzelne Programmmodule zu einem ausführbaren Programm. Im Zuge dessen werden die Symbole in den Objectfiles aufgelöst. Man unterscheidet zwischen statisches und dynamisches Linken. Man unterscheidet dabei zwischen \crucial{statisches und dynamisches Linken}.
+  Ein Linker oder Binder verbindet einzelne \crucial{Programmmodule zu einem ausführbaren Programm}. Im Zuge dessen werden die Symbole in den Objectfiles aufgelöst. Man unterscheidet zwischen statischem und dynamischem Linken.
 
   \paragraph*{Statisches Linken:}
   Die Symbole schon während des Zusammenstellens der Programmdatei aufgelöst
@@ -257,7 +257,7 @@
 
 \question{Wozu wird beim Assemblieren eine Symboltabelle angelegt?}
 \begin{answer}
-  Zum Auflösen von Verweisen.
+  Zum Auflösen von Verweisen zu anderen Programmteilen.
 \end{answer}
 
 \question{Welchen Vorteil hat es, Bibliotheken mit \textit{Position Independent Code} zu versehen?}
@@ -284,17 +284,20 @@
 \question{Was ist ein Interrupt? Nenne Beispiele für mögliche Interrupt-Quellen. Warum werden sie unterschiedlich priorisiert? Wie wird ein Interrupt in etwa behandelt?}
 \begin{answer}
   Ein Interrupt ist eine \crucial{externe Unterbrechung eines Prozesses}. Eine Quelle kann z.B. die Hardware sein. Hardwareinterrupts haben generell eine höhere Priorität als Softwareinterrupts.
-  Beim Clock-Tic ist die Quelle eben die Hardware, und der Prozess hat eine sehr hohe
+  Beim Clock-Tick ist die Quelle eben die Hardware, und der Prozess hat eine sehr hohe
   Priorität, da ansonsten die System-Uhr nicht mehr genau laufen würde, was sich fatal auf
   andere Programme auswirken kann, die sich nach dieser Uhr zu richten haben.
   Beispiele für einen Softwareinterrupt wären SIGKILL oder SIGSTOP.
+  Der Interrupt entsteht und l"ost im Prozessor einen Interrupt Request (IRQ) aus.
+  Daraufhin wird der aktuelle Befehlszyklus zu Ende ausgeführt und es erfolgt ein Sprung in die Interrupt Service Routine (ISR).
+  Die ISR sichert die für sich benötigten Register, führt den entsprechenden Code aus und stellt daraufhin die gesicherten Register wieder her.
+  Zum Schluss erfolgt ein Rücksprung zum zuvor ausgeführten Code.
 \end{answer}
 
 \question{Was ist ein Trap? Nenne Beispiele. Inwiefern unterscheiden sich Traps von Interrupts?}
 \begin{answer}
-  Ein Trap ist ein \crucial{interne Unterbrechung eines Programms in Ausführung, die vom System
-  kommt. Beim Trap wird in den Kernel-Mode gewechselt}, da es ja ein Systemaufruf ist.
-  Die Regelung erfolgt durch den Trap-Handler, der bei Bedarf dann auch Signale senden
+  Ein Trap ist eine \crucial{interne Unterbrechung eines Programms in Ausführung. Beim Trap wird in den Kernel-Mode gewechselt}, da es sich um einen Systemaufruf oder ein Problem/undefiniertes Ereignis handelt, wofür das BS eingreifen muss.
+  Die Behandlung erfolgt durch den Trap-Handler, der bei Bedarf dann auch Signale senden
   kann. Division durch 0 wäre ein solches Beispiel. Es wird ein Trap ausgelöst, der durch den
   Trap-Handler gejagt wird, welcher wiederum das Signal sigfpe lossendet (SignalFloating-
   PointError). Die Folge ist, wie bei vielen anderen Signalen auch, dass der Prozess terminert
@@ -303,7 +306,7 @@
 
 \question{Was ist ein Signal? Nenne Beispiele für mögliche Signalquellen. Wie kann ein Prozess auf ein Signal reagieren?}
 \begin{answer}
-  Signale dienen der Meldung (von Ausnahmezust"anden) an einen Prozess. Sowohl der Benutzer als auch Prozesse können Signale an Prozesse senden. Beispiele für Signale sind u.a. Stop (SIGINT), Kill (SIGKILL), Terminate und (SIGTERM). Der Traphandler ist oft eine Signalquelle.
+  Signale dienen der Meldung (von Ausnahmezust"anden) an einen Prozess. Sowohl der Benutzer als auch Prozesse können Signale an Prozesse senden. Beispiele für Signale sind u.a. Stop (SIGINT), Kill (SIGKILL) und Terminate (SIGTERM). Der Traphandler ist oft eine Signalquelle.
 \end{answer}
 
 \question{Beschreibe kurz einige Zustände, in denen sich ein (UNIX-)Prozess befinden kann.}
@@ -325,7 +328,7 @@
 
   \item[dead]\hfill \\ Der Prozess wurde beendet, er belegt jedoch noch Speicherplatz.
 
-  \item[trace]\hfill \\ Der Prozess wurde von außen angehalten, üblicherweise durch einen Debugger.
+  \item[trace]\hfill \\ Der Prozess wurde von au"sen angehalten, üblicherweise durch einen Debugger.
 
   \item[wait]\hfill \\ Der Prozess wartet auf ein Ereignis, üblicherweise eine Benutzereingabe.
 
@@ -337,7 +340,7 @@
 \question{Nenne einige Randbedingungen, auf die man beim Entwurf eines Schedulers achten sollte. Wie sollten rechenintensive bzw. Ein-/Ausgabe-intensive Prozesse dabei behandelt werden?}
 \begin{answer}
   Ein Scheduler soll schlank \crucial{(effizient) und fair} sein, d. h. der Rechenaufwand der Prozessverwaltung
-  darf nicht so groß werden, dass die Effizienz darunter leidet, und jeder Prozess soll
+  darf nicht so gro"s werden, dass die Effizienz darunter leidet, und jeder Prozess soll
   gerechterweise auch drankommen. Auch die Zeitscheiben sollen eine angemessene Grösse
   haben.
 \end{answer}
@@ -372,7 +375,7 @@
 
 \question{Skizziere kurz die Prozesserzeugung in UNIX. Welche Rolle spielen die Systemaufrufe fork() und exec() dabei? Wie unterscheiden sich Vater- und Kindprozess voneinander?}
 \begin{answer}
-  Der Prozess Nummer Eins (init) wird ,,von Hand'' beim Systemstart erzeugt (standardmäßig \texttt{/sbin/init}, andere Pfade können dem Kernel im Boot-Loader als Parameter übergeben werden).
+  Der Prozess Nummer Eins (init) wird ,,von Hand'' beim Systemstart erzeugt (standardmä"sig \texttt{/sbin/init}, andere Pfade können dem Kernel im Boot-Loader als Parameter übergeben werden).
   Andere Prozesse werden bei Bedarf als Kindprozesse mit fork() (oft als Kind-Prozesse
   der Shell) erzeugt. So entsteht eine Hierachie von Prozessen. Der Kindprozess erhält eine
   neue Prozess-ID, ist aber zunächst eine Kopie des Vaters, d.h. der ,,gleiche'' Adressraum
@@ -412,7 +415,7 @@
   Es gibt Variationen, bspw. unterschiedlich lange Zeitscheiben oder mehrfaches Einreihen in Run-Queue.
 
   Ebenfalls gibt es die Möglichkeit des Schedulings nach Prioritäten, die sich aus dynamischen und statischen
-  Faktoren berechnen ließen.
+  Faktoren berechnen lie"sen.
 \end{answer}
 
 \question{Welche Scheduling-Strategie ist empfehlenswert? Was wird bei Unix-Systemen genutzt?}
@@ -429,7 +432,7 @@
 \question{Welche Vor- und Nachteile hat der First-Fit- bzw. der Best-Fit-Algorithmus zur Speicherverwaltung? Wie funktioniert der Buddy-Algorithmus in etwa?}
 \begin{answer}
   \textbf{First-Fit-Algorithmus:}
-  Der erste Block, der groß genug ist, wird verwendet indem er in zwei Teile gespalten wird
+  Der erste Block, der gro"s genug ist, wird verwendet indem er in zwei Teile gespalten wird
   (gross genug für die Anforderung und Rest).
   Das führt zu einer Ansammlung von kleinen Blöcken am Anfang der Liste, es werden immer
   mehr Blöcke und sie werden im Mittel immer kleiner. Das führt zu im Mittel längerer
@@ -442,7 +445,7 @@
   Liste durchsucht wird. Es sind lange auch grosse Blöcke verfügbar.
 
   \textbf{Buddy-Algorithmus:}
-  Blöcke sind immer $2^k$ groß. Bei der Freigabe eines Blockes wird er, wann immer sein
+  Blöcke sind immer $2^k$ gro"s. Bei der Freigabe eines Blockes wird er, wann immer sein
   Nachbar (Buddy) frei ist, mit dem Nachbarn verschmolzen.
   Das vereinfacht das splitten und zusammenfügen der Blöcke. Allerding entsteht freier Speicher
   innerhalb der Blöcke.
@@ -463,22 +466,22 @@
 
 \question{Was versteht man unter \textit{Paging}, was unter \textit{Segmentierung}? Wo tritt \textit{interne Fragmentierung}, wo \textit{externe Fragmentierung} auf? Was versteht man darunter?}
 \begin{answer}
-  \textbf{Segmentierung:} Speicher wird in verschieden große Stücke unterteilt, das ermöglicht die flexible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte groß. Segmentierung hat das Problem der externen Fragmentierung.
+  \textbf{Segmentierung:} Speicher wird in verschieden gro"se Stücke unterteilt, das ermöglicht die flexible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte gro"s. Segmentierung hat das Problem der externen Fragmentierung.
 
   \textbf{Paging:} flexible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (Page-Frames)
-  fester Größe unterteilt. Die Prozessadressräume wiederum liegen in Seiten (Pages) von
-  gleicher Größe (meist 4 KiB). Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung (statt externer).
+  fester Grö"se unterteilt. Die Prozessadressräume wiederum liegen in Seiten (Pages) von
+  gleicher Grö"se (meist 4 KiB). Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung (statt externer).
 
-  \textbf{externe Fragmentierung:} Wenn durch die angewendete Logik Speicher in unterschiedlich große
+  \textbf{externe Fragmentierung:} Wenn durch die angewendete Logik Speicher in unterschiedlich gro"se
   Stücke eingeteilt wird und ganze Stücke freibleiben.
 
-  \textbf{interne Fragmentierung:} Wenn innerhalb von gleich großen Stücken der Speicher nicht restlos
+  \textbf{interne Fragmentierung:} Wenn innerhalb von gleich gro"sen Stücken der Speicher nicht restlos
   ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
 \question{Was ist Paging und warum macht man das? Wann tritt ein Page-Fault auf und was passiert dann?}
 \begin{answer}
-  Beim Paging wird der Hauptspeicher in Kacheln \crucial{(Page-Frames) fester Größe} unterteilt.
+  Beim Paging wird der Hauptspeicher in Kacheln \crucial{(Page-Frames) fester Grö"se} unterteilt.
   Wird eine neue Page im Speicher benötigt und ist kein Page-Frame frei, kommt es zur Verdrängung.
   Wenn diese Page später angefordert wird, tritt ein Page-Fault auf, da sich diese Seite nicht im Working-Set des Hauptspeichers befindet.
 
@@ -551,18 +554,18 @@
 
 \begin{answer}
   Ein optimaler Algorithmus ist für ein 'normales' Betriebssystem nicht realisierbar, da die Prozesse
-  durch unterschiedliche Working Sets eine unterschiedlich große Anzahl von Seiten unterschiedlich
+  durch unterschiedliche Working Sets eine unterschiedlich gro"se Anzahl von Seiten unterschiedlich
   lange benötigen.
   Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben (Embeded
   Systems) ein optimaler bzw. annähernd optimaler Algorithmus möglich.
 \end{answer}
 
-\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu groß bzw. zu klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
+\question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gro"s bzw. zu klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
 \begin{answer}
-  Wenn die Umlaufzeit zu groß gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die Freispeichereserve leer). Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als sinnvoll.
+  Wenn die Umlaufzeit zu gro"s gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die Freispeichereserve leer). Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als sinnvoll.
 
   \paragraph*{}
-  Ein zweiter Zeiger verbessert den Clock-Hand-Algorithmus insbesondere bei großen Mengen von Speicher. Zum Beispiel kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen und der Zweite die
+  Ein zweiter Zeiger verbessert den Clock-Hand-Algorithmus insbesondere bei gro"sen Mengen von Speicher. Zum Beispiel kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen und der Zweite die
   Seiten entfernen falls sie in der Zwischenzeit nicht erneut referenziert wurden.
 \end{answer}
 
@@ -576,13 +579,13 @@
 
 \question{Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}
 \begin{answer}
-  Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte Adressraum wird in gleich große Kacheln eingeteilt.
-  Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen enthalten. Die Größe der Segmente ist nicht statisch, sondern kann jede Gösse mit n multipliziert mit Page Frame Größe umfassen.
+  Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte Adressraum wird in gleich gro"se Kacheln eingeteilt.
+  Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen enthalten. Die Grö"se der Segmente ist nicht statisch, sondern kann jede Gösse mit n multipliziert mit Page Frame Grö"se umfassen.
 
   \paragraph*{}
   Dadurch entstehen dreiteilige Adressen:
   Region mit eigener Pagetabelle, Page in der Region, Adresse in Page.
-  Regionen folgen dabei der logischen Größe des Adressraumes (Text, Data, Stack), Pages sind in feste Größen unterteilt.
+  Regionen folgen dabei der logischen Grö"se des Adressraumes (Text, Data, Stack), Pages sind in feste Grö"sen unterteilt.
 \end{answer}
 
 \question{Wozu bzw. wo wird bei der Speicherverwaltung häufig ein \textit{Assoziativspeicher} eingesetzt?}
@@ -615,7 +618,7 @@
 
   \texttt{lseek()}\\
   wird mit den Parametern File Descriptor, offset und whence aufgerufen. Die aktuelle Position im
-  File Descriptor wird um offset Bytes gemäß whence verschoben (d.h. 0 = vom Anfang, 1 = vom
+  File Descriptor wird um offset Bytes gemä"s whence verschoben (d.h. 0 = vom Anfang, 1 = vom
   Ende, 2 = von der aktuellen Position aus).
   Zusammengefasst: lseek setzt den Zeiger, der innerhalb einer Datei die Position anzeigt.
   \\
@@ -637,7 +640,7 @@
   \begin{itemize}
   \item Der Dateiinhalt ist Block-orientiert mit speziellem Block-Index organisiert. 
   \item Der Boot-Block ist Block 0 des Root-Dateisystems und wird beim booten geladen. 
-  \item Der Superblock enthält die Verwaltungsinformationen des Dateisystems: Größe, Verwaltung der freien Inodes, Verwaltung der freien Blöcke (mit verketteter Liste von Blöcken mit freien Blocknummern) 
+  \item Der Superblock enthält die Verwaltungsinformationen des Dateisystems: Grö"se, Verwaltung der freien Inodes, Verwaltung der freien Blöcke (mit verketteter Liste von Blöcken mit freien Blocknummern) 
   \item Der Superblock verweist auf Inodes und freie Blöcke
   \item Inodes dienen zur Ablage der Verwaltungsinformationen der Dateien. Jede Datei hat einen Inode mit:
     \begin{itemize}
@@ -653,9 +656,9 @@
 
   \item Organisation der Indirekten Blöcke:
   \begin{itemize}
-  \item Dateien größer als 10 Blöcke
+  \item Dateien grö"ser als 10 Blöcke
   \item Jeder ind. Block ist in Inodes eingetragen
-  \item Sehr große Dateien mit maximal vier Zugriffen/Dateiblock realisierbar
+  \item Sehr gro"se Dateien mit maximal vier Zugriffen/Dateiblock realisierbar
   \item Blockaufteilung für Sicherheit: 
   \begin{itemize}
   \item Superblock mehrfach in Kopie vorhanden
@@ -705,10 +708,10 @@
   wird, sollten Armbewegungen möglichst vermieden werden. D.h. zusammengehörende Daten sollten
   in hintereinanderliegenden Sektoren in derselben Spur untergebracht werden, damit das Lesen
   und Schreiben in Vorgang ohne weitere Armbewegung vorgenommen werden kann. Ist die Datenmenge
-  größer, sollten die Spuren innerhalb des gleichen Zylinders verwendet werden.
+  grö"ser, sollten die Spuren innerhalb des gleichen Zylinders verwendet werden.
 
   UNIX Fast File System:
-  Das System arbeitet auf vier bzw. acht Byte großen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
+  Das System arbeitet auf vier bzw. acht Byte gro"sen Datenblöcken. Die Platte ist in Zylindergruppen unterteilt. Jede Zylindergruppe hat einen eigenen Inode- und Datenbereich, Dateien und ihr Inode werden möglichst in derselben Zylindergruppe gespeichert. Ein Verzeichnis und die darin enthaltenen Dateien werden wiederum in derselben Zylindergruppe gespeichert, dies gilt aber nicht für im Verzeichnis befindliche Unterverzeichnisse.
 \end{answer}
 
 \question{Welche Vorteile bietet eine vereinheitlichte Betriebssystemschnittstelle zum Zugriff auf Geräte? Wie sieht die in UNIX in etwa aus?}
@@ -717,7 +720,7 @@
   Vorteil, dass sie einheitlich zu behandeln sind.
 
   \paragraph*{Laut Wikipedia:}
-  \crucial{Everything is a file} (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine große Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
+  \crucial{Everything is a file} (engl. ‚Alles ist eine Datei‘) beschreibt eine der definierenden Eigenschaften von Unix und seinen Abkömmlingen, dass eine gro"se Bandbreite an Ein-/Ausgabe-Ressourcen wie Dokumente, Verzeichnisse, Festplatten, Modems, Tastaturen, Drucker und sogar Interprozess- und Netzwerkverbindungen als einfache Byteströme via Dateisystem verfügbar sind.
 \end{answer}
 
 \question{Was ist ein \textit{Gerätetreiber}, was ein \textit{Geräte-Controller}? Welche Aufgaben haben sie?}
