@@ -214,26 +214,32 @@ Ausführung. Wenn man ein Programm auf Maschinen-Code runterbricht, kann man seh
 
 \question{Auf welche verschiedenen Arten kann man \textit{Verklemmungen} angehen? Wie arbeitet der \textit{Bankiersalgorithmus}?}
 \begin{answer}
-Ein Deadlock liegt an wenn z.B. zwei oder mehrere Prozesse auf Betriebsmittel warten, die nur
+Ein Deadlock liegt an, wenn z.B. zwei oder mehrere Prozesse auf ein Betriebsmittel warten, das nur
 von anderen freigegeben werden kann, es aber nicht mehr zu der Freigabe kommen wird.
-Möglickeiten:
-- Deadlock ignorieren, wenn er nur selten auftreten kann, da eine Lösung unter Umständen zu
+Möglichkeiten:
+\begin{itemize}
+\item Deadlock ignorieren, wenn er nur selten auftreten kann, da eine Lösung unter Umständen zu
 teuer ist.
-- Deadlock durch Untersuchung des Betriebsmittelgraphen entdecken und Deadlock durch Zwangsentfernen
+\item Deadlock durch Untersuchung des Betriebsmittelgraphen entdecken und Deadlock durch Zwangsentfernen
 eines Prozesses beheben.
-- Deadlock verhindern durch das erkennen der Randbedingung, die zum Deadlock führt:
-- Exklusivität (Spooling)
-- alles auf einmal anfordern (aber: Verschwendung von Ressurcen!)
-- Zwangsentzug
-Zyklus verhindern (Betriebsmittel nach aufsteigender Nummer anfordern und belegen), dies führt
+\item Deadlock verhindern durch das erkennen der Randbedingung, die zum Deadlock führt:
+\begin{itemize}
+\item Exklusivität (Spooling)
+\item alles auf einmal anfordern (aber: Verschwendung von Ressourcen!)
+\item Zwangsentzug
+\item Zyklus verhindern (Betriebsmittel nach aufsteigender Nummer anfordern und belegen), dies führt
 zu einer Einschränkung der Prozesse.
-- Deadlocks vermeiden: Bankiersalgorithmus.
-Der Bankiersalgorithmus:
+\end{itemize}
+\item Deadlocks vermeiden: Bankiersalgorithmus.
+\end{itemize}
+\begin{description}
+\item[Bankiersalgorithmus] \hfill \\
 Die Idee ist, dass die maximale Anforderung von Betriebsmitteln im voraus bekannt ist. Belegung
 wird nur dann gewährt, wenn das System dadurch nicht in einen Zustand gelangt, der zu einem
 Deadlock führen kann. Diesem Verfahren liegt das Modell eines Bankiers zugrunde, der mit Kunden
 einen Kreditrahmen aushandelt, der nach und nach eingelöst werden kann, aber die Grenzen der
-leistungsfähigkeit nicht sprengt.
+Leistungsfähigkeit nicht sprengt.
+\end{description}
 \end{answer}
 
 \question{Wie kann man eine einseitige Synchronisation mit Hilfe von wait() und signal() vornehmen? Wie kann man diese Primitiven in etwa auf lock() und unlock() abbilden?}
