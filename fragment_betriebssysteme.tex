@@ -363,14 +363,21 @@
 \begin{answer}
   Die in der \crucial{Proc-Struktur abgelegten Zustandsinformationen sind für alle Prozesse verfügbar},
   die in der \crucial{User-Struktur abgelegten sind nur für den laufenden Prozess verfügbar}.
-  Beispiele für Angaben in der Proc-Struktur:
-  Signale, die zur Verarbeitung anstehen
-  Prozesszustände
-  Scheduling
-  Beispiele für Angaben in der User-Struktur:
-  Zugriffsrechte
-  Aktuelles Verzeichnis
-  Geöffnete Dateien.
+  \subsection*{Beispiele:}
+  \begin{description}
+    \item[Proc-Struktur]\hfill
+    \begin{itemize}
+      \item Signale, die zur Verarbeitung anstehen
+      \item Prozesszustände
+      \item Scheduling
+    \end{itemize} 
+    \item[User-Struktur]\hfill
+    \begin{itemize}
+      \item Zugriffsrechte
+      \item Aktuelles Verzeichnis
+      \item Geöffnete Dateien
+    \end{itemize} 
+  \end{description}
 \end{answer}
 
 \question{Skizziere kurz die Prozesserzeugung in UNIX. Welche Rolle spielen die Systemaufrufe fork() und exec() dabei? Wie unterscheiden sich Vater- und Kindprozess voneinander?}
@@ -386,7 +393,7 @@
 
 \question{Wie erfährt ein UNIX-Prozess, ob ein Kindprozess terminiert ist? Wozu gibt es in UNIX den Prozesszustand SZOMB (,,Zombie'')?}
 \begin{answer}
-  Das Kind meldet bei der Termination das Signal SIGCHLD an den Vater, dieser behnadelt
+  Das Kind meldet bei der Termination das Signal SIGCHLD an den Vater, dieser behandelt
   durch den Aufruf wait() den Kindprozess und der Kindprozess terminiert
   oder der Vater ignoriert das Signal. In diesem Fall wird das Kind zum Zombie. Der Zombie
   wird dann entweder später vom Vater behandelt oder (je nach UNIX-Variante) durch das
@@ -439,8 +446,7 @@
   Suche, kleine Anforderungen können schnell erfüllt werden.
 
   \textbf{Best-Fit-Algorithmus:}
-  Die Liste wird immer ganz durchsucht, der Block mit dem kleinsten Verschnitt wird ausgew
-  ählt.
+  Die Liste wird immer ganz durchsucht, der Block mit dem kleinsten Verschnitt wird ausgewählt.
   Es entstehen extrem viele kleine Blöcke. Die Suche dauert sehr lange da immer die ganze
   Liste durchsucht wird. Es sind lange auch grosse Blöcke verfügbar.
 
@@ -455,27 +461,30 @@
 \question{Wozu bieten Systeme eine Speicherhierachie an? Welche Beobachtung über den Speicherzugriff realer Programme liegt dem zugrunde? Welche verschiedenen Arten von Speicher werden typischerweise bereitgestellt?}
 \begin{answer}
   Die Systeme bieten eine Speicherhierachie an, da die Geschwindigkeit sich proportional zu den
-  Kosten verhält - \crucial{der schnellste Speicher ist der teuerste}. Reale Programme greifen oft nur auf eine sehr kleine Bereich zu (Working Set). Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
+  Kosten verhält - \crucial{der schnellste Speicher ist der teuerste}. Reale Programme greifen oft nur auf einen sehr kleine Bereich zu (Working Set).
+  Dem liegt das Lokalitätsprinzip zu Grunde.
+  Das Prinzip der räumlichen Lokalität besagt, dass nächste Speicherzugriffe mit hoher Wahrscheinlichkeit auf Adressen in unmittelbarer Nähe zur Aktuellen erfolgen.\footnote{https://de.wikipedia.org/wiki/Lokalitätseigenschaft}
+  Es werden meist Cache, Hauptspeicher und Massenspeicher bereitgestellt.
 \end{answer}
 
 \question{Warum ist es in der Regel nicht sinnvoll, den Adressraum eines Prozesses in einem Stück im Speicher abzulegen?}
 \begin{answer}
   Ein Prozess muss nicht zwangsläufig komplett im Speicher verfügbar sein (s.o.:Working
-  Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten möglich, heisst insgesamt eine erheblich bessere Nutzung des Haupspeichers.
+  Set). Bei der Aufteilung in kleinere Einheiten ist auch die Nutzung kleinerer Freispeichereinheiten möglich, heisst insgesamt eine erheblich bessere Nutzung des Hauptspeichers.
 \end{answer}
 
 \question{Was versteht man unter \textit{Paging}, was unter \textit{Segmentierung}? Wo tritt \textit{interne Fragmentierung}, wo \textit{externe Fragmentierung} auf? Was versteht man darunter?}
 \begin{answer}
-  \textbf{Segmentierung:} Speicher wird in verschieden gro"se Stücke unterteilt, das ermöglicht die flexible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte gro"s. Segmentierung hat das Problem der externen Fragmentierung.
+  \paragraph{Segmentierung:}Speicher wird in verschieden gro"se Stücke unterteilt, das ermöglicht die flexible Zuteilung kleiner Speicherbereiche und Shared Memory. Es sind Adressumsetzungstabellen pro Prozess notwendig. Segmente enthalten unterschiedlich viele Pages und sind maximal 210 Byte gro"s. Segmentierung hat das Problem der externen Fragmentierung.
 
-  \textbf{Paging:} flexible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (Page-Frames)
+  \paragraph{Paging:} flexible Zuteilung von gleich grossen Speichereinheiten. Der Hauptspeicher wird in Kacheln (Page-Frames)
   fester Grö"se unterteilt. Die Prozessadressräume wiederum liegen in Seiten (Pages) von
   gleicher Grö"se (meist 4 KiB). Auch dieses Verfahren ermöglicht Shared Memory, impliziert aber interne Fragmentierung (statt externer).
 
-  \textbf{externe Fragmentierung:} Wenn durch die angewendete Logik Speicher in unterschiedlich gro"se
+  \paragraph{externe Fragmentierung:} Wenn durch die angewendete Logik Speicher in unterschiedlich gro"se
   Stücke eingeteilt wird und ganze Stücke freibleiben.
 
-  \textbf{interne Fragmentierung:} Wenn innerhalb von gleich gro"sen Stücken der Speicher nicht restlos
+  \paragraph{interne Fragmentierung:} Wenn innerhalb von gleich gro"sen Stücken der Speicher nicht restlos
   ausgenutzt wird und so Speicher ungenutzt bleibt.
 \end{answer}
 
@@ -484,7 +493,6 @@
   Beim Paging wird der Hauptspeicher in Kacheln \crucial{(Page-Frames) fester Grö"se} unterteilt.
   Wird eine neue Page im Speicher benötigt und ist kein Page-Frame frei, kommt es zur Verdrängung.
   Wenn diese Page später angefordert wird, tritt ein Page-Fault auf, da sich diese Seite nicht im Working-Set des Hauptspeichers befindet.
-
   Es gibt verschiedene Verdrängungsstrategien wie FIFO, LFU und LRU oder NRU.
 \end{answer}
 
@@ -502,27 +510,27 @@
 
 \question{Wie arbeiten die folgenden Algorithmen zur Verdrängung von Seiten aus dem Hauptspeicher in etwa?}
 \begin{answer}
-  \textbf{LRU (Least-Recently-Used):}
+  \paragraph{LRU (Least-Recently-Used):}
   LRU entfernt die Seite im Hauptspeicher, auf die am längsten nicht mehr zugriffen
   wurde. Das Lokalitätsprinzip wird in der Regel gut erfasst. LRU ist eine gute
   Aproximation an den optimalen Algorithmus,
   aber das erfassen aller Zugriffszeiten auf die Seiten ist notwendig, d.h. bei jedem
   Zugriff müssen weitere Speicherzugriffe erfolgen. LRU ist zu aufwendig ohne Spezialhardware.
 
-  \textbf{FIFO (First-in-First-Out):}
+  \paragraph{FIFO (First-in-First-Out):}
   FIFO entfernt die älteste Seite und ist einfach zu realisieren: als verkettete Liste der
   Page Frames nach Belegungsalter.
   Aber: bestimmt das Working Set in der Regel nicht gut.
 
-  \textbf{Second-Chance-FIFO:}
+  \paragraph{Second-Chance-FIFO:}
   Funktioniert (im Prinzip) wie FIFO: als verkettete Liste nach Belegungsalter. Wenn
   eine Seite (nach FIFO) zum Löschen an der Reihe ist wird überprüft ob sie seit
-  ihrer letzten überprüfung referenziert wurde. Wenn ja: sie wird wieder (als jüngste
+  ihrer letzten Überprüfung referenziert wurde. Wenn ja: sie wird wieder (als jüngste
   Seite) in die Liste eingehängt. Wenn nein: löschen der Seite.
-  In diesem Algorithmus wird unterschiedliche Benutzungshäufigkeit einkalkulliert,
+  In diesem Algorithmus wird unterschiedliche Benutzungshäufigkeit einkalkuliert,
   aber er ist sehr aufwendig, da auch eine FIFO-Liste geführt werden muss (s.o.)
 
-  \textbf{NRU (Not-Recently-Used):}
+  \paragraph{NRU (Not-Recently-Used):}
   NRU trifft eine zufällige Auswahl aus den kürzlich nicht referenzierten Seiten (z.B.
   mit zyklischer Suche nach Page Frame-Nummern). Der gewählte Modus des Zurücksetzens
   des Referenzbits entscheidet über die Güte".
@@ -536,12 +544,12 @@
   Bei Lastspitzen summiert sich die Verdrängung von beschriebenen Seiten, daher
   wird NRU oft nicht verwendet.
   
-  \textbf{Aging:}
+  \paragraph{Aging:}
   Beim Aging altern die Seiten duch shiften eines Schieberegisters das für jede Seite
-  angelegt wird. Das führt zu einer guten Annäherung an LRU, aber auch zu unbertretbar
+  angelegt wird. Das führt zu einer guten Annäherung an LRU, aber auch zu unvertretbar
   hohem Aufwand. Bei Vereinfachung des Algorithmus (z.B. von Schieberegister
   mit 8 Bit auf 2 Bit) gehen die LRU-ähnlichen Vorteile verloren und Aging wird
-  zu komplexen Variante von Second-Chance-FIFO.
+  zu komplexer Variante von Second-Chance-FIFO.
 \end{answer}
 
 \question{In welche dieser Kategorien kann man den Clock-Hand-Algorithmus einordnen?}
@@ -556,13 +564,13 @@
   Ein optimaler Algorithmus ist für ein 'normales' Betriebssystem nicht realisierbar, da die Prozesse
   durch unterschiedliche Working Sets eine unterschiedlich gro"se Anzahl von Seiten unterschiedlich
   lange benötigen.
-  Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben (Embeded
+  Im Gegensatz dazu ist bei einem Betriebssystem mit wenigen, speziellen Aufgaben (Embedded
   Systems) ein optimaler bzw. annähernd optimaler Algorithmus möglich.
 \end{answer}
 
 \question{Was passiert, wenn die Umlaufzeit des Zeigers beim Clock-Hand-Algorithmus zu gro"s bzw. zu klein gewählt wird? Wie kann ein zweiter Zeiger den Algorithmus verbessern?}
 \begin{answer}
-  Wenn die Umlaufzeit zu gro"s gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die Freispeichereserve leer). Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als sinnvoll.
+  Wenn die Umlaufzeit zu gro"s gwählt wird ist irgendwann kein freier Speicher mehr verfügbar (die Freispeicherreserve leer). Wird die Umlaufzeit zu klein gewählt, werden die Seiten vor ihrer nächsten Benutzung aus dem Speicher entfernt und müssen dann erneut geladen werden, die Freispeicherreserve ist grösser als sinnvoll.
 
   \paragraph*{}
   Ein zweiter Zeiger verbessert den Clock-Hand-Algorithmus insbesondere bei gro"sen Mengen von Speicher. Zum Beispiel kann der erste Zeiger das Referenzbit gegebenenfalls zurücksetzen und der Zweite die
@@ -580,7 +588,8 @@
 \question{Wie kann man die Vorteile von Paging und Segmentierung kombinieren?}
 \begin{answer}
   Bei einem einzigen Adressraum kann dieser beim Paging nicht logisch aufgeteilt werden. Der gesamte Adressraum wird in gleich gro"se Kacheln eingeteilt.
-  Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen enthalten. Die Grö"se der Segmente ist nicht statisch, sondern kann jede Gösse mit n multipliziert mit Page Frame Grö"se umfassen.
+  Deswegen wird heute der Speicher häufig in mehrere Segmente unterteilt, die jeweils eigene Pagetabellen enthalten.
+  Die Grö"se der Segmente ist nicht statisch, sondern kann jede n-fache Page Frame Grö"se umfassen.
 
   \paragraph*{}
   Dadurch entstehen dreiteilige Adressen:
@@ -601,35 +610,35 @@
 
 \question{Beschreibe kurz die Zugriffsoperationen open(), close(), lseek(), read() und write() auf einem UNIX-Filesystem. Welche Rolle spielt der File-Deskriptor dabei?}
 \begin{answer}
-  \texttt{open()}\\
+  \paragraph{open()}
   Öffnet eine Datei für die weitere Arbeit. open() werden die Parameter \texttt{path} (Pfadname der Datei),
   \texttt{ags} (erlaubte Folgeoperationen wie lesen, schreiben,...) und \texttt{mode} (Zugriffsrechte bei einer NEU
   angelegten Datei) übergeben. Der File Descriptor wird zurückgegeben.
   \\
 
-  \texttt{close()}\\
+  \paragraph{close()}
   Dieser Systemaufruf gibt eine Datei wieder frei.
   \\
 
-  \texttt{create()}\\
+  \paragraph{create()}
   Es wird mit den Parametern path und mode eine neue Datei erzeugt. Der File Descriptor wird
   zurückgegeben.
   \\
 
-  \texttt{lseek()}\\
+  \paragraph{lseek()}
   wird mit den Parametern File Descriptor, offset und whence aufgerufen. Die aktuelle Position im
   File Descriptor wird um offset Bytes gemä"s whence verschoben (d.h. 0 = vom Anfang, 1 = vom
   Ende, 2 = von der aktuellen Position aus).
   Zusammengefasst: lseek setzt den Zeiger, der innerhalb einer Datei die Position anzeigt.
   \\
 
-  \texttt{read()}\\
+  \paragraph{read()}
   mit den Parametern File Descriptor (fd), buf und len liest von len Bytes ab der aktuellen Position
   des fd in den Puffer buf, dabei wird die aktuelle Position um die gelesenen Bytes weitergeschoben.
   read() liefert die Anzahl der tatsächlich gelesen Bytes.
   \\
 
-  \texttt{write()}\\
+  \paragraph{write()}
   mit den Parametern fd, buf und len funktioniert analog zu read() und liefert die Anzahl der geschriebenen
   Bytes zurück.
 \end{answer}
@@ -646,7 +655,7 @@
     \begin{itemize}
     \item eindeutigem Bezeichner (heisst: Inodenummer, diese gibt die Position an) 
     \item Besitzer (nid), Gruppe (gid) 
-    \item Zeitpunkt der letzten änderung, des letzten Zugriffs, ... 
+    \item Zeitpunkt der letzten Änderung, des letzten Zugriffs, ... 
     \item Anzahl der Hard Links (mehrere Namen für eine Datei verweisen auf denselben Inode) 
     \item Anzahl von Bytes 
     \item Dateityp 
@@ -669,7 +678,7 @@
   \end{itemize}
 \end{answer}
 
-\question{Welche Aufgaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Euch besser bekannt als \textit{Directory})?}
+\question{Welche Angaben enthält ein Inode? Welche Angaben enthält eine Verzeichnis-Datei (Euch besser bekannt als \textit{Directory})?}
 \begin{answer}
   Aufgaben von Inodes: siehe oben. Eine Verzeichnis-Datei (Directory) ist eine Datei und hat entsprechend
   einen eigenen Inode und Datenblöcke. Verzeichnisse sind eine Folge von Einträgen, die
@@ -703,7 +712,7 @@
 \begin{answer}
   Eine physikalische Festplatte besteht aus sechs bis zehn internen \crucial{Platten} (Scheiben). Auf jede
   dieser internen Platten greift jeweils von oben und von unten ein \crucial{Lese-Schreibkopf} zu. Jede
-  Oberfläche ist in \crucial{Spuren} unterteilt, jede Spur in \crucial{Sektoren}. übereinanderliegende Spuren auf den
+  Oberfläche ist in \crucial{Spuren} unterteilt, jede Spur in \crucial{Sektoren}. Übereinanderliegende Spuren auf den
   verschiedenen Oberflächen bilden \crucial{Zylinder}. Da für jede Armbewegung relativ viel Zeit benötigt
   wird, sollten Armbewegungen möglichst vermieden werden. D.h. zusammengehörende Daten sollten
   in hintereinanderliegenden Sektoren in derselben Spur untergebracht werden, damit das Lesen
@@ -725,21 +734,24 @@
 
 \question{Was ist ein \textit{Gerätetreiber}, was ein \textit{Geräte-Controller}? Welche Aufgaben haben sie?}
 \begin{answer}
-  Gerätetreiber:
+  \paragraph{Gerätetreiber:}
   \begin{itemize}
-   \item ist Code innerhalb des Betriebssystems zur Geräteverwaltung
-  \item es existiert jeweils ein Treiber pro Gerätetyp, die Typen werden durch die Major Number unterschieden
-  \item als Parameter wird die Minor Number benötigt, um die konkrete Hardware zu identifizieren / anzusprechen. Controller:
-  \item ist Hardware, die sich zwischen CPU und Gerät befindet
-  \item enthält unter anderem einen Puffer für die Zwischenlagerung von Aufträgen an das Gerät
-  \item zur Aktivierung des Controllers werden die Aufträge in Controllereigenen Registern abgelegt Ein Treiber ist also zum Kernel gehörende Software, ein Controller ist die zu einem Gerät gehörende, vom Treiber gesteuerte, Hardware.
+    \item ist Code innerhalb des Betriebssystems zur Geräteverwaltung
+    \item es existiert jeweils ein Treiber pro Gerätetyp, die Typen werden durch die Major Number unterschieden
+    \item als Parameter wird die Minor Number benötigt, um die konkrete Hardware zu identifizieren / anzusprechen.
+  \end{itemize}
+  \paragraph{Controller:}
+  \begin{itemize}
+    \item ist Hardware, die sich zwischen CPU und Gerät befindet
+    \item enthält unter anderem einen Puffer für die Zwischenlagerung von Aufträgen an das Gerät
+    \item zur Aktivierung des Controllers werden die Aufträge in controllereigenen Registern abgelegt Ein Treiber ist also zum Kernel gehörende Software, ein Controller ist die zu einem Gerät gehörende, vom Treiber gesteuerte, Hardware.
   \end{itemize}
 
 \end{answer}
 
 \question{Warum erfolgt der Zugriff auf Geräte häufig über Warteschlangen? Wozu besitzten diese in der Regel eine \textit{High Water Mark} bzw. eine \textit{Low Water Mark}?}
 \begin{answer}
-  Der Zugriff über Warteschlangen erfolgt um eine Vermischung von Aufträgen und das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
+  Der Zugriff über Warteschlangen erfolgt um eine Vermischung oder das Verlorengehen von Aufträgen zu verhindern. Desweiteren um die komplette Abarbeitung eines Auftrages zu gewährleisten und die Reihenfolge der Auftragsabarbeitung zu organisieren.
   Die Warteschlangen besitzen in der Regel eine High Water Mark, um anzuzeigen, dass die Warteschlange voll ist, d.h. um zu verhindern das entweder ein Auftrag in der Schlange überschrieben wird und ein Auftrag verlorengeht. Die Low Water Mark zeigt dagegen an, dass weitere Aufträge "nachgefüllt'' werden können.
 \end{answer}
 
@@ -760,7 +772,7 @@
   erzeugen, benötigt ein Treiber die Angabe desselben mit Hilfe eines Parameters $\Rightarrow$ Parametrisierung.
   Ein typischer Parameter wäre bei einem Monitor z.B. die Farbtiefe.
   Bei Terminals werden grundsätzlich zwei Modi unterschieden: der Raw-Modus (Canonical Mode),
-  in ihm werden einem Terminal Tasteneingaben unverändert und zeichenweise an des Pozess
+  in ihm werden einem Terminal Tasteneingaben unverändert und zeichenweise an den Prozess
   weitergereicht. Im Cooked-Modus (Noncanonical Mode)wird die Tasteneingabe zeilenweise an den
   Prozess weitergegeben. In diesem Modus ist es möglich, Tastenkombinationen abzufangen (also
   erst einmal nicht an den Prozess weiterzugeben) und ihnen besondere Funktionen zuzuweisen.
