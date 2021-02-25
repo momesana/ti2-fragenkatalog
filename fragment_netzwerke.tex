@@ -19,7 +19,7 @@ Wenn mehrere Wächter zutreffen, ist die Auswahl nichtdeterministisch.
 \begin{answer}
 Der Korridor-Algorithmus arbeitet ähnlich wie ein Bürobote, der auf seinem Rundgang durch einen Korridor mit vielen Büros geht. Der Bote hat einen ,,Warteraum'', in dem er im ruhenden Zustand sitzt. An jedem Büro ist eine Lampe o.ä. angebracht, die abzuarbeitende Aufträge anzeigt.
 
-Wenn der Bote von seinem Warteraum aus sieht, dass ein Auftrag abzuarbeiten ist, geht er an den Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies tut er in festglegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge zu Beginn seiner Runde entstanden sind.
+Wenn der Bote von seinem Warteraum aus sieht, dass ein Auftrag abzuarbeiten ist, geht er an den Türen aller Büros vorbei und sammelt die zu diesem Zeitpunkt anstehenden Aufträge ein. Dies tut er in festgelegter Reihenfolge. Der Bürobote sollte sich, bevor er sich wieder in den Warteraum begibt, noch einmal umsehen, ob in der Zwischenzeit nicht neue Aufträge zu Beginn seiner Runde entstanden sind.
 \end{answer}
 
 \begin{multilinequestion}[Worin unterscheiden sich die Eigenschaften der folgenden UNIX-Mechanismen zur Interprozesskommunikation:]
@@ -54,7 +54,7 @@ sind möglich), verbindungslos (Vergleich: Brief-/Paketzustellung)
 Man erzeugt sie, bekommt den Deskriptor zurück und kann auf ihnen operieren.
 \end{answer}
 
-\question{Warum kommt dem Adressierungsproblem in der Interkommunikation eine so große Bedeutung zu? In welche zwei Teile zerfällt eine Adressangabe typischerweise?}
+\question{Warum kommt dem Adressierungsproblem in der Interkommunikation eine so gro"se Bedeutung zu? In welche zwei Teile zerfällt eine Adressangabe typischerweise?}
 \begin{answer}
 Ohne eindeutige Adressierung ist Kommunikation unmöglich. Nur die eindeutige und funktionierende
 Adressierung ermöglicht den Austausch von Nachrichten bzw. Inhalten.
@@ -72,13 +72,13 @@ Protokoll: Verabredung über die Art und Weise des Kommunikationsvorgangs.
 \question{Skizziere kurz einige typische Kommunikationsprobleme und je einen Lösungsvorschlag im Rahmen eines entsprechenden Protokolls.}
 \begin{answer}
 Probleme und Lösungsansätze:
-- Kabel, d.h. übertragungsmedium kapput: via Routing eines anderen Weg suchen.
+- Kabel, d.h. übertragungsmedium kaputt: via Routing eines anderen Weg suchen.
 - Bitkipper: via Fehlererkennung, z.B. Prüfsummenberechnung eine überprüfung durchführen und
 den Vorgang gegebenenfalls wiederholen.
 - überlastung des Empfängers, d.h. die Nachricht kann nicht angenommen werden: via Flusskontrolle
 überprüfen (Staumeldung).
 - Empfänger liegt in einem anderen System, d.h. er arbeitet mit einem anderen Protokoll: die
-Daten müssen entsprechen umgewandelt werden.
+Daten müssen entsprechend umgewandelt werden.
 \end{answer}
 
 \question{Skizziere einige Eigenschaften typischer Netztopologien.}
@@ -92,11 +92,11 @@ gespeichert werden.
 Ein Ringsystem bietet den Vorteil, dass die Nachrichten einfach in eine Richtung losgeschickt
 werden und die beteiligten Computer nur überprüfen, ob die Nachricht für sie ist. Wenn nicht,
 wird das Datenpaket weitergeleitet.
-Es hat den Nachteil besonders großer Störanfälligkeit. Wenn ein einziger Netzwerkrechner oder
+Es hat den Nachteil besonders gro"ser Störanfälligkeit. Wenn ein einziger Netzwerkrechner oder
 ein Kabel ausfällt, ist die Kommunikation ,,dahinterliegender'' Rechner gestört.
 
 - Bus:
-Bei einem Bussystem ist die größte Störanfälligkeit der Bus selbst. Fällt diese Leitung aus, sind
+Bei einem Bussystem ist die grö"ste Störanfälligkeit der Bus selbst. Fällt diese Leitung aus, sind
 u.U. alle Rechner vom Netz abgeschnitten. Ausserdem muss bei dieser Netzvariante besonderes
 Augenmerk auf die Reihenfolge der Nachrichtenübertragung gelegt werden.
 

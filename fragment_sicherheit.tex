@@ -51,15 +51,15 @@ Die Dateizugriffsrechte in UNIX ordnen dem Besitzer einer Datei, der zugehörige
 
 \question{Charakterisiere \textit{symmetrische} und \textit{asymmetrische} Verschlüsselungsverfahren. Wie können sie zur Realisierung einer Vertraulichkeit eingesetzt werden? Warum werden häufig Mischformen eingesetzt?}
 \begin{answer}
-Bei symetrischer Verschlüsselung existieren zwei gleiche Schlüssel. Das hat den Nachteil, das bei bekannt werden des Schlüssels die Vertraulichkeit nicht mehr gegeben ist.
-Bei asymetrischer Verschlüsselung existieren insgesamt vier Schlüssel: zwei private und zwei öffentliche Schlüssel. Die öffentlichen Schlüssel können allgemein bekannt sein. Die Verschlüsselung selbst passiert mit dem privaten Schlüssel des Senders und dem öffentlichen Schlüssel des Empfängers.
+Bei symmetrischer Verschlüsselung existieren zwei gleiche Schlüssel. Das hat den Nachteil, dass bei bekannt werden des Schlüssels die Vertraulichkeit nicht mehr gegeben ist.
+Bei asymmetrischer Verschlüsselung existieren insgesamt vier Schlüssel: zwei private und zwei öffentliche Schlüssel. Die öffentlichen Schlüssel können allgemein bekannt sein. Die Verschlüsselung selbst passiert mit dem privaten Schlüssel des Senders und dem öffentlichen Schlüssel des Empfängers.
 Die Entschlüsselung einer Nachricht erfolgt mit dem privaten Schlüssel des Empfängers und dem
 öffentlichen Schlüssel des Senders.
 
-Asymetrische Verschlüsselung ist erheblicher rechenintensiver als Symetrische. Allerdings ist die
-symetrische Verschlüsselung unsicherer als die Asymetrische. Deshalb werden oft Mischformen
-eingesetzt, z.B. werden die symetrischen Schlüssel mit Hilfe asymetrischer Verschlüsselung ausgetauscht
+Asymmetrische Verschlüsselung ist erheblicher rechenintensiver als Symmetrische. Allerdings ist die
+symmetrische Verschlüsselung unsicherer als die Asymmetrische. Deshalb werden oft Mischformen
+eingesetzt, z.B. werden die symmetrischen Schlüssel mit Hilfe asymmetrischer Verschlüsselung ausgetauscht
 um die Schlüsselübergabe so sicher als möglich zu machen, die Kommunikation selbst
-findet dann aber mit Hilfe der symetrischen Verschlüsselung statt um eine angemessene Geschwindigkeit
+findet dann aber mit Hilfe der symmetrischen Verschlüsselung statt um eine angemessene Geschwindigkeit
 (z.B. Videokonferenzen) zu gewährleisten.
 \end{answer}

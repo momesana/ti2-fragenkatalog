@@ -26,7 +26,7 @@ Bei nebenläufigem Zugriff kann es zu inkonsistenten Daten kommen, wenn der \cru
 \end{description}
 \end{answer}
 
-\begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die drei folgenden ,,klassischen'' Szenarien ausgedrückt:]
+\begin{multilinequestion}[Welche Nebenläufigkeitseigenschaften bzw. -probleme werden durch die folgenden ,,klassischen'' Szenarien ausgedrückt:]
 \begin{enumerate}
 \item Kritischer Abschnitt (Critical Section)
 \item Leser/Schreiber (Reader/Writer)
@@ -59,7 +59,7 @@ Mögliche Lösung durch Vermeidung (Bankiers Algorithmus): Es dürfen nur vier P
 
 Ein Prozess könnte eine Operation auf mehrere Datensätze ausführen, das ist sehr gut parallelisierbar.
 
-Oder ein Prozess hat eine Grafische Benutzeroberfläche (GUI) und führt Berechnungen durch. Dann soll die GUI immer beidenbar sein, auch wenn grade eine aufwändige Berechnung läuft.
+Oder ein Prozess hat eine Grafische Benutzeroberfläche (GUI) und führt Berechnungen durch. Dann soll die GUI immer bedienbar sein, auch wenn grade eine aufwändige Berechnung läuft.
 \end{answer}
 
 \question{Was besagt Prämemption?}
@@ -135,7 +135,7 @@ s.P();
 verbrauchen();
 \end{verbatim}
 
-\item[Mehrseitige Synchronisation] Producer-Consumer-Problem mit Pufferkapazität; benötigt zwei Semaphoren
+\item[Mehrseitige Synchronisation] Producer-Consumer-Problem mit begrenzter Pufferkapazität; benötigt zwei Semaphoren
 \label{mehrseitige-synchronisation-beispiel}
 
 \begin{verbatim}
@@ -176,7 +176,7 @@ In der Regel wird zuviel gesperrt; viele Aktivitäten wollen kritischen Abschnit
 \begin{answer}
 Ein kritischer Abschnitt ist ein Teil des Programmcodes, welcher geschützt werden muss, wenn zwei Threads auf die selben Ressourcen zugreifen.
 
-Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabäufen auf eine gemeinsame
+Ein kritischer Abschnitt ist ein Programmteil, in dem von mehreren Programmabläufen auf eine gemeinsame
 Datenstruktur oder auf ein gemeinsames Betriebsmittel zugegriffen wird. Kritische Abschnitte müssen daher geschützt werden. Sonst würde es eventuell zu falschen Ergebnissen kommen. jeder kritische Abschnitt benötigt daher einen Schliessmechanismus, der durch eine ,,Schlossvariable'' realisiert wird. Bei Betreten eines kritischen Abschnitts wird dann diese Variable gesetzt (oft Boolean TRUE).
 
 \paragraph*{}
@@ -208,8 +208,8 @@ Der Zugriff auf Schlossvariablen darf nicht selbst in einem kritischen Abschnitt
 
 \question{Warum sollte man die Bewertung von Locking-Algorithmen auf der Grundlage von \textit{unteilbaren Operationen} durchführen?}
 \begin{answer}
-Nur unteilbare Operationen sind nicht unterbrechbar. Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-
-Ausführung. Wenn man ein Programm auf Maschinen-Code runterbricht, kann man sehr gut erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Prozesswechsel, erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher genau analysieren und Anfang und Ende festlegen.
+Nur unteilbare Operationen sind nicht unterbrechbar. Unteilbare Operationenen sind Maschinen-Instruktionen, also die unterste Ebene der Programm-Ausführung.
+Wenn man ein Programm auf Maschinen-Code runterbricht, kann man sehr gut erkennen, dass nach jedem Befehl eine Unterbrechung, z.B. ein Interupt zum Prozesswechsel, erfolgen kann (z.B. durch Ablauf der Zeitscheibe). Die kritischen Abschnitte lassen sich daher genau analysieren und Anfang und Ende festlegen.
 \end{answer}
 
 \question{Auf welche verschiedenen Arten kann man \textit{Verklemmungen} angehen? Wie arbeitet der \textit{Bankiersalgorithmus}?}
@@ -249,8 +249,8 @@ TODO
 
 \question{Grenze die Begriffe \textit{aktives} und \textit{blockierendes} Warten voneinander ab.}
 \begin{answer}
-Beim aktiven Warten wird ständig die Schlüsselvariable eines kritischen Abschnitts überprüf, ob sieser nun frei geworden ist oder nicht. Durch das ständige Abfragen wird unter Unständen unnötig CPU-Zeit in Anspruch genommen.
-Beim blockierenden Warten legt sich der betreffende Pozess schlafen, falls der kritische Abschnitt nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein wakeup() aus, um die schlafenden Prozesse zu wecken.
+Beim aktiven Warten wird ständig die Schlüsselvariable eines kritischen Abschnitts überprüf, ob diese nun frei geworden ist oder nicht. Durch das ständige Abfragen wird unter Unständen unnötig CPU-Zeit in Anspruch genommen.
+Beim blockierenden Warten legt sich der betreffende Prozess schlafen, falls der kritische Abschnitt nicht frei ist. Wird der kritische Abschnitt von dem anderen Prozess verlassen, so führt dieser ein wakeup() aus, um die schlafenden Prozesse zu wecken.
 \end{answer}
 
 \question{Was ist ein Spinlock?}
@@ -309,7 +309,7 @@ auch; ,,counting semaphore''
 Zähler $>= 0$ bei Eintritt in kritischen Bereich inkrementiert, dekrementiert bei Austritt. Bei Zähler $= 0$ warten.
 
 P()/V() ist nicht an Blockstrukturen gebunden. \\
-P()/V() ist nicht immer regelmäßig geschachtelt.
+P()/V() ist nicht immer regelmä"sig geschachtelt. 
 \end{answer}
 
 \question{Welche zusätzlichen Eigenschaften zeichnen Semaphoren gegenüber blockierenden Locks aus?}
@@ -329,9 +329,9 @@ Es gibt zwei zusätzliche Erweiterungen bei einer Semaphore:
 
 \begin{itemize}
 
-  \item Im Wartefall wird der Pozess in eine FIFO-Queue eingereiht, das heißt, die Prozesse werden nach Ankunftsreihenfolge beim kritischen Abschnitt abgearbeitet.
+  \item Im Wartefall wird der Prozess in eine FIFO-Queue eingereiht, das hei"st, die Prozesse werden nach Ankunftsreihenfolge beim kritischen Abschnitt abgearbeitet.
 
-  \item Semaphore-Counting, das heisst die Semaphore enthält einen Counter, durch den die Semaphore erst blockiert, wenn dich n Prozesse im kritischen Abschnitt befinden. Eine Semaphore wird mit $n$ vorinitialisiert.
+  \item Semaphore-Counting, das heisst die Semaphore enthält einen Counter, durch den die Semaphore erst blockiert, wenn sich n Prozesse im kritischen Abschnitt befinden. Eine Semaphore wird mit $n$ vorinitialisiert.
 
 \end{itemize}
 \end{answer}
@@ -401,7 +401,7 @@ Signale/Ereignisse: myObj.wait()/myObj.notify()
 \begin{answer}
 Die Philosophen sitzen am Tisch und denken über philosophische Probleme nach. Wenn einer hungrig wird, greift er zuerst die Gabel links von seinem Teller, dann die auf der rechten Seite und beginnt zu essen. Wenn er satt ist, legt er die Gabeln wieder zurück und beginnt wieder zu denken. Sollte eine Gabel nicht an ihrem Platz liegen, wenn der Philosoph sie aufnehmen möchte, so wartet er, bis die Gabel wieder verfügbar ist.
 
-Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wunderbar. Es kann aber passieren, dass sich alle fünf Philosophen gleichzeitig entschließen, zu essen. Sie ergreifen also alle gleichzeitig ihre linke Gabel und nehmen damit dem jeweils links von ihnen sitzenden Kollegen seine rechte Gabel weg. Nun warten alle fünf darauf, dass die rechte Gabel wieder auftaucht. Das passiert aber nicht, da keiner der fünf seine linke Gabel zurücklegt. Die Philosophen verhungern.
+Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wunderbar. Es kann aber passieren, dass sich alle fünf Philosophen gleichzeitig entschlie"sen, zu essen. Sie ergreifen also alle gleichzeitig ihre linke Gabel und nehmen damit dem jeweils links von ihnen sitzenden Kollegen seine rechte Gabel weg. Nun warten alle fünf darauf, dass die rechte Gabel wieder auftaucht. Das passiert aber nicht, da keiner der fünf seine linke Gabel zurücklegt. Die Philosophen verhungern.
 \end{answer}
 
 \question{Wie können Semaphore zur Lösung des Problems der speisenden Philosophen eingesetzt werden? In welches Problem wird eine allzu einfache ,,Implementierung'' laufen?}
@@ -409,7 +409,7 @@ Solange nur einzelne Philosophen hungrig sind, funktioniert dieses Verfahren wun
 Fünf Philosophen sitzen an einem Tisch mit fünf Tellern Reis. Zwischen jedem der Teller befindet
 sich ein Stäbchen, also insgesamt sind auch fünf Stäbchen vorhanden. Das Problem ist, dass jeder Philosoph zwei Stäbchen zum Essen benötigt, es können also nicht alle Philosophen gleichzeitig essen. Nur für zwei gleichzeitig speisende Philosophen sind ausreichend Stäbchen vorhanden.
 Jedes Stäbchen ist ein kritischer Abschnitt. Es kommt aber zu Verklemmungen, wenn jeder Philosoph z.B. sein linkes Stäbchen nimmt, kann keiner der Philosophen essen.
-Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das heißt immer Paare schützen.
+Lösung: Einsatz von Semaphoren für Stäbchen und Philosophen, das hei"st immer Paare schützen.
 \end{answer}
 
 \question{Warum bietet eine einfache Semaphor-Implementierung mit den UNIX-eigenen \texttt{sleep()/wakeup()}-Routinen keine vollständige Semaphore-Semantik? Welche zusätzlichen Massnahmen müsste man ergreifen?}
@@ -463,7 +463,7 @@ werden und somit unabhängig nebenläufig laufen.
 \question{Was kennzeichnet lebendige bzw. todesgefährdete Petrinetze?}
 \begin{answer}
 Bei lebendigen Petrinetzen gibt es immer Transistionen, egal welche Ausführungsreihenfolge stattgefunden
-hat..
+hat.
 Bei todesgefährdeten Petrinetzen kann es nach einer Transistion zu einem Zustand kommen, von
 dem aus keine Transistionen mehr ausgeführt werden kann.
 \end{answer}
@@ -480,7 +480,7 @@ Operator | : Unabhängikeit von Prozessen
 
 \question{Welche Vorteile bieten Pfadausdrücke zur Steuerung von Nebenläufigkeit im Vergleich zu Semaphoren bzw. Monitore?}
 \begin{answer}
-Vorteil ist die korrekte Definition dessen, was erlaubt ist oder was nicht erlaubt ist. Unterschied
+Vorteil ist die korrekte Definition dessen, was erlaubt ist oder was nicht erlaubt ist.
 \end{answer}
 
 \question{Was ist der Unterschied zwischen offenen und geschlossenen Pfadausdrücken?}
@@ -492,7 +492,7 @@ Offene Pfadausdrücke: alle Einschränkungen von Ausführungsreihenfolgen sind i
 zu spezifizieren. Das heisst alles andere ist erlaubt.
 \end{answer}
 
-\question{Welches Problem entsteht bei Nebenläufigkeit, wenn bspw. zwei Threads die Variable i inkrementieren möchten und was verursacht dieses? Wie heißt dieses Problem genau? Wie kann man dies Semaphoren lösen?}
+\question{Welches Problem entsteht bei Nebenläufigkeit, wenn bspw. zwei Threads die Variable i inkrementieren möchten und was verursacht dieses? Wie hei"st dieses Problem genau? Wie kann man dies Semaphoren lösen?}
 \begin{answer}
 Es handelt sich um das Leser-/Schreiber-Problem. Das Problem führt dazu, dass der zweite Thread u.U. mit dem alten Wert weiterarbeitet. Lesende Zugriffe stören sich nicht gegenseitig und können parallel erfolgen. Jedoch ist nebenläufiges Schreiben problematisch.
 
